@@ -1,771 +1,1722 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="cs" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    
     <title>Bc. Jan Koukal | ZNAČKA CUCKOO - Osobní Brand & Expertíza</title>
+    <meta name="description" content="Bc. Jan Koukal - Špičkové technologie, drony, webdesign a udržitelné dotace. Značka CUCKOO.">
+    <meta name="author" content="Bc. Jan Koukal">
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- 1. GLOBÁLNÍ PROMĚNNÉ (DESIGN SYSTÉM) --- */
+        /* --- 2.1 DESIGN TOKENS (PROMĚNNÉ) --- */
         :root {
-            --color-bg-abyss: #010202;
-            --color-bg-surface: #070908;
+            /* Paleta: Základ */
+            --color-abyss: #010202;
+            --color-surface-100: #050706;
+            --color-surface-200: #0a0d0b;
+            --color-surface-300: #111513;
+            
+            /* Paleta: Zlato (Cuckoo Brand) */
+            --color-gold-dark: #B8860B;
             --color-gold-base: #D4AF37;
             --color-gold-light: #F9D371;
             --color-gold-glow: rgba(212, 175, 55, 0.4);
-            --color-gold-neon: rgba(249, 211, 113, 0.15);
+            --color-gold-transparent: rgba(212, 175, 55, 0.1);
+            
+            /* Paleta: Technologie & Akcenty */
             --color-green-energy: #10b981;
             --color-green-glow: rgba(16, 185, 129, 0.5);
             --color-blue-matrix: #3b82f6;
+            --color-blue-glow: rgba(59, 130, 246, 0.5);
+            
+            /* Paleta: Texty */
+            --color-text-pure: #ffffff;
             --color-text-primary: #e2e8f0;
             --color-text-secondary: #94a3b8;
-            --color-glass-bg: rgba(3, 4, 4, 0.85);
-            --color-glass-border: rgba(212, 175, 55, 0.15);
+            --color-text-muted: #64748b;
             
-            --font-sans: 'Montserrat', sans-serif;
-            --font-serif: 'Playfair Display', serif;
-            --font-mono: 'Rajdhani', sans-serif;
+            /* Efekty: Sklo & Hloubka */
+            --glass-bg: rgba(3, 4, 4, 0.85);
+            --glass-border: rgba(212, 175, 55, 0.2);
+            --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.3);
+            --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
             
-            --z-index-back: -10;
-            --z-index-canvas: 1;
-            --z-index-content: 10;
-            --z-index-nav: 1000;
-            --z-index-overlay: 2000;
+            /* Typografie */
+            --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-mono: 'Rajdhani', 'Courier New', monospace;
+            
+            /* Spacing & Z-Index */
+            --z-behind: -10;
+            --z-canvas-bg: 1;
+            --z-canvas-tree: 2;
+            --z-content: 10;
+            --z-navigation: 1000;
+            --z-modal: 2000;
+            --z-toast: 3000;
         }
 
-        /* --- 2. TVRDÝ RESET A ZÁMEK DISPLEJE (PROTI UTÍKÁNÍ) --- */
-        *, *::before, *::after {
+        /* --- 2.2 HARD RESET & NORMALIZATION --- */
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            outline: none;
             -webkit-tap-highlight-color: transparent;
         }
 
         html {
+            font-size: 16px;
             scroll-behavior: smooth;
-            background-color: var(--color-bg-abyss);
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-rendering: optimizeLegibility;
+            background-color: var(--color-abyss);
             width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden; /* Absolutní zámek horizontálního posuvu */
+            height: 100%;
+            overflow-x: hidden; /* Záruka 1: Ochrana proti horizontálnímu přetečení */
         }
 
         body {
             font-family: var(--font-sans);
             color: var(--color-text-primary);
-            width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden; /* Dvojitý zámek pro iOS */
-            position: relative;
+            background-color: var(--color-abyss);
             line-height: 1.7;
+            font-weight: 400;
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden; /* Záruka 2: Ochrana proti horizontálnímu přetečení */
+            position: relative;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(10, 13, 11, 1) 0%, var(--color-bg-abyss) 100%),
+                radial-gradient(circle at 50% 10%, rgba(10, 13, 11, 0.9) 0%, var(--color-abyss) 100%),
                 url('https://www.transparenttextures.com/patterns/micro-carbon.png');
+            background-attachment: fixed;
         }
 
-        /* Čistota odkazů */
-        a { text-decoration: none; color: inherit; outline: none; }
-        
-        /* Zlatý custom scrollbar pro prohlížeče */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--color-bg-abyss); }
-        ::-webkit-scrollbar-thumb { background: var(--color-gold-base); border-radius: 10px; }
+        a {
+            text-decoration: none;
+            color: inherit;
+            background-color: transparent;
+            cursor: pointer;
+        }
 
-        /* Typografie */
-        h1, h2, h3, h4, .font-luxury { font-family: var(--font-serif); font-weight: 700; }
-        .font-tech { font-family: var(--font-mono); }
-        .text-gold { color: var(--color-gold-base); }
+        img, svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
 
-        /* --- 3. CANVAS PRO EFEKTY --- */
-        #particle-canvas {
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        /* --- 2.3 CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-abyss);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-gold-dark);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-gold-base);
+        }
+
+        /* --- 2.4 TYPOGRAFICKÉ TŘÍDY --- */
+        .text-serif {
+            font-family: var(--font-serif);
+            font-weight: 700;
+        }
+        .text-tech {
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+        .text-gold {
+            color: var(--color-gold-base);
+        }
+        .text-bold {
+            font-weight: 700;
+        }
+        .text-italic {
+            font-style: italic;
+        }
+
+        /* --- 2.5 INFRASTRUKTURA CANVASŮ --- */
+        #particle-engine-canvas {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             pointer-events: none;
-            z-index: var(--z-index-canvas);
-            opacity: 0.85;
+            z-index: var(--z-canvas-bg);
+            opacity: 0.9;
         }
 
-        /* --- 4. HLAVNÍ NAVIGACE (HEADER) --- */
+        #fractal-tree-canvas {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: var(--z-canvas-tree);
+            opacity: 0.7;
+        }
+
+        /* --- 2.6 HLAVIČKA (NAVIGATION) --- */
         .site-header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            z-index: var(--z-index-nav);
-            padding: 25px 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding-top: 25px;
+            padding-bottom: 25px;
+            padding-left: 50px;
+            padding-right: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: var(--z-navigation);
+            transition-property: all;
+            transition-duration: 0.5s;
+            transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
         }
+
         .site-header.is-scrolled {
-            padding: 15px 50px;
-            background: var(--color-glass-bg);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--color-glass-border);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            padding-top: 15px;
+            padding-bottom: 15px;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
         }
 
-        /* Značka / Logo */
-        .brand-identity {
-            display: flex; align-items: center; gap: 15px;
-            transition: transform 0.4s ease;
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition-property: transform;
+            transition-duration: 0.4s;
+            transition-timing-function: ease;
         }
-        .brand-identity:hover { transform: scale(1.03); }
-        
-        .brand-icon-wrapper {
-            position: relative; width: 45px; height: 45px;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .icon-dove { font-size: 2.2rem; color: var(--color-gold-base); filter: drop-shadow(0 0 10px var(--color-gold-glow)); transform: skewY(-2deg); z-index: 2;}
-        .icon-feather { position: absolute; bottom: -2px; right: -8px; font-size: 1.1rem; color: #fff; transform: rotate(-25deg); z-index: 3;}
-        
-        .brand-text {
-            font-size: 2.1rem; font-weight: 900; color: #fff;
-            letter-spacing: 6px; text-transform: uppercase;
-            transition: text-shadow 0.4s ease;
-        }
-        .brand-text span { color: var(--color-gold-base); }
-        .brand-identity:hover .brand-text { text-shadow: 0 0 25px var(--color-gold-glow); }
-
-        /* Desktop Menu */
-        .desktop-nav { display: flex; gap: 40px; align-items: center; list-style: none; }
-        .desktop-nav a {
-            font-size: 0.85rem; font-weight: 700; color: #fff;
-            text-transform: uppercase; letter-spacing: 3px;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-        .desktop-nav a:hover { color: var(--color-gold-base); text-shadow: 0 0 10px var(--color-gold-glow); }
-        
-        .btn-action-outline {
-            border: 2px solid var(--color-gold-base); color: var(--color-gold-base) !important;
-            padding: 10px 25px; border-radius: 50px; background: rgba(212, 175, 55, 0.05);
-            transition: all 0.4s ease;
-        }
-        .btn-action-outline:hover {
-            background: var(--color-gold-base) !important; color: var(--color-bg-abyss) !important;
-            box-shadow: 0 0 30px var(--color-gold-glow);
+        .brand-link:hover {
+            transform: scale(1.02);
         }
 
-        /* Mobile Burger */
-        .mobile-burger { display: none; font-size: 2rem; color: var(--color-gold-base); cursor: pointer; z-index: 2001; transition: transform 0.3s;}
-        .mobile-burger:hover { transform: scale(1.1); }
-
-        /* Mobilní Menu Overlay */
-        .mobile-overlay {
-            position: fixed; top: 0; right: -100%; width: 100vw; height: 100vh;
-            background: rgba(1, 2, 2, 0.98); z-index: var(--z-index-overlay);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .mobile-overlay.is-active { right: 0; }
-        .mobile-overlay a {
-            font-size: 1.8rem; color: #fff; margin: 20px 0; font-family: var(--font-serif);
-            text-transform: uppercase; letter-spacing: 5px; font-weight: 700;
-        }
-        .mobile-close { position: absolute; top: 30px; right: 40px; font-size: 3.5rem; color: var(--color-gold-base); cursor: pointer; }
-
-        /* --- 5. HERO SEKCE & EFEKTY --- */
-        .hero-module {
-            min-height: 100vh; width: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 0 20px;
-            position: relative; z-index: var(--z-index-content);
-            overflow: hidden; /* Zabraňuje přetečení laserů */
+        .brand-icon-box {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .tag-pill {
-            background: var(--color-gold-neon); border: 1px solid rgba(212, 175, 55, 0.3);
-            color: var(--color-gold-base); font-size: 0.85rem; font-weight: 800;
-            text-transform: uppercase; letter-spacing: 5px;
-            padding: 10px 30px; border-radius: 50px; margin-bottom: 30px;
-            animation: fadeUp 1s ease forwards;
+        .brand-dove {
+            font-size: 2.2rem;
+            color: var(--color-gold-base);
+            filter: drop-shadow(0 0 12px var(--color-gold-glow));
+            transform: skewY(-2deg);
+            z-index: 2;
         }
 
-        /* Laserový prstenec (iPhone efekt) */
-        .laser-core {
-            position: relative; padding: 30px; margin-bottom: 20px;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .laser-core::before {
-            content: ''; position: absolute; top: 50%; left: 50%;
-            width: 200%; height: 200%; transform: translate(-50%, -50%);
-            background: repeating-conic-gradient(from 0deg, rgba(212, 175, 55, 0.7) 0deg 2deg, transparent 2deg 12deg);
-            mask-image: radial-gradient(circle, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 65%);
-            -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 65%);
-            animation: spinLasers 40s linear infinite; z-index: -1; pointer-events: none;
-        }
-        @keyframes spinLasers { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
-
-        .hero-headline {
-            font-size: clamp(3rem, 9vw, 7.5rem); line-height: 1.05; color: #fff;
-            text-shadow: 0 15px 40px rgba(0,0,0,1);
-            animation: fadeUp 1s 0.3s ease forwards; opacity: 0;
-        }
-        .hero-headline span { font-style: italic; color: var(--color-gold-base); font-weight: 400; }
-        
-        .hero-vision {
-            font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 800; color: var(--color-gold-base);
-            text-transform: uppercase; letter-spacing: 4px;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-            margin-bottom: 35px; animation: fadeUp 1s 0.6s ease forwards; opacity: 0;
+        .brand-feather {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            font-size: 1.2rem;
+            color: var(--color-text-pure);
+            transform: rotate(-25deg);
+            z-index: 3;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
         }
 
-        .hero-description {
-            max-width: 850px; font-size: 1.25rem; color: #cbd5e1; line-height: 1.8;
-            margin-bottom: 50px; animation: fadeUp 1s 0.9s ease forwards; opacity: 0; font-weight: 300;
-        }
-        .hero-description b { color: #fff; font-weight: 700;}
-
-        .scroll-indicator {
-            position: absolute; bottom: 40px; color: var(--color-gold-base); font-size: 2.5rem;
-            animation: scrollBounce 2s infinite; opacity: 0; animation: fadeUp 1s 1.5s forwards, scrollBounce 2s 2.5s infinite;
-        }
-        @keyframes scrollBounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-7px); } }
-
-        /* --- 6. INFOGRAFIKA (BUDÍKY) --- */
-        .stats-module {
-            padding: 120px 20px; position: relative; z-index: var(--z-index-content);
-            background: linear-gradient(90deg, var(--color-bg-abyss) 0%, #0a0d0c 50%, var(--color-bg-abyss) 100%);
-            border-top: 1px solid rgba(212, 175, 55, 0.1); border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
-        }
-        .stats-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 60px; }
-        .stat-box { text-align: center; display: flex; flex-direction: column; align-items: center;}
-        
-        .stat-value-wrap { display: flex; align-items: baseline; justify-content: center; margin-bottom: 10px; }
-        .stat-number { font-size: clamp(4.5rem, 8vw, 7rem); color: var(--color-gold-light); line-height: 1; text-shadow: 0 0 30px var(--color-gold-glow); font-weight: 700;}
-        .stat-suffix { font-size: clamp(2rem, 4vw, 3.5rem); color: var(--color-gold-base); margin-left: 5px; font-weight: 600;}
-        .stat-text { text-transform: uppercase; letter-spacing: 4px; color: var(--color-text-secondary); font-size: 1rem; font-weight: 700; }
-
-        /* --- 7. SLUŽBY / KARTY (ROSTOUCÍ VĚTVE A EFEKTY) --- */
-        .services-module { padding: 160px 20px; position: relative; z-index: var(--z-index-content); }
-        .section-heading { text-align: center; margin-bottom: 100px; }
-        .section-heading h2 { font-size: clamp(3rem, 6vw, 4.5rem); color: #fff; margin-bottom: 15px; letter-spacing: 1px;}
-        .section-heading p { color: var(--color-gold-base); text-transform: uppercase; letter-spacing: 6px; font-weight: 800; font-size: 1.1rem; }
-
-        .cards-layout {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px; max-width: 1400px; margin: 0 auto; perspective: 1200px;
+        .brand-typography {
+            font-family: var(--font-sans);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--color-text-pure);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            transition-property: text-shadow;
+            transition-duration: 0.4s;
+            transition-timing-function: ease;
         }
 
-        .service-card {
-            background: var(--color-bg-surface); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 25px; padding: 60px 40px; position: relative; overflow: hidden;
-            display: flex; flex-direction: column; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-style: preserve-3d;
+        .brand-typography span {
+            color: var(--color-gold-base);
         }
 
-        /* EFEKT: ROSTOUCÍ VĚTEV (Odspodu karty) */
-        .branch-line {
-            position: absolute; bottom: 0; left: 40px; width: 4px; height: 0;
-            background: linear-gradient(to top, transparent, var(--color-gold-base));
-            transition: height 0.8s cubic-bezier(0.25, 1, 0.5, 1); z-index: 0;
+        .brand-link:hover .brand-typography {
+            text-shadow: 0 0 25px var(--color-gold-glow);
+        }
+
+        /* Desktop Navigace */
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-item {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-text-pure);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition-property: color, text-shadow, transform;
+            transition-duration: 0.3s;
+            transition-timing-function: ease;
+        }
+
+        .nav-item:hover {
+            color: var(--color-gold-base);
+            text-shadow: 0 0 15px var(--color-gold-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-connect {
+            border: 2px solid var(--color-gold-base);
+            color: var(--color-gold-base);
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 25px;
+            padding-right: 25px;
             border-radius: 50px;
+            background-color: var(--color-gold-transparent);
+            font-weight: 800;
+            letter-spacing: 2px;
+            transition-property: all;
+            transition-duration: 0.4s;
+            transition-timing-function: ease;
         }
-        .service-card:hover .branch-line { height: 100%; }
-        
-        /* Barvy větví podle karty */
-        .service-card[data-type="drone"] .branch-line { background: linear-gradient(to top, transparent, var(--color-gold-base)); }
-        .service-card[data-type="web"] .branch-line { background: linear-gradient(to top, transparent, var(--color-blue-matrix)); }
-        .service-card[data-type="electro"] .branch-line { background: linear-gradient(to top, transparent, var(--color-green-energy)); }
 
-        .service-card:hover { border-color: var(--color-gold-base); transform: translateY(-15px); box-shadow: 0 30px 60px rgba(0,0,0,0.9); }
-        
-        .card-inner { position: relative; z-index: 2; display: flex; flex-direction: column; flex-grow: 1;}
-        .card-badge { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--color-gold-base); font-weight: 800; margin-bottom: 30px; display: inline-block;}
+        .btn-connect:hover {
+            background-color: var(--color-gold-base);
+            color: var(--color-abyss);
+            box-shadow: 0 0 25px var(--color-gold-glow);
+            transform: translateY(-2px);
+        }
 
-        /* Animace Vizuálních Ikon */
-        .icon-stage { margin-bottom: 30px; height: 70px; display: flex; align-items: center;}
-        
-        /* 1. Létající Orel (Strážce úrody) */
-        .eagle-fly { width: 70px; height: 70px; fill: var(--color-gold-base); animation: flyEagle 4s ease-in-out infinite; filter: drop-shadow(0 10px 10px rgba(212,175,55,0.3));}
-        @keyframes flyEagle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        /* Mobile Burger Icon */
+        .mobile-burger-trigger {
+            display: none;
+            font-size: 2.2rem;
+            color: var(--color-gold-base);
+            cursor: pointer;
+            z-index: 2001;
+            transition-property: transform;
+            transition-duration: 0.3s;
+            transition-timing-function: ease;
+        }
 
-        /* 2. Matrix kódování */
-        .matrix-wrap { display: flex; align-items: center; gap: 15px; font-size: 2.8rem; color: #fff;}
-        .matrix-code { font-family: 'Courier New', monospace; font-size: 2rem; color: var(--color-blue-matrix); font-weight: bold; border-right: 3px solid var(--color-blue-matrix); overflow: hidden; white-space: nowrap; animation: typingCode 3s steps(15, end) infinite;}
-        @keyframes typingCode { 0% { width: 0; } 50%, 100% { width: 120px; } }
+        .mobile-burger-trigger:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Mobilní Overlay Menu */
+        .mobile-fullscreen-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(2, 3, 3, 0.99);
+            z-index: var(--z-modal);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition-property: right;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.8, 0, 0.2, 1);
+        }
+
+        .mobile-fullscreen-menu.is-open {
+            right: 0;
+        }
+
+        .mobile-menu-link {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-text-pure);
+            margin-top: 25px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            transition-property: color;
+            transition-duration: 0.3s;
+            transition-timing-function: ease;
+        }
+
+        .mobile-menu-link:hover {
+            color: var(--color-gold-base);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 4rem;
+            color: var(--color-gold-base);
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* --- 2.7 HERO SEKCE (Sluneční lasery & Typografie) --- */
+        .hero-section {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-left: 20px;
+            padding-right: 20px;
+            position: relative;
+            z-index: var(--z-content);
+            overflow: hidden;
+        }
+
+        .hero-label {
+            background-color: var(--color-gold-neon);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--color-gold-base);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 30px;
+            padding-right: 30px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            animation-name: revealUp;
+            animation-duration: 1.2s;
+            animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+            animation-fill-mode: both;
+        }
+
+        .hero-brand-container {
+            position: relative;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            padding-left: 50px;
+            padding-right: 50px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Ostré lasery zářící ze středu ven (iPhone efekt) */
+        .hero-brand-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            transform: translate(-50%, -50%);
+            background-image: repeating-conic-gradient(
+                from 0deg,
+                rgba(212, 175, 55, 0.9) 0deg 2deg,
+                transparent 2deg 12deg
+            );
+            mask-image: radial-gradient(circle, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 65%);
+            -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 65%);
+            animation-name: rotateLasers;
+            animation-duration: 40s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes rotateLasers {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(3.5rem, 9vw, 8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--color-text-pure);
+            text-shadow: 0 15px 40px rgba(0,0,0,1);
+            margin: 0;
+            animation-name: revealUp;
+            animation-duration: 1.2s;
+            animation-delay: 0.3s;
+            animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+            animation-fill-mode: both;
+        }
+
+        .hero-title span {
+            color: var(--color-gold-base);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .hero-motto {
+            font-family: var(--font-sans);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 900;
+            color: var(--color-gold-base);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            margin-bottom: 40px;
+            animation-name: revealUp;
+            animation-duration: 1.2s;
+            animation-delay: 0.6s;
+            animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+            animation-fill-mode: both;
+        }
+
+        .hero-paragraph {
+            max-width: 800px;
+            font-family: var(--font-sans);
+            font-size: 1.25rem;
+            color: var(--color-text-primary);
+            line-height: 1.8;
+            margin-bottom: 60px;
+            font-weight: 300;
+            animation-name: revealUp;
+            animation-duration: 1.2s;
+            animation-delay: 0.9s;
+            animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+            animation-fill-mode: both;
+        }
+
+        .scroll-down-icon {
+            position: absolute;
+            bottom: 40px;
+            font-size: 2.5rem;
+            color: var(--color-gold-base);
+            animation-name: scrollBounce;
+            animation-duration: 2s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes scrollBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); opacity: 1;}
+            40% { transform: translateY(-15px); opacity: 1;}
+            60% { transform: translateY(-7px); opacity: 1;}
+        }
+
+        @keyframes revealUp {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 2.8 STATISTIKY (BUDÍKY) --- */
+        .stats-section {
+            width: 100%;
+            padding-top: 120px;
+            padding-bottom: 120px;
+            padding-left: 20px;
+            padding-right: 20px;
+            background-image: linear-gradient(90deg, var(--color-abyss) 0%, var(--color-surface-200) 50%, var(--color-abyss) 100%);
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            position: relative;
+            z-index: var(--z-content);
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.9);
+        }
+
+        .stats-layout {
+            max-width: 1300px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 60px;
+        }
+
+        .stat-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 260px;
+        }
+
+        .stat-value-container {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-family: var(--font-mono);
+            font-size: clamp(5rem, 8vw, 7.5rem);
+            font-weight: 700;
+            color: var(--color-gold-light);
+            line-height: 1;
+            text-shadow: 0 0 35px var(--color-gold-glow);
+        }
+
+        .stat-symbol {
+            font-family: var(--font-sans);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--color-gold-base);
+            margin-left: 5px;
+        }
+
+        .stat-description {
+            font-family: var(--font-sans);
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        /* --- 2.9 MOJE VĚTVE (SLUŽBY S FRAKTÁLNÍM STROMEM) --- */
+        .branches-section {
+            width: 100%;
+            padding-top: 160px;
+            padding-bottom: 160px;
+            padding-left: 20px;
+            padding-right: 20px;
+            position: relative;
+            z-index: var(--z-content);
+            background-color: var(--color-surface-100);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 100px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-header p {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--color-gold-base);
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-bottom: 15px;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(3.5rem, 7vw, 5rem);
+            color: var(--color-text-pure);
+            letter-spacing: 2px;
+        }
+
+        .branches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            perspective: 1500px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .branch-card {
+            background-color: var(--color-surface-200);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding-top: 60px;
+            padding-bottom: 60px;
+            padding-left: 45px;
+            padding-right: 45px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition-property: transform, border-color, box-shadow;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .branch-card:hover {
+            border-color: var(--color-gold-base);
+            transform: translateY(-20px);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+        }
+
+        /* Speciální efekty na pozadí karet (Rostoucí gradient) */
+        .card-bg-glow {
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-image: radial-gradient(circle, var(--color-gold-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition-property: opacity, transform;
+            transition-duration: 0.6s;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .branch-card:nth-child(1) .card-bg-glow { background-image: radial-gradient(circle, rgba(212,175,55,0.4) 0%, transparent 70%); }
+        .branch-card:nth-child(2) .card-bg-glow { background-image: radial-gradient(circle, var(--color-blue-glow) 0%, transparent 70%); }
+        .branch-card:nth-child(3) .card-bg-glow { background-image: radial-gradient(circle, var(--color-green-glow) 0%, transparent 70%); }
+
+        .branch-card:hover .card-bg-glow {
+            opacity: 1;
+            transform: scale(2.5);
+        }
+
+        .card-content-layer {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card-tagline {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--color-gold-base);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        /* --- Vizuální piktogramy s efekty --- */
+        .card-visual-stage {
+            height: 80px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 1. Létající Orel (SVG přímo v kódu) */
+        .eagle-svg {
+            width: 80px;
+            height: 80px;
+            fill: var(--color-gold-base);
+            animation-name: levitateEagle;
+            animation-duration: 4s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            filter: drop-shadow(0 15px 15px rgba(212,175,55,0.25));
+        }
+        @keyframes levitateEagle {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        /* 2. Matrix kód pro weby */
+        .matrix-effect-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .icon-laptop {
+            font-size: 3rem;
+            color: var(--color-text-pure);
+        }
+        .code-typing {
+            font-family: var(--font-mono);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-blue-matrix);
+            border-right: 4px solid var(--color-blue-matrix);
+            white-space: nowrap;
+            overflow: hidden;
+            animation-name: typeCode;
+            animation-duration: 3s;
+            animation-timing-function: steps(12, end);
+            animation-iteration-count: infinite;
+        }
+        @keyframes typeCode {
+            0% { width: 0; }
+            50%, 100% { width: 110px; }
+        }
 
         /* 3. Nabíjecí kabel Elektro */
-        .electro-wrap { display: flex; align-items: center; gap: 15px;}
-        .bolt-pulse { font-size: 3.5rem; color: var(--color-green-energy); animation: pulseBolt 1.5s infinite alternate; }
-        @keyframes pulseBolt { 0% { filter: drop-shadow(0 0 5px var(--color-green-energy)); transform: scale(1); } 100% { filter: drop-shadow(0 0 25px var(--color-green-energy)); transform: scale(1.1); } }
-        .energy-flow { width: 100px; height: 6px; background: repeating-linear-gradient(90deg, var(--color-green-energy) 0, var(--color-green-energy) 15px, transparent 15px, transparent 25px); background-size: 25px 100%; animation: flowRight 0.5s linear infinite; border-radius: 10px;}
-        @keyframes flowRight { 100% { background-position: 25px 0; } }
-
-        .service-card h3 { font-size: 2.4rem; color: #fff; margin-bottom: 20px; line-height: 1.1; }
-        .service-card p { color: #a1a1aa; font-size: 1.15rem; margin-bottom: 40px; flex-grow: 1; }
-        .explore-link { color: var(--color-gold-base); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; font-size: 0.95rem;}
-        .explore-link i { transition: transform 0.4s; }
-        .service-card:hover .explore-link i { transform: translateX(15px); }
-
-        /* --- 8. GALERIE --- */
-        .gallery-module { padding: 120px 20px; background: #040505; position: relative; z-index: var(--z-index-content); }
-        .gallery-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .gallery-photo {
-            aspect-ratio: 16/11; border-radius: 20px; background-size: cover; background-position: center;
-            border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden; transition: all 0.6s ease;
-            cursor: pointer; background-color: #111;
+        .electro-effect-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
         }
-        .gallery-photo::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.6); transition: 0.5s; }
-        .gallery-photo:hover::before { background: rgba(0,0,0,0.1); }
-        .gallery-photo:hover { transform: translateY(-12px); border-color: var(--color-gold-base); box-shadow: 0 25px 50px rgba(0,0,0,0.9); }
-        
-        .photo-label {
-            position: absolute; bottom: 30px; left: 30px; color: rgba(255,255,255,0.4); font-weight: 800;
-            text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem; transition: 0.5s; z-index: 2;
+        .bolt-icon {
+            font-size: 3.5rem;
+            color: var(--color-green-energy);
+            animation-name: pulseEnergy;
+            animation-duration: 1.5s;
+            animation-direction: alternate;
+            animation-iteration-count: infinite;
         }
-        .gallery-photo:hover .photo-label { color: var(--color-gold-base); transform: translateX(15px); text-shadow: 0 0 10px rgba(0,0,0,0.8);}
-
-        /* --- 9. RADAR MISTROVSTVÍ (EXPERTÍZA) --- */
-        .expertise-module {
-            padding: 160px 20px; display: flex; justify-content: center; align-items: center;
-            position: relative; z-index: var(--z-index-content);
-            background: linear-gradient(180deg, transparent, rgba(10,13,12,0.95)); border-bottom: 1px solid rgba(212,175,55,0.1);
+        @keyframes pulseEnergy {
+            0% { filter: drop-shadow(0 0 5px var(--color-green-energy)); transform: scale(1); }
+            100% { filter: drop-shadow(0 0 25px var(--color-green-energy)); transform: scale(1.1); }
         }
-        .radar-system { width: 380px; height: 380px; position: relative; display: flex; justify-content: center; align-items: center; }
-        
-        /* Rotující skenovací mřížka */
-        .radar-grid {
-            position: absolute; width: 100%; height: 100%; border: 2px dashed rgba(212, 175, 55, 0.4);
-            border-radius: 50%; animation: spinGrid 25s linear infinite;
+        .energy-cable-line {
+            width: 100px;
+            height: 6px;
+            border-radius: 10px;
+            background-image: repeating-linear-gradient(
+                90deg, 
+                var(--color-green-energy) 0, 
+                var(--color-green-energy) 15px, 
+                transparent 15px, 
+                transparent 25px
+            );
+            background-size: 25px 100%;
+            animation-name: flowEnergy;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
         }
-        @keyframes spinGrid { 100% { transform: rotate(360deg); } }
-        
-        /* Jádro radaru */
-        .radar-core {
-            width: 75%; height: 75%; background: var(--color-bg-abyss); border-radius: 50%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            border: 2px solid var(--color-gold-base); box-shadow: inset 0 0 60px rgba(212,175,55,0.15), 0 0 50px rgba(0,0,0,0.9);
-            position: relative; overflow: hidden;
-        }
-        /* Zelený/Zlatý paprsek hledání */
-        .radar-core::after {
-            content: ''; position: absolute; top: 0; left: 50%; width: 50%; height: 50%;
-            background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.5));
-            transform-origin: bottom left; animation: scanRadar 3s linear infinite; z-index: 0;
-        }
-        @keyframes scanRadar { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .radar-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center;}
-        .radar-content i.fa-feather { font-size: 3.5rem; color: var(--color-gold-light); margin-bottom: 10px; filter: drop-shadow(0 0 15px var(--color-gold-base)); }
-        
-        /* Úprava textu EXPERTÍZA, aby se vlezl na mobily */
-        .radar-title {
-            font-family: var(--font-head);
-            font-size: clamp(1rem, 5vw, 1.5rem); /* Zajišťuje, že se text zmenší na malých obrazovkách */
-            color: #fff; letter-spacing: 5px; text-transform: uppercase; font-weight: 900;
-            text-align: center; width: 100%;
+        @keyframes flowEnergy {
+            100% { background-position: 25px 0; }
         }
 
-        /* --- 10. PATIČKA --- */
+        .card-title {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-text-pure);
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .card-description {
+            font-family: var(--font-sans);
+            font-size: 1.15rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 40px;
+            flex-grow: 1;
+            line-height: 1.7;
+        }
+
+        .card-action-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--color-gold-base);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition-property: color;
+            transition-duration: 0.3s;
+        }
+
+        .card-action-link i {
+            transition-property: transform;
+            transition-duration: 0.4s;
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .branch-card:hover .card-action-link i {
+            transform: translateX(15px);
+        }
+
+        /* --- 2.10 GALERIE (FOTKY) --- */
+        .gallery-section {
+            width: 100%;
+            padding-top: 140px;
+            padding-bottom: 140px;
+            padding-left: 20px;
+            padding-right: 20px;
+            background-color: #030404;
+            position: relative;
+            z-index: var(--z-content);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .gallery-image-box {
+            aspect-ratio: 16/11;
+            border-radius: 20px;
+            background-color: #111;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition-property: transform, border-color, box-shadow;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-image-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0,0,0,0.7);
+            transition-property: background-color;
+            transition-duration: 0.5s;
+        }
+
+        .gallery-image-box:hover::before {
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        .gallery-image-box:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: var(--color-gold-base);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            z-index: 2;
+            transition-property: color, transform, text-shadow;
+            transition-duration: 0.5s;
+        }
+
+        .gallery-image-box:hover .gallery-caption {
+            color: var(--color-gold-base);
+            transform: translateX(15px);
+            text-shadow: 0 0 15px rgba(0,0,0,0.8);
+        }
+
+        /* --- 2.11 EXPERTÍZA (RADAR) --- */
+        .expertise-section {
+            width: 100%;
+            padding-top: 180px;
+            padding-bottom: 180px;
+            padding-left: 20px;
+            padding-right: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: var(--z-content);
+            background-image: linear-gradient(180deg, transparent, rgba(10,13,12,0.95));
+        }
+
+        .radar-wrapper {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .radar-grid-outer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: 2px dashed rgba(212, 175, 55, 0.4);
+            border-radius: 50%;
+            animation-name: spinRadarOuter;
+            animation-duration: 30s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        @keyframes spinRadarOuter { 100% { transform: rotate(360deg); } }
+
+        .radar-core-inner {
+            width: 75%;
+            height: 75%;
+            background-color: var(--color-abyss);
+            border-radius: 50%;
+            border: 2px solid var(--color-gold-base);
+            box-shadow: inset 0 0 60px rgba(212,175,55,0.2), 0 0 50px rgba(0,0,0,0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radar-core-inner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 50%;
+            background-image: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.5));
+            transform-origin: bottom left;
+            animation-name: radarSweepScan;
+            animation-duration: 3s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            z-index: 0;
+        }
+        @keyframes radarSweepScan { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .radar-content-text {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .radar-icon-feather {
+            font-size: 3.5rem;
+            color: var(--color-gold-light);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 15px var(--color-gold-base));
+        }
+
+        .radar-title-expertiza {
+            font-family: var(--font-serif);
+            /* Zaručuje zmenšení na malých telefonech, aby text nevytekl */
+            font-size: clamp(1.2rem, 6vw, 1.8rem);
+            font-weight: 900;
+            color: var(--color-text-pure);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* --- 2.12 KONTAKT (FOOTER) --- */
         .site-footer {
-            padding: 120px 20px 50px 20px; text-align: center; position: relative; z-index: var(--z-index-content);
-            background: radial-gradient(circle at bottom center, rgba(212, 175, 55, 0.05), transparent 65%);
+            width: 100%;
+            padding-top: 140px;
+            padding-bottom: 50px;
+            padding-left: 20px;
+            padding-right: 20px;
+            text-align: center;
+            position: relative;
+            z-index: var(--z-content);
+            background-image: radial-gradient(circle at bottom center, rgba(212, 175, 55, 0.08), transparent 65%);
         }
-        .footer-wrap { max-width: 800px; margin: 0 auto 80px auto; }
-        .footer-wrap h2 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 10px; color: #fff; letter-spacing: 2px;}
-        .footer-subtitle { color: var(--color-gold-base); text-transform: uppercase; letter-spacing: 6px; font-weight: 800; margin-bottom: 50px; font-size: 1.1rem; }
-        
-        .footer-contacts { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; }
-        .footer-contacts a { color: #d1d5db; font-size: 1.4rem; display: flex; align-items: center; gap: 15px; font-weight: 600; transition: 0.4s; }
-        .footer-contacts a:hover { color: var(--color-gold-base); transform: translateY(-5px); text-shadow: 0 0 20px rgba(212,175,55,0.5); }
-        .footer-contacts i { color: var(--color-gold-base); font-size: 1.8rem; }
 
-        .footer-legal { color: #475569; font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase; margin-top: 80px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 40px; font-weight: 700; }
+        .footer-content-box {
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 80px;
+        }
 
-        /* --- 11. PLOVOUCÍ WHATSAPP TLAČÍTKO --- */
-        .wa-floating-btn {
-            position: fixed; bottom: 40px; right: 40px; width: 75px; height: 75px;
-            background: #000; border: 2px solid var(--color-gold-base); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 3rem;
-            color: var(--color-gold-base); z-index: 9000; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        .footer-name {
+            font-family: var(--font-serif);
+            font-size: clamp(3.5rem, 8vw, 5.5rem);
+            font-weight: 800;
+            color: var(--color-text-pure);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .footer-position {
+            font-family: var(--font-sans);
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--color-gold-base);
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-bottom: 60px;
+        }
+
+        .footer-contact-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 60px;
+        }
+
+        .footer-contact-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: var(--font-sans);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            transition-property: color, transform, text-shadow;
+            transition-duration: 0.4s;
+            transition-timing-function: ease;
+        }
+
+        .footer-contact-link i {
+            font-size: 2rem;
+            color: var(--color-gold-base);
+        }
+
+        .footer-contact-link:hover {
+            color: var(--color-gold-base);
+            transform: translateY(-8px);
+            text-shadow: 0 0 20px rgba(212,175,55,0.5);
+        }
+
+        .footer-legal-bar {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 100px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* --- 2.13 FLOATING WHATSAPP BTN --- */
+        .floating-wa-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 80px;
+            height: 80px;
+            background-color: var(--color-abyss);
+            border: 2px solid var(--color-gold-base);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3.5rem;
+            color: var(--color-gold-base);
+            z-index: var(--z-toast);
             box-shadow: 0 0 30px var(--color-gold-glow);
-        }
-        .wa-floating-btn:hover { transform: scale(1.15) rotate(-10deg); background: var(--color-gold-base); color: #000; }
-
-        /* --- 12. ANIMACE ODKRÝVÁNÍ (SCROLL) --- */
-        .anim-reveal { opacity: 0; transform: translateY(60px); transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-        .anim-reveal.is-visible { opacity: 1; transform: translateY(0); }
-
-        /* --- 13. RESPONSIVNÍ DESIGN (NEPRŮSTŘELNÁ OPTIMALIZACE) --- */
-        @media (max-width: 1024px) {
-            .desktop-nav, .contact-btn-head { display: none; }
-            .mobile-burger { display: block; }
-            .footer-contacts { flex-direction: column; gap: 30px; align-items: center; }
-            .stats-container { gap: 50px; }
+            transition-property: transform, background-color, color;
+            transition-duration: 0.4s;
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @media (max-width: 768px) {
-            .site-header { padding: 15px 25px; }
-            .site-header.is-scrolled { padding: 10px 25px; }
-            .brand-text { font-size: 1.5rem; letter-spacing: 4px; }
-            .icon-dove { font-size: 1.8rem; }
+        .floating-wa-btn:hover {
+            transform: scale(1.15) rotate(-15deg);
+            background-color: var(--color-gold-base);
+            color: var(--color-abyss);
+        }
+
+        /* --- 2.14 ANIMAČNÍ TŘÍDY PRO SCROLL REVEAL --- */
+        .js-reveal-node {
+            opacity: 0;
+            transform: translateY(80px);
+            transition-property: opacity, transform;
+            transition-duration: 1.2s;
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .js-reveal-node.is-revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 2.15 MEDIA QUERIES (RESPONSIVNÍ DESIGN DO DETAILU) --- */
+        /* Desktop Small */
+        @media screen and (max-width: 1200px) {
+            .cards-layout { gap: 30px; }
+            .gallery-grid { gap: 20px; }
+        }
+
+        /* Tablet Landscape */
+        @media screen and (max-width: 1024px) {
+            .desktop-nav { display: none; }
+            .mobile-burger-trigger { display: block; }
+            .footer-contact-row { flex-direction: column; gap: 30px; }
+        }
+
+        /* Tablet Portrait / Velký mobil */
+        @media screen and (max-width: 768px) {
+            .site-header { padding-top: 15px; padding-bottom: 15px; padding-left: 20px; padding-right: 20px; }
+            .site-header.is-scrolled { padding-top: 10px; padding-bottom: 10px; }
             
-            .hero-headline { font-size: 3.5rem; }
+            .brand-typography { font-size: 1.6rem; letter-spacing: 4px; margin-left: 5px; }
+            .brand-icon-box { width: 35px; height: 35px; }
+            .brand-dove { font-size: 1.8rem; }
+            
+            .hero-section { padding-left: 15px; padding-right: 15px; }
+            .hero-title { font-size: 3.5rem; }
             .hero-vision { font-size: 1.1rem; }
-            .laser-core { padding: 20px; }
             
+            .stats-layout { gap: 40px; }
             .stat-number { font-size: 4.5rem; }
-            .stat-suffix { font-size: 2.5rem; }
+            .stat-suffix { font-size: 2.2rem; }
             
-            .section-heading h2 { font-size: 3rem; }
-            .cards-layout { grid-template-columns: 1fr; gap: 30px; }
-            .service-card { padding: 40px 25px; }
+            .section-header h2 { font-size: 3rem; }
+            .cards-layout { grid-template-columns: 1fr; }
+            .service-card { padding-top: 40px; padding-bottom: 40px; padding-left: 25px; padding-right: 25px; }
             
             .gallery-grid { grid-template-columns: 1fr; }
             
-            .radar-system { width: 280px; height: 280px; }
+            .radar-wrapper { width: 280px; height: 280px; }
             
-            .footer-wrap h2 { font-size: 2.8rem; }
-            .wa-floating-btn { width: 60px; height: 60px; font-size: 2.2rem; bottom: 20px; right: 20px; }
+            .floating-wa-btn { width: 60px; height: 60px; font-size: 2.5rem; bottom: 20px; right: 20px; }
         }
+
+        /* Malý mobil (iPhone SE, atd.) */
+        @media screen and (max-width: 400px) {
+            .brand-typography { font-size: 1.2rem; letter-spacing: 2px; }
+            .hero-title { font-size: 2.8rem; }
+            .stat-number { font-size: 3.5rem; }
+            .footer-name { font-size: 2.5rem; }
+            .footer-contact-link { font-size: 1.1rem; }
+        }
+
     </style>
 </head>
 <body>
 
-    <canvas id="particle-canvas"></canvas>
-
-    <header class="site-header" id="header">
-        <a href="#" class="brand-identity">
-            <div class="brand-icon-wrapper">
-                <i class="fas fa-dove icon-dove"></i>
-                <i class="fas fa-feather icon-feather"></i>
+    <canvas id="particle-engine-canvas"></canvas>
+    
+    <header class="site-header" id="main-header">
+        <a href="#" class="brand-link">
+            <div class="brand-icon-box">
+                <i class="fas fa-dove brand-dove"></i>
+                <i class="fas fa-feather brand-feather"></i>
             </div>
-            <div class="brand-text">Cuck<span>oo</span></div>
+            <div class="brand-typography">Cuck<span>oo</span></div>
         </a>
+        
         <nav>
             <ul class="desktop-nav">
-                <li><a href="#sluzby">Služby</a></li>
-                <li><a href="#expertiza">Vize</a></li>
-                <li><a href="#kontakt" class="btn-action-outline">Spojit se</a></li>
+                <li><a href="#sluzby" class="nav-item">Služby</a></li>
+                <li><a href="#expertiza" class="nav-item">Vize</a></li>
+                <li><a href="#kontakt" class="btn-connect">Spojit se</a></li>
             </ul>
         </nav>
-        <div class="mobile-burger" onclick="toggleMobileNav()">
+        
+        <div class="mobile-burger-trigger" id="burger-btn">
             <i class="fas fa-bars"></i>
         </div>
     </header>
 
-    <div class="mobile-overlay" id="mobileMenu">
-        <div class="mobile-close" onclick="toggleMobileNav()">&times;</div>
-        <a href="#sluzby" onclick="toggleMobileNav()">Služby</a>
-        <a href="#expertiza" onclick="toggleMobileNav()">Vize</a>
-        <a href="#kontakt" onclick="toggleMobileNav()">Kontakt</a>
+    <div class="mobile-fullscreen-menu" id="mobile-overlay">
+        <div class="mobile-menu-close" id="close-btn">&times;</div>
+        <a href="#sluzby" class="mobile-menu-link">Služby</a>
+        <a href="#expertiza" class="mobile-menu-link">Vize</a>
+        <a href="#kontakt" class="mobile-menu-link">Kontakt</a>
     </div>
 
-    <section class="hero-module">
-        <div class="tag-pill">Osobní Brand & Technologie s duší</div>
-        
-        <div class="laser-core">
-            <h1 class="hero-headline">ZNAČKA<br><span>CUCKOO</span></h1>
-        </div>
-        
-        <div class="hero-vision">Jsme středobodem vašich vizí.</div>
-        <p class="hero-description">Spojení nadhledu, přírody a špičkových technologií. Jako <b>Bc. Jan Koukal</b> urychluji realizaci vizí, které mají smysl a mění budoucnost. Jsem váš Inovační Pilot 🚀.</p>
-        
-        <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
-    </section>
-
-    <section class="stats-module">
-        <div class="stats-container">
-            <div class="stat-box anim-reveal">
-                <div class="stat-value-wrap">
-                    <span class="stat-number font-tech odometer" data-target="500">0</span><span class="stat-suffix">h</span>
-                </div>
-                <div class="stat-text">Nalétaných hodin (Drony)</div>
-            </div>
-            <div class="stat-box anim-reveal">
-                <div class="stat-value-wrap">
-                    <span class="stat-number font-tech odometer" data-target="10">0</span><span class="stat-suffix">Mil.+</span>
-                </div>
-                <div class="stat-text">Zajištěné financování a dotace</div>
-            </div>
-            <div class="stat-box anim-reveal">
-                <div class="stat-value-wrap">
-                    <span class="stat-number font-tech odometer" data-target="10">0</span><span class="stat-suffix">k+</span>
-                </div>
-                <div class="stat-text">Řádků čistého kódu</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="services-module" id="sluzby">
-        <div class="section-heading anim-reveal">
-            <p>Moje Služby a Činnost</p>
-            <h2>Digitální Ekosystém</h2>
-        </div>
-        
-        <div class="cards-layout">
+    <main>
+        <section class="hero-section">
+            <div class="hero-label">Osobní Brand & Technologie s duší</div>
             
-            <a href="https://www.strazce-urody.cz" target="_blank" class="service-card anim-reveal" data-type="drone">
-                <div class="branch-line"></div>
-                <div class="card-inner">
-                    <span class="card-badge">Zemědělství & Hardware</span>
-                    
-                    <div class="icon-stage">
-                        <svg class="eagle-fly" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-                            <path d="M50 15 C45 25 30 30 10 20 C25 40 40 45 45 60 C40 70 45 80 50 90 C55 80 60 70 55 60 C60 45 75 40 90 20 C70 30 55 25 50 15 Z" />
-                            <path d="M45 60 L50 75 L55 60 Z" fill="#fff" opacity="0.5"/>
-                            <circle cx="48" cy="25" r="2" fill="#000"/>
-                            <circle cx="52" cy="25" r="2" fill="#000"/>
-                        </svg>
-                    </div>
-                    
-                    <h3>Strážce úrody</h3>
-                    <p>Špičkové technologie pro efektivní hospodaření. Využívám drony pro precizní monitoring a ochranu plodin v dokonalé harmonii s přírodou.</p>
-                    <div class="explore-link">Prozkoumat projekt <i class="fas fa-arrow-right"></i></div>
-                </div>
-            </a>
+            <div class="laser-core">
+                <h1 class="hero-title">ZNAČKA<br><span>CUCKOO</span></h1>
+            </div>
+            
+            <div class="hero-vision">Jsme středobodem vašich vizí.</div>
+            
+            <p class="hero-paragraph">
+                Spojení nadhledu, přírody a špičkových technologií. Jako <b>Bc. Jan Koukal</b> 
+                urychluji realizaci vizí, které mají smysl a mění budoucnost. Jsem váš Inovační Pilot 🚀.
+            </p>
+            
+            <div class="scroll-down-icon">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
 
-            <a href="https://koukal96.github.io/Filcovekralovstvi/" target="_blank" class="service-card anim-reveal" data-type="web" style="transition-delay: 0.1s;">
-                <div class="branch-line"></div>
-                <div class="card-inner">
-                    <span class="card-badge">Digitální Prezentace</span>
-                    
-                    <div class="icon-stage">
-                        <div class="matrix-wrap">
-                            <i class="fas fa-laptop-code" style="color: #fff;"></i>
-                            <div class="matrix-code">{'</>'}</div>
+        <section class="stats-section">
+            <div class="stats-layout">
+                
+                <div class="stat-block js-reveal-node">
+                    <div class="stat-value-container">
+                        <span class="stat-number js-counter" data-target="500">0</span>
+                        <span class="stat-suffix">h</span>
+                    </div>
+                    <div class="stat-description">Nalétaných hodin (Drony)</div>
+                </div>
+                
+                <div class="stat-block js-reveal-node">
+                    <div class="stat-value-container">
+                        <span class="stat-number js-counter" data-target="10">0</span>
+                        <span class="stat-suffix">Mil.+</span>
+                    </div>
+                    <div class="stat-description">Zajištěné financování a dotace</div>
+                </div>
+                
+                <div class="stat-block js-reveal-node">
+                    <div class="stat-value-container">
+                        <span class="stat-number js-counter" data-target="10">0</span>
+                        <span class="stat-suffix">k+</span>
+                    </div>
+                    <div class="stat-description">Řádků čistého kódu</div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="branches-section" id="sluzby">
+            
+            <canvas id="fractal-tree-canvas"></canvas>
+
+            <div class="section-header js-reveal-node">
+                <p>Digitální Ekosystém</p>
+                <h2>Moje větve</h2>
+            </div>
+            
+            <div class="branches-grid">
+                
+                <a href="https://www.strazce-urody.cz" target="_blank" class="branch-card js-reveal-node" data-type="drone">
+                    <div class="card-bg-glow"></div>
+                    <div class="card-content-layer">
+                        <span class="card-tagline">Zemědělství & Hardware</span>
+                        
+                        <div class="card-visual-stage">
+                            <svg class="eagle-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+                                <path d="M60 20 C50 35 30 40 10 30 C30 55 50 65 55 85 C50 95 55 105 60 115 C65 105 70 95 65 85 C70 65 90 55 110 30 C90 40 70 35 60 20 Z" />
+                                <path d="M55 85 L60 100 L65 85 Z" fill="#fff" opacity="0.6"/>
+                                <circle cx="58" cy="32" r="2.5" fill="#000"/>
+                                <circle cx="62" cy="32" r="2.5" fill="#000"/>
+                            </svg>
+                        </div>
+                        
+                        <h3 class="card-title">Strážce úrody</h3>
+                        <p class="card-description">
+                            Špičkové technologie pro efektivní hospodaření. Využívám drony pro precizní 
+                            monitoring a ochranu plodin v dokonalé harmonii s přírodou.
+                        </p>
+                        
+                        <div class="card-action-link">
+                            Prozkoumat projekt <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
-                    
-                    <h3>Tvorba webů</h3>
-                    <p>Architektura a kód, který prodává. Vytvářím interaktivní, luxusní webové prezentace na míru, které posouvají váš brand do digitální elity.</p>
-                    <div class="explore-link">Zobrazit realizace <i class="fas fa-arrow-right"></i></div>
-                </div>
-            </a>
+                </a>
 
-            <a href="https://koukal96.github.io/K-unit/" target="_blank" class="service-card anim-reveal" data-type="electro" style="transition-delay: 0.2s;">
-                <div class="branch-line"></div>
-                <div class="card-inner">
-                    <span class="card-badge">Dotace a Udržitelnost</span>
-                    
-                    <div class="icon-stage" style="flex-direction: column; align-items: flex-start; justify-content: center; height: auto;">
-                        <div class="electro-wrap">
-                            <i class="fas fa-bolt bolt-pulse"></i>
-                            <div class="energy-flow"></div>
+                <a href="https://koukal96.github.io/Filcovekralovstvi/" target="_blank" class="branch-card js-reveal-node" data-type="web" style="transition-delay: 0.1s;">
+                    <div class="card-bg-glow"></div>
+                    <div class="card-content-layer">
+                        <span class="card-tagline" style="color: var(--color-blue-matrix);">Digitální Prezentace</span>
+                        
+                        <div class="card-visual-stage">
+                            <div class="matrix-effect-box">
+                                <i class="fas fa-laptop-code icon-laptop"></i>
+                                <div class="code-typing">{'</>'}</div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="card-title">Tvorba webů</h3>
+                        <p class="card-description">
+                            Architektura a kód, který prodává. Vytvářím interaktivní, luxusní webové prezentace 
+                            na míru, které posouvají váš brand do digitální elity.
+                        </p>
+                        
+                        <div class="card-action-link" style="color: var(--color-blue-matrix);">
+                            Zobrazit realizace <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
-                    
-                    <h3 style="margin-top: 15px;">Elektromobilita</h3>
-                    <p>Urychluji váš přechod na zelenou energii. Zajišťuji komplexní financování a dotační management pro elektro kamiony a flotily.</p>
-                    <div class="explore-link">Dotační příležitosti <i class="fas fa-arrow-right"></i></div>
+                </a>
+
+                <a href="https://koukal96.github.io/K-unit/" target="_blank" class="branch-card js-reveal-node" data-type="electro" style="transition-delay: 0.2s;">
+                    <div class="card-bg-glow"></div>
+                    <div class="card-content-layer">
+                        <span class="card-tagline" style="color: var(--color-green-energy);">Dotace a Udržitelnost</span>
+                        
+                        <div class="card-visual-stage">
+                            <div class="electro-effect-box">
+                                <i class="fas fa-bolt bolt-icon"></i>
+                                <div class="energy-cable-line"></div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="card-title">Elektromobilita</h3>
+                        <p class="card-description">
+                            Urychluji váš přechod na zelenou energii. Zajišťuji komplexní financování a dotační 
+                            management pro elektro kamiony a udržitelné flotily.
+                        </p>
+                        
+                        <div class="card-action-link" style="color: var(--color-green-energy);">
+                            Dotační příležitosti <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <section class="gallery-section">
+            <div class="section-header js-reveal-node" style="margin-bottom: 70px;">
+                <p>Pohled z křídel</p>
+                <h2>Vizuální stopy</h2>
+            </div>
+            
+            <div class="gallery-grid">
+                
+                <div class="gallery-image-box js-reveal-node" style="background-image: url('https://images.unsplash.com/photo-1508197149814-0cc02e8b7f74?q=80&w=800&auto=format&fit=crop');">
+                    <div class="gallery-caption">Monitoring Pole & Drony</div>
                 </div>
-            </a>
+                
+                <div class="gallery-image-box js-reveal-node" style="transition-delay: 0.1s; background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop');">
+                    <div class="gallery-caption">Kódování & Vývoj</div>
+                </div>
+                
+                <div class="gallery-image-box js-reveal-node" style="transition-delay: 0.2s; background-image: url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=800&auto=format&fit=crop');">
+                    <div class="gallery-caption">Zelená Energie & Dotace</div>
+                </div>
 
-        </div>
-    </section>
+            </div>
+        </section>
 
-    <section class="gallery-module">
-        <div class="section-heading anim-reveal" style="margin-bottom: 60px;">
-            <p>Pohled z křídel</p>
-            <h2>Vizuální stopy</h2>
-        </div>
-        <div class="gallery-grid">
-            <div class="gallery-photo anim-reveal" style="background-image: url('https://images.unsplash.com/photo-1508197149814-0cc02e8b7f74?q=80&w=800&auto=format&fit=crop');">
-                <div class="photo-label">Monitoring Pole & Drony</div>
-            </div>
-            <div class="gallery-photo anim-reveal" style="transition-delay: 0.1s; background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop');">
-                <div class="photo-label">Kódování & Vývoj</div>
-            </div>
-            <div class="gallery-photo anim-reveal" style="transition-delay: 0.2s; background-image: url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=800&auto=format&fit=crop');">
-                <div class="photo-label">Zelená Energie & Dotace</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="expertise-module" id="expertiza">
-        <div class="radar-system anim-reveal">
-            <div class="radar-grid"></div>
-            <div class="radar-core">
-                <div class="radar-content">
-                    <i class="fas fa-feather"></i>
-                    <div class="radar-title">EXPERTÍZA</div>
+        <section class="expertise-section" id="expertiza">
+            <div class="radar-wrapper js-reveal-node">
+                <div class="radar-grid-outer"></div>
+                <div class="radar-core-inner">
+                    <div class="radar-content-text">
+                        <i class="fas fa-feather radar-icon-feather"></i>
+                        <div class="radar-title-expertiza">EXPERTÍZA</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+    </main>
 
     <footer class="site-footer" id="kontakt">
-        <div class="footer-wrap anim-reveal">
-            <h2 class="luxury-font">BC. JAN KOUKAL</h2>
-            <p class="footer-subtitle">Inovační Pilot pro vaši budoucnost</p>
+        <div class="footer-content-box js-reveal-node">
+            <h2 class="footer-name">BC. JAN KOUKAL</h2>
+            <p class="footer-position">Inovační Pilot pro vaši budoucnost</p>
             
-            <div class="footer-contacts">
-                <a href="mailto:koukal@cuckoo.cz"><i class="fas fa-envelope"></i> koukal@cuckoo.cz</a>
-                <a href="tel:+420604353393"><i class="fas fa-phone"></i> +420 604 353 393</a>
+            <div class="footer-contact-row">
+                <a href="mailto:koukal@cuckoo.cz" class="footer-contact-link">
+                    <i class="fas fa-envelope"></i> koukal@cuckoo.cz
+                </a>
+                <a href="tel:+420604353393" class="footer-contact-link">
+                    <i class="fas fa-phone"></i> +420 604 353 393
+                </a>
             </div>
         </div>
         
-        <div class="footer-legal">
+        <div class="footer-legal-bar">
             &copy; 2026 ZNAČKA CUCKOO. DIGITÁLNÍ EKOSYSTÉM HUB. VŠECHNA PRÁVA VYHRAZENA.
         </div>
     </footer>
 
-    <a href="https://wa.me/420604353393" target="_blank" class="wa-floating-btn" title="Napsat na WhatsApp">
+    <a href="https://wa.me/420604353393" target="_blank" class="floating-wa-btn" title="Napsat na WhatsApp" rel="noopener noreferrer">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <script>
         /**
-         * Aplikace Cuckoo - Hlavní Controller
-         * Zpracovává menu, scroll animace, počítadla a canvas částice
+         * ======================================================================
+         * MODUL 1: DOM Controller & UI Events
+         * Správa hlavičky, mobilního menu a základních eventů.
+         * ======================================================================
          */
-        const App = {
-            init() {
-                this.bindUIEvents();
-                this.initScrollReveal();
-                this.initParticleSystem();
-            },
-
-            // 1. Ovládání Menu & Hlavičky
-            bindUIEvents() {
-                // Mobilní menu toggle
-                window.toggleMobileNav = () => {
-                    const menu = document.getElementById("mobileMenu");
-                    menu.classList.toggle("is-active");
-                };
-
-                // Změna barvy hlavičky při scrollování
-                window.addEventListener('scroll', () => {
-                    const header = document.getElementById('header');
-                    if (window.scrollY > 60) {
-                        header.classList.add('is-scrolled');
-                    } else {
-                        header.classList.remove('is-scrolled');
-                    }
-                });
-            },
-
-            // 2. Intersection Observer (Odkrývání prvků a Budíky)
-            initScrollReveal() {
-                const options = { root: null, rootMargin: '0px', threshold: 0.15 };
+        class UIController {
+            constructor() {
+                this.header = document.getElementById('main-header');
+                this.burgerBtn = document.getElementById('burger-btn');
+                this.closeBtn = document.getElementById('close-btn');
+                this.mobileMenu = document.getElementById('mobile-overlay');
+                this.menuLinks = this.mobileMenu.querySelectorAll('a');
                 
+                this.initEvents();
+            }
+
+            initEvents() {
+                // Scroll handler pro hlavičku
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 60) {
+                        this.header.classList.add('is-scrolled');
+                    } else {
+                        this.header.classList.remove('is-scrolled');
+                    }
+                }, { passive: true });
+
+                // Toggle menu handlers
+                this.burgerBtn.addEventListener('click', () => this.openMenu());
+                this.closeBtn.addEventListener('click', () => this.closeMenu());
+                
+                // Zavření menu po kliknutí na odkaz
+                this.menuLinks.forEach(link => {
+                    link.addEventListener('click', () => this.closeMenu());
+                });
+            }
+
+            openMenu() {
+                this.mobileMenu.classList.add('is-open');
+                document.body.style.overflow = 'hidden'; // Zamezí scrollování pod menu
+            }
+
+            closeMenu() {
+                this.mobileMenu.classList.remove('is-open');
+                document.body.style.overflow = '';
+            }
+        }
+
+        /**
+         * ======================================================================
+         * MODUL 2: Scroll Observer Engine
+         * Řídí odkrývání prvků a spouští plynulá počítadla.
+         * ======================================================================
+         */
+        class ScrollEngine {
+            constructor() {
+                this.elements = document.querySelectorAll('.js-reveal-node');
+                this.options = { root: null, rootMargin: '0px', threshold: 0.15 };
+                this.initObserver();
+            }
+
+            initObserver() {
                 const observer = new IntersectionObserver((entries, obs) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            entry.target.classList.add('is-visible');
+                            entry.target.classList.add('is-revealed');
                             
-                            // Pokud najdeme budíky (čísla), spustíme animaci
-                            const odometers = entry.target.querySelectorAll('.odometer');
-                            odometers.forEach(el => this.animateCounter(el));
+                            // Pokud najde element počítadla, deleguje na Counter
+                            const counters = entry.target.querySelectorAll('.js-counter');
+                            counters.forEach(counter => this.runCounter(counter));
                             
                             obs.unobserve(entry.target);
                         }
                     });
-                }, options);
+                }, this.options);
 
-                document.querySelectorAll('.anim-reveal').forEach(el => observer.observe(el));
-            },
+                this.elements.forEach(el => observer.observe(el));
+            }
 
-            // 3. Plynulá animace čísel (Budíky)
-            animateCounter(el) {
-                if (el.dataset.completed) return;
-                el.dataset.completed = "true";
+            runCounter(element) {
+                if (element.getAttribute('data-finished') === 'true') return;
+                element.setAttribute('data-finished', 'true');
                 
-                const target = parseInt(el.getAttribute('data-target'), 10);
+                const target = parseInt(element.getAttribute('data-target'), 10);
                 let current = 0;
-                const increment = Math.max(1, Math.ceil(target / 60)); // Zajišťuje plynulost
+                // Matematický výpočet kroku pro stejnou dobu trvání
+                const increment = Math.max(1, Math.ceil(target / 60)); 
                 
                 const timer = setInterval(() => {
                     current += increment;
                     if (current >= target) {
-                        el.innerText = target;
+                        element.innerText = target;
                         clearInterval(timer);
                     } else {
-                        el.innerText = current;
+                        element.innerText = current;
                     }
-                }, 25);
-            },
-
-            // 4. Komplexní Canvas Particle System (Peříčka)
-            initParticleSystem() {
-                const canvas = document.getElementById('particle-canvas');
-                const ctx = canvas.getContext('2d');
-                let width, height;
-                let particles = [];
-
-                // Vykreslení reálného tvaru pera (SVG cesta přeložená pro Canvas)
-                const renderFeather = (x, y, scale, rotation, opacity) => {
-                    ctx.save();
-                    ctx.translate(x, y);
-                    ctx.rotate(rotation * Math.PI / 180);
-                    ctx.scale(scale, scale);
-                    
-                    // Stylizace
-                    ctx.fillStyle = `rgba(212, 175, 55, ${opacity})`;
-                    ctx.shadowBlur = 15;
-                    ctx.shadowColor = "rgba(212, 175, 55, 0.4)";
-                    
-                    // Vykreslení obrysu pera
-                    ctx.beginPath();
-                    ctx.moveTo(0, 30); 
-                    ctx.bezierCurveTo(-15, 10, -20, -10, -5, -25);
-                    ctx.bezierCurveTo(0, -30, 5, -30, 10, -25);
-                    ctx.bezierCurveTo(20, -10, 15, 10, 0, 30);
-                    ctx.fill();
-
-                    // Vykreslení středového brku (žilky)
-                    ctx.beginPath();
-                    ctx.moveTo(0, 30);
-                    ctx.quadraticCurveTo(4, 0, 2, -28);
-                    ctx.strokeStyle = `rgba(0, 0, 0, ${opacity + 0.3})`;
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
-
-                    ctx.restore();
-                };
-
-                const resizeCanvas = () => {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
-                    
-                    // Reset částic
-                    particles = [];
-                    const particleCount = window.innerWidth > 768 ? 25 : 15; // Méně peří na mobilech pro výkon
-                    
-                    for (let i = 0; i < particleCount; i++) {
-                        particles.push({
-                            x: Math.random() * width,
-                            y: Math.random() * height - height, 
-                            size: Math.random() * 0.7 + 0.3,
-                            speedY: Math.random() * 0.6 + 0.2, // Pomalý, majestátní pád
-                            rot: Math.random() * 360,
-                            rotSpeed: Math.random() * 1 - 0.5,
-                            windOffset: Math.random() * Math.PI * 2,
-                            opacity: Math.random() * 0.5 + 0.1
-                        });
-                    }
-                };
-
-                const animate = () => {
-                    ctx.clearRect(0, 0, width, height);
-                    
-                    particles.forEach(p => {
-                        // Fyzika pádu a vlivu větru
-                        p.y += p.speedY;
-                        p.x += Math.sin(p.y * 0.005 + p.windOffset) * 0.6; // Jemné houpání do stran
-                        p.rot += p.rotSpeed;
-                        
-                        // Znovuzrození nahoře po dopadu
-                        if (p.y > height + 50) {
-                            p.y = -50;
-                            p.x = Math.random() * width;
-                        }
-                        
-                        renderFeather(p.x, p.y, p.size, p.rot, p.opacity);
-                    });
-                    
-                    requestAnimationFrame(animate);
-                };
-
-                // Spuštění Canvas Systému
-                window.addEventListener('resize', resizeCanvas);
-                resizeCanvas();
-                animate();
+                }, 30);
             }
-        };
+        }
 
-        // Boot Aplikace
-        document.addEventListener('DOMContentLoaded', () => App.init());
+        /**
+         * ======================================================================
+         * MODUL 3: Particle System (Majestátní Létající Peříčka)
+         * Generuje reálné tvary přes SVG cesty a aplikuje fyziku.
+         * ======================================================================
+         */
+        class ParticleEngine {
+            constructor() {
+                this.canvas = document.getElementById('particle-engine-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                
+                // SVG Cesta pírka natvrdo zapsaná pro canvas API
+                this.featherPath = new Path2D("M12.4,2.6C12.4,2.6,9.1,6.8,8.2,9.6C7.3,12.4,7.8,15.6,9.5,18.1C8.2,17.2,6.5,16.5,5.1,16C3.7,15.5,2.1,15.4,0.6,15.6C1.9,16.6,3.6,17.4,5.3,18.1C6.9,18.8,8.8,19.2,10.6,19.3C10.5,21.5,10.8,23.8,11.5,25.8C12,27.3,12.8,28.8,13.8,30C13.5,28.2,13.6,26.3,14,24.5C14.7,21,16.4,17.7,18.7,15.1C21,12.5,23.9,10.4,27.1,8.9C24,9.6,20.8,10.9,18.1,12.7C15.4,14.5,13.2,16.9,11.7,19.7C11.3,17.4,11.3,15,11.8,12.7C12.3,10.4,13.4,8.3,15,6.5C14.1,5.3,13.2,3.9,12.4,2.6Z");
+
+                this.init();
+                window.addEventListener('resize', () => this.resize());
+                requestAnimationFrame(() => this.loop());
+            }
+
+            resize() {
+                this.width = this.canvas.width = window.innerWidth;
+                this.height = this.canvas.height = window.innerHeight;
+                this.generateParticles();
+            }
+
+            generateParticles() {
+                this.particles = [];
+                const count = window.innerWidth > 768 ? 25 : 12; // Méně na mobilu
+                
+                for (let i = 0; i < count; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.width,
+                        y: Math.random() * this.height - this.height,
+                        s: Math.random() * 0.7 + 0.3,
+                        speedY: Math.random() * 0.5 + 0.2,
+                        angle: Math.random() * 360,
+                        spin: Math.random() * 0.6 - 0.3,
+                        wind: Math.random() * Math.PI * 2,
+                        opacity: Math.random() * 0.5 + 0.1
+                    });
+                }
+            }
+
+            drawFeather(p) {
+                this.ctx.save();
+                this.ctx.translate(p.x, p.y);
+                this.ctx.rotate(p.angle * Math.PI / 180);
+                this.ctx.scale(p.s, p.s);
+                
+                this.ctx.fillStyle = `rgba(212, 175, 55, ${p.opacity})`;
+                this.ctx.shadowBlur = 10;
+                this.ctx.shadowColor = "rgba(212, 175, 55, 0.3)";
+                this.ctx.fill(this.featherPath);
+                
+                this.ctx.restore();
+            }
+
+            loop() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                
+                this.particles.forEach(p => {
+                    p.y += p.speedY; // Gravitace
+                    p.x += Math.sin(p.y * 0.005 + p.wind) * 0.5; // Vítr
+                    p.angle += p.spin; // Rotace
+                    
+                    // Reset na vrchol při dosažení dna
+                    if (p.y > this.height + 50) {
+                        p.y = -50;
+                        p.x = Math.random() * this.width;
+                    }
+                    
+                    this.drawFeather(p);
+                });
+                
+                requestAnimationFrame(() => this.loop());
+            }
+
+            init() {
+                this.resize();
+            }
+        }
+
+        /**
+         * ======================================================================
+         * MODUL 4: Fractal Tree Generator
+         * Matematicky generuje rostoucí větve stromu v sekci Služby.
+         * ======================================================================
+         */
+        class FractalTree {
+            constructor() {
+                this.canvas = document.getElementById('fractal-tree-canvas');
+                if(!this.canvas) return;
+                
+                this.ctx = this.canvas.getContext('2d');
+                this.branchesSection = document.getElementById('sluzby');
+                this.hasDrawn = false;
+
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.initObserver();
+            }
+
+            resize() {
+                if(!this.branchesSection) return;
+                // Velikost canvasu podle sekce
+                this.width = this.canvas.width = this.branchesSection.offsetWidth;
+                this.height = this.canvas.height = this.branchesSection.offsetHeight;
+            }
+
+            initObserver() {
+                const obs = new IntersectionObserver((entries) => {
+                    if(entries[0].isIntersecting && !this.hasDrawn) {
+                        this.hasDrawn = true;
+                        this.startGrowth();
+                    }
+                }, { threshold: 0.2 });
+                
+                if(this.branchesSection) obs.observe(this.branchesSection);
+            }
+
+            startGrowth() {
+                // Začneme kreslit ze dvou míst na dně
+                this.drawBranch(this.width * 0.2, this.height, -90, 100, 10, 'rgba(212, 175, 55, 0.1)');
+                this.drawBranch(this.width * 0.8, this.height, -90, 100, 10, 'rgba(212, 175, 55, 0.1)');
+            }
+
+            // Rekurzivní funkce pro kreslení fraktálu (animovaná přes setTimeout)
+            drawBranch(x, y, angle, length, width, color) {
+                this.ctx.beginPath();
+                this.ctx.save();
+                this.ctx.strokeStyle = color;
+                this.ctx.fillStyle = color;
+                this.ctx.lineWidth = width;
+                this.ctx.translate(x, y);
+                this.ctx.rotate(angle * Math.PI/180);
+                this.ctx.moveTo(0, 0);
+                this.ctx.lineTo(0, -length);
+                this.ctx.stroke();
+                
+                // Přechod na konec větve
+                this.ctx.translate(0, -length);
+
+                if(length > 20) {
+                    // Volání další generace s jemným zpožděním pro efekt "růstu"
+                    setTimeout(() => {
+                        this.drawBranch(0, 0, -25, length * 0.75, width * 0.7, color);
+                        this.drawBranch(0, 0, 25, length * 0.75, width * 0.7, color);
+                    }, 100);
+                }
+                
+                this.ctx.restore();
+            }
+        }
+
+        /**
+         * ======================================================================
+         * SYSTEM BOOTSTRAP
+         * Spuštění všech modulů aplikace po načtení DOM stromu.
+         * ======================================================================
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const ui = new UIController();
+            const scroller = new ScrollEngine();
+            const particles = new ParticleEngine();
+            const tree = new FractalTree();
+            
+            console.log("CUCKOO OSVČ Brand System Booted Successfully. Engine 100% Active.");
+        });
 
     </script>
 </body>
