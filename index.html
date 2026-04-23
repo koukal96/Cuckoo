@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bc. Jan Koukal | CUCKOO - High-Tech & Nature</title>
+    <title>Bc. Jan Koukal | CUCKOO - High-Tech & Nature Hub</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- LUXUSNÍ PROMĚNNÉ --- */
+        /* --- LUXUSNÍ PROMĚNNÉ & HIGH-BRAND TEMATIZACE --- */
         :root {
             --bg-deep: #030404;
             --bg-card: #0a0d0b;
@@ -19,15 +19,18 @@
             --neon-gold: rgba(249, 211, 113, 0.15);
             --text-light: #e0e0e0;
             --text-muted: #888888;
-            --glass: rgba(5, 5, 5, 0.75);
+            --glass: rgba(5, 5, 5, 0.7);
             --border-glow: 1px solid rgba(212, 175, 55, 0.2);
+            --font-main: 'Montserrat', sans-serif;
+            --font-head: 'Playfair Display', serif;
+            --font-tech: 'Rajdhani', sans-serif;
         }
 
         /* --- ZÁKLAD A GRID --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; background-color: var(--bg-deep); }
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: var(--font-main);
             color: var(--text-light);
             overflow-x: hidden;
             line-height: 1.6;
@@ -36,8 +39,8 @@
                 url('https://www.transparenttextures.com/patterns/micro-carbon.png');
         }
 
-        h1, h2, h3, h4, .luxury-font { font-family: 'Playfair Display', serif; }
-        .tech-font { font-family: 'Rajdhani', sans-serif; }
+        h1, h2, h3, h4, .luxury-font { font-family: var(--font-head); }
+        .tech-font { font-family: var(--font-tech); }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-deep); }
@@ -49,7 +52,7 @@
             pointer-events: none; z-index: 0; opacity: 0.6;
         }
 
-        /* --- HLAVIČKA A NAVIGACE --- */
+        /* --- HLAVIČKA A LOGO --- */
         header {
             position: fixed; width: 100%; top: 0; z-index: 1000;
             padding: 25px 50px; display: flex; justify-content: space-between; align-items: center;
@@ -63,15 +66,15 @@
         .logo-container {
             display: flex; align-items: center; gap: 15px; text-decoration: none; position: relative; z-index: 1001;
         }
+        
         .logo-icon {
-            position: relative; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;
+            position: relative; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
+            filter: drop-shadow(0 0 10px var(--gold-glow));
         }
-        .logo-icon i.fa-dove { font-size: 1.8rem; color: var(--gold); position: absolute; z-index: 2; text-shadow: 0 0 15px var(--gold-glow);}
-        .logo-icon i.fa-feather { font-size: 1.2rem; color: var(--gold-bright); position: absolute; right: -5px; bottom: -5px; transform: rotate(-30deg); z-index: 1; opacity: 0.8;}
         
         .logo-text {
-            font-size: 1.8rem; font-weight: 700; color: #fff; font-family: 'Montserrat', sans-serif;
-            letter-spacing: 6px; text-transform: uppercase; margin-left: 10px;
+            font-size: 2rem; font-weight: 300; color: #fff; font-family: var(--font-main);
+            letter-spacing: 9px; text-transform: uppercase; margin-left: 10px;
         }
         .logo-text span { color: var(--gold); }
 
@@ -112,44 +115,44 @@
             width: 40vw; height: 40vw; border-radius: 50%; border: 1px solid rgba(212, 175, 55, 0.05);
             animation: spin 40s linear infinite reverse; pointer-events: none; z-index: -1;
         }
-        
         @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* Důležitá animace pro objevování textů */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        .subtitle {
+            color: var(--gold); text-transform: uppercase; letter-spacing: 7px; font-size: 0.85rem;
+            margin-bottom: 25px; font-weight: 800; opacity: 0; animation: fadeUp 1s 0.3s forwards;
+            background: var(--neon-gold); padding: 8px 25px; border-radius: 50px; border: var(--border-glow);
+        }
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 6.5rem); line-height: 1.1; margin-bottom: 30px; color: #fff;
+            opacity: 0; animation: fadeUp 1s 0.6s forwards; text-shadow: 0 10px 40px rgba(0,0,0,1);
+        }
+        .hero h1 span { font-style: italic; color: var(--gold); font-weight: 400;}
+        .hero h1 i { font-style: normal; color: #fff; font-weight: 700;}
+        
+        .hero p {
+            max-width: 750px; color: #aaa; font-size: 1.25rem; margin-bottom: 50px; line-height: 1.8;
+            opacity: 0; animation: fadeUp 1s 0.9s forwards;
+        }
+        
+        .scroll-down {
+            position: absolute; bottom: 40px; color: var(--gold); font-size: 2.5rem;
+            animation: bounce 2s infinite; opacity: 0; animation: fadeUp 1s 1.5s forwards, bounce 2s 2.5s infinite;
+        }
+
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-15px); }
             60% { transform: translateY(-7px); }
         }
 
-        .subtitle {
-            color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-size: 0.85rem;
-            margin-bottom: 25px; font-weight: 800; opacity: 0; animation: fadeUp 1s 0.3s forwards;
-            background: var(--neon-gold); padding: 8px 20px; border-radius: 50px; border: var(--border-glow);
-        }
-        .hero h1 {
-            font-size: clamp(3rem, 7vw, 6rem); line-height: 1.1; margin-bottom: 30px; color: #fff;
-            opacity: 0; animation: fadeUp 1s 0.6s forwards; text-shadow: 0 10px 40px rgba(0,0,0,1);
-        }
-        .hero h1 span { font-style: italic; color: var(--gold); font-weight: 400;}
-        
-        .hero p {
-            max-width: 700px; color: #aaa; font-size: 1.25rem; margin-bottom: 50px; line-height: 1.8;
-            opacity: 0; animation: fadeUp 1s 0.9s forwards;
-        }
-
-        .scroll-down {
-            position: absolute; bottom: 40px; color: var(--gold); font-size: 2.5rem;
-            animation: bounce 2s infinite; opacity: 0; animation: fadeUp 1s 1.5s forwards, bounce 2s 2.5s infinite;
-        }
-
         /* --- STATISTIKY / BUDÍKY --- */
         .stats-section {
-            padding: 80px 20px; background: linear-gradient(90deg, rgba(3,4,4,1) 0%, rgba(10,13,11,1) 50%, rgba(3,4,4,1) 100%);
+            padding: 100px 20px; background: linear-gradient(90deg, rgba(3,4,4,1) 0%, rgba(10,13,11,1) 50%, rgba(3,4,4,1) 100%);
             border-top: var(--border-glow); border-bottom: var(--border-glow); position: relative; z-index: 10;
         }
         .stats-grid {
@@ -157,12 +160,12 @@
         }
         .stat-item { text-align: center; position: relative; }
         .stat-number {
-            font-size: 5rem; color: var(--gold-bright); text-shadow: 0 0 20px var(--gold-glow);
+            font-size: 6rem; color: var(--gold-bright); text-shadow: 0 0 20px var(--gold-glow);
             line-height: 1; margin-bottom: 15px; display: flex; align-items: center; justify-content: center;
         }
-        .stat-suffix { font-size: 2.5rem; color: var(--gold); margin-left: 5px; font-family: 'Montserrat', sans-serif;}
+        .stat-suffix { font-size: 3rem; color: var(--gold); margin-left: 5px; font-family: var(--font-main);}
         .stat-label {
-            font-size: 1rem; text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); font-weight: 600;
+            font-size: 1.05rem; text-transform: uppercase; letter-spacing: 5px; color: var(--text-muted); font-weight: 600;
         }
 
         /* --- EKOSYSTÉM (PROJEKTY) --- */
@@ -170,16 +173,16 @@
             padding: 120px 20px 150px 20px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 10;
         }
         .section-title { text-align: center; margin-bottom: 80px; }
-        .section-title h2 { font-size: 3.5rem; color: #fff; margin-bottom: 20px; }
-        .section-title p { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-size: 1.1rem; font-weight: 600;}
+        .section-title h2 { font-size: 4rem; color: #fff; margin-bottom: 20px; }
+        .section-title p { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-size: 1.2rem; font-weight: 600;}
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; perspective: 1000px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 40px; perspective: 1000px; }
 
         .project-card {
             background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
             border-radius: 20px; padding: 50px 40px; text-align: left;
             position: relative; overflow: hidden; text-decoration: none; display: flex; flex-direction: column;
-            transform-style: preserve-3d; transition: border-color 0.4s; box-shadow: inset 0 0 0 0 transparent;
+            transform-style: preserve-3d; transition: border-color 0.4s, box-shadow 0.4s; box-shadow: inset 0 0 0 0 transparent;
         }
         .project-card::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -198,16 +201,16 @@
         
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
         .card-icon {
-            width: 70px; height: 70px; border-radius: 15px; background: rgba(212, 175, 55, 0.1);
+            width: 75px; height: 75px; border-radius: 15px; background: rgba(212, 175, 55, 0.1);
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            border: 1px solid rgba(212, 175, 55, 0.3); color: var(--gold); font-size: 1.8rem; transition: 0.5s;
+            border: 1px solid rgba(212, 175, 55, 0.3); color: var(--gold); transition: 0.5s;
         }
         .project-card:hover .card-icon { background: var(--gold); color: var(--bg-deep); transform: rotate(10deg) scale(1.1); box-shadow: 0 0 20px var(--gold-glow);}
         
-        .card-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); border: 1px solid #333; padding: 6px 15px; border-radius: 20px; }
+        .card-tag { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); border: 1px solid #333; padding: 6px 15px; border-radius: 20px; }
 
         .card-content h3 { font-size: 2rem; color: #fff; margin-bottom: 15px; line-height: 1.2; }
-        .card-content p { color: #aaa; font-size: 1.1rem; margin-bottom: 30px; flex-grow: 1; }
+        .card-content p { color: #aaa; font-size: 1.15rem; margin-bottom: 30px; flex-grow: 1; }
 
         .card-link {
             display: flex; align-items: center; gap: 10px; color: var(--gold); text-transform: uppercase;
@@ -216,22 +219,29 @@
         .card-link i { transition: 0.3s; }
         .project-card:hover .card-link i { transform: translateX(10px); }
 
-        /* --- HIGH-TECH FOTOALBUM --- */
+        /* --- HIGH-TECH FOTOALBUM (S reálnými fotkami!) --- */
         .gallery-section {
             padding: 100px 20px; border-top: var(--border-glow); border-bottom: var(--border-glow); position: relative; z-index: 10;
             background: linear-gradient(180deg, var(--bg-deep) 0%, rgba(10,13,11,1) 100%);
         }
         .gallery-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;}
+        
         .gallery-item {
             aspect-ratio: 1/1; background-color: rgba(255,255,255,0.02); border-radius: 15px; border: 1px solid rgba(255,255,255,0.05);
-            display: flex; justify-content: center; align-items: center; color: rgba(255,255,255,0.1); font-size: 3rem; position: relative; overflow: hidden;
-            transition: 0.4s;
+            display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;
+            transition: 0.4s; background-size: cover; background-position: center;
         }
-        .gallery-item:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(-5px); }
+        /* Jemný tmavý filtr přes fotku, který se při najetí odbarví */
+        .gallery-item::before {
+            content: ''; position: absolute; inset: 0; background: rgba(3,4,4,0.6); transition: 0.4s;
+        }
+        .gallery-item:hover::before { background: rgba(3,4,4,0.1); }
+        .gallery-item:hover { border-color: var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.8); transform: translateY(-5px); }
+        
         .gallery-item-title {
-            position: absolute; bottom: -100%; left: 0; width: 100%; padding: 20px; text-align: center;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: #fff; transition: 0.4s;
-            font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+            position: absolute; bottom: -100%; left: 0; width: 100%; padding: 25px 20px; text-align: center;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: #fff; transition: 0.4s;
+            font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; z-index: 2;
         }
         .gallery-item:hover .gallery-item-title { bottom: 0; }
 
@@ -242,8 +252,8 @@
         }
         .vision-container { max-width: 1000px; margin: 0 auto; display: flex; gap: 60px; align-items: center; }
         .vision-text { flex: 1; }
-        .vision-text h2 { font-size: 3rem; color: var(--gold); margin-bottom: 30px; }
-        .vision-text p { font-size: 1.2rem; color: #bbb; margin-bottom: 20px; line-height: 1.8; }
+        .vision-text h2 { font-size: 3.5rem; color: var(--gold); margin-bottom: 30px; }
+        .vision-text p { font-size: 1.25rem; color: #bbb; margin-bottom: 20px; line-height: 1.8; }
         
         .vision-badge {
             width: 250px; height: 250px; flex-shrink: 0; border-radius: 50%; border: 2px dashed var(--gold);
@@ -255,8 +265,8 @@
             background: var(--bg-card); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center;
             animation: spin 20s linear infinite reverse;
         }
-        .vision-badge-inner i { font-size: 3rem; color: var(--gold); margin-bottom: 10px; }
-        .vision-badge-inner span { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; color: #fff; }
+        .vision-badge-inner svg { width: 50px; height: 50px; margin-bottom: 15px; }
+        .vision-badge-inner span { font-family: var(--font-head); font-size: 1.6rem; font-style: italic; color: #fff; }
 
         /* --- FOOTER / KONTAKT --- */
         footer {
@@ -264,13 +274,13 @@
             background: radial-gradient(circle at bottom center, rgba(212, 175, 55, 0.05), transparent 50%);
         }
         .contact-box { max-width: 600px; margin: 0 auto 60px auto; }
-        .contact-box h2 { font-size: 2.5rem; margin-bottom: 10px; color: #fff;}
-        .contact-box p.titul { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 40px; font-weight: 600;}
+        .contact-box h2 { font-size: 3rem; margin-bottom: 10px; color: #fff;}
+        .contact-box p.titul { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; margin-bottom: 40px; font-weight: 600;}
         
-        .contact-links { display: flex; flex-direction: column; gap: 20px; font-size: 1.2rem; }
+        .contact-links { display: flex; flex-direction: column; gap: 20px; font-size: 1.3rem; }
         .contact-links a { color: #bbb; text-decoration: none; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 15px;}
         .contact-links a:hover { color: var(--gold); transform: scale(1.05); }
-        .contact-links i { color: var(--gold); font-size: 1.5rem; }
+        .contact-links i { color: var(--gold); font-size: 1.6rem; }
 
         .copyright { color: #444; font-size: 0.9rem; margin-top: 60px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; }
         
@@ -288,7 +298,6 @@
         .wa-float:hover::before { left: 100%; }
         .wa-float:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6); background: var(--gold); color: #000; }
 
-        /* Scroll animace třídy */
         .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -298,40 +307,37 @@
             .vision-badge { width: 200px; height: 200px; }
             .hero h1 { font-size: 3.5rem; }
             .stats-grid { gap: 30px; }
-            .stat-number { font-size: 3.5rem; }
-            .contact-btn { font-size: 1rem; padding: 15px 30px; }
+            .stat-number { font-size: 4rem; }
         }
         
         @media (max-width: 768px) {
             header { padding: 15px 20px; }
             header.scrolled { padding: 10px 20px; }
-            
-            /* Tlačítko na menu (Hamburger) */
             .mobile-menu-btn { display: block; }
-            
-            /* Celoobrazovkové menu schované napravo */
             .nav-links {
                 position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
                 background: rgba(3, 4, 4, 0.98); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
                 flex-direction: column; justify-content: center; align-items: center; gap: 40px;
                 transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 1000;
             }
-            .nav-links.active { right: 0; } /* Zobrazení menu po kliknutí */
+            .nav-links.active { right: 0; }
             .nav-links a { font-size: 1.3rem; }
             .contact-btn-head { margin-top: 20px; padding: 15px 40px; font-size: 1rem; }
             
-            .hero h1 { font-size: 3rem; }
+            .hero h1 { font-size: 3.2rem; }
             .grid { grid-template-columns: 1fr; gap: 30px; }
             .project-card { padding: 40px 25px; transform: none !important; }
             .card-content { transform: none !important; }
             .stat-number { font-size: 3rem; }
             .stat-label { font-size: 0.85rem; }
+            .gallery-container { grid-template-columns: 1fr 1fr; }
             .wa-float { bottom: 20px; right: 20px; width: 55px; height: 55px; font-size: 1.8rem; }
+            .logo-text { font-size: 1.6rem; letter-spacing: 5px;}
         }
-        
         @media (max-width: 380px) {
-            .logo-text { font-size: 1.4rem; letter-spacing: 3px;}
+            .logo-text { font-size: 1.3rem; letter-spacing: 3px;}
             .stat-number { font-size: 2.5rem;}
+            .gallery-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -342,8 +348,9 @@
     <header id="header">
         <a href="#" class="logo-container">
             <div class="logo-icon">
-                <i class="fas fa-dove"></i>
-                <i class="fas fa-feather"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--gold)" width="40" height="40" style="position: absolute; z-index:2; filter: drop-shadow(0 0 5px var(--gold-glow));">
+                    <path d="M21.9 6.8l-8.4 3.6-3.8-4.1-1.3.6 2.4 4.8-4.9 2.1-2.9-2.2-1.3.6 3.6 4 3.7-1.6 3.9 3.5 1.5-.7-2.6-5 9.8-4.2c.4-.2.6-.6.5-1-.1-.3-.4-.5-.8-.3z"/>
+                </svg>
             </div>
             <div class="logo-text">CUCK<span>OO</span></div>
         </a>
@@ -361,8 +368,8 @@
 
     <section class="hero">
         <div class="subtitle">Osobní OSVČ Brand & Tech-Nature Portfolio</div>
-        <h1 class="luxury-font">Vize s křídly.<br><span>High-tech s duší.</span></h1>
-        <p>Jsem Bc. Jan Koukal. Spojuji inovace, péči o přírodu a precizní technologie do projektů, které mají reálný dopad. Moje mateřská kukačka Cuckoo zaštiťuje drony v zemědělství, kreativní weby a dotační technologie pro udržitelnou budoucnost.</p>
+        <h1 class="luxury-font">Vize s křídly.<br><i>High-tech</i> <span>s duší.</span></h1>
+        <p>Jsem <strong>Bc. Jan Koukal</strong>. Cuckoo není jen pták; je to strategie nadhledu. Přetvářím hardware, dotační data a webový kód v udržitelná řešení. Jsem váš innovation <i>Pilot</i> pro budoucnost.</p>
         
         <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
     </section>
@@ -371,7 +378,7 @@
         <div class="stats-grid">
             <div class="stat-item reveal">
                 <div class="stat-number tech-font" style="display:flex;">
-                    <span data-target="500">0</span><span class="stat-suffix">k</span>
+                    <span data-target="500">0</span><span class="stat-suffix">h</span>
                 </div>
                 <div class="stat-label">Odlétaných hodin (Drony)</div>
             </div>
@@ -379,11 +386,13 @@
                 <div class="stat-number tech-font" style="display:flex;">
                     <span data-target="10">0</span><span class="stat-suffix">Mil.+</span>
                 </div>
-                <div class="stat-label">Zajištěno na dotačních projektech</div>
+                <div class="stat-label">Zajištěno na dotacích</div>
             </div>
             <div class="stat-item reveal">
-                <div class="stat-number tech-font" data-target="10000">0</div>
-                <div class="stat-label">Napsaných řádků kódu (Weby)</div>
+                <div class="stat-number tech-font" style="display:flex;">
+                    <span data-target="10">0</span><span class="stat-suffix">k+</span>
+                </div>
+                <div class="stat-label">Napsaných řádků kódu</div>
             </div>
         </div>
     </section>
@@ -391,7 +400,7 @@
     <section class="projects-section" id="projekty">
         <div class="section-title reveal">
             <p>Moje větve</p>
-            <h2 class="luxury-font">Digitální Ekosystém</h2>
+            <h2 class="luxury-font">Digitální Ekosystém Hub</h2>
         </div>
 
         <div class="grid">
@@ -400,12 +409,16 @@
                 <div class="card-glare"></div>
                 <div class="card-content">
                     <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-satellite-dish"></i> <i class="fas fa-helicopter"></i></div>
-                        <span class="card-tag">Zemědělství & Tech</span>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40">
+                                <rect x="8" y="8" width="8" height="8" rx="2" ry="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/><circle cx="12" cy="12" r="2"/>
+                            </svg>
+                        </div>
+                        <span class="card-tag">Agtech & Příroda</span>
                     </div>
                     <h3>Strážce úrody</h3>
-                    <p>Moderní technologie pro zemědělství. Využívám špičkové drony pro monitoring, ochranu plodin a zefektivnění práce v naprosté symbióze s přírodou.</p>
-                    <div class="card-link">Prozkoumat můj projekt <i class="fas fa-arrow-right"></i></div>
+                    <p>Nasazujeme <i>Agtech</i> řešení tak přesně, jako kukačka klade vejce. Využívám špičkové drony pro monitoring a ochranu plodin na milimetr přesně.</p>
+                    <div class="card-link">Prozkoumat projekt <i class="fas fa-arrow-right"></i></div>
                 </div>
             </a>
 
@@ -413,11 +426,11 @@
                 <div class="card-glare"></div>
                 <div class="card-content">
                     <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-code"></i> <i class="fas fa-feather"></i></div>
-                        <span class="card-tag">Prezentace & Code</span>
+                        <div class="card-icon"><i class="fas fa-code"></i></div>
+                        <span class="card-tag">Code & Prezentace</span>
                     </div>
                     <h3>Filcové království</h3>
-                    <p>Ukázka mé tvorby webových prezentací. Návrh a naprogramování kompletního, interaktivního a vizuálně vyladěného webu pro řemeslnou značku na míru.</p>
+                    <p>Tvorba webových prezentací, které mají duši. Návrh a naprogramování kompletního, interaktivního a vizuálně vyladěného webu pro řemeslnou značku na míru.</p>
                     <div class="card-link">Prozkoumat webdesign <i class="fas fa-arrow-right"></i></div>
                 </div>
             </a>
@@ -426,11 +439,11 @@
                 <div class="card-glare"></div>
                 <div class="card-content">
                     <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-id-card-alt"></i> <i class="fas fa-truck-loading"></i></div>
-                        <span class="card-tag">Udržitelný rozvoj</span>
+                        <div class="card-icon"><i class="fas fa-charging-station"></i></div>
+                        <span class="card-tag">Udržitelný Funding</span>
                     </div>
                     <h3>K-Unit Elektromobilita</h3>
-                    <p>Technologické inovace v dopravě. Specializuji se na vyřizování dotací a komplexní řešení pro zavádění dotačních elektro kamionů do flotil.</p>
+                    <p>Zajišťuji strategický <i>funding</i> pro udržitelný rozvoj. Komplexní řešení a technologické inovace pro zavádění dotačních elektro kamionů do flotil.</p>
                     <div class="card-link">Prozkoumat dotace <i class="fas fa-arrow-right"></i></div>
                 </div>
             </a>
@@ -444,23 +457,33 @@
             <h2 class="luxury-font">Tech-Nature Galerie</h2>
         </div>
         <div class="gallery-container">
-            <div class="gallery-item reveal"><i class="fas fa-satellite"></i><div class="gallery-item-title">Ortofoto monitoring</div></div>
-            <div class="gallery-item reveal" style="transition-delay: 0.1s;"><i class="fas fa-solar-panel"></i><div class="gallery-item-title">Dotační fotovoltaika</div></div>
-            <div class="gallery-item reveal" style="transition-delay: 0.2s;"><i class="fas fa-vr-cardboard"></i><div class="gallery-item-title">Webdev vizualizace</div></div>
-            <div class="gallery-item reveal" style="transition-delay: 0.3s;"><i class="fas fa-charging-station"></i><div class="gallery-item-title">E-mobilita v praxi</div></div>
+            <div class="gallery-item reveal" style="background-image: url('https://images.unsplash.com/photo-1559038234-904abacbd23b?q=80&w=800&auto=format&fit=crop');">
+                <div class="gallery-item-title">Agtech monitoring</div>
+            </div>
+            <div class="gallery-item reveal" style="transition-delay: 0.1s; background-image: url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800&auto=format&fit=crop');">
+                <div class="gallery-item-title">Dotační zdroje</div>
+            </div>
+            <div class="gallery-item reveal" style="transition-delay: 0.2s; background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop');">
+                <div class="gallery-item-title">Webdev vizualizace</div>
+            </div>
+            <div class="gallery-item reveal" style="transition-delay: 0.3s; background-image: url('https://images.unsplash.com/photo-1620556276856-749e756cbaec?q=80&w=800&auto=format&fit=crop');">
+                <div class="gallery-item-title">E-mobilita v praxi</div>
+            </div>
         </div>
     </section>
 
     <section class="vision-section reveal" id="vize">
         <div class="vision-container">
             <div class="vision-text">
-                <h2 class="luxury-font">Základní kámen Vize.</h2>
-                <p>Jako nezávislé OSVČ tvořím a zaštiťuji projekty, které mají reálný dopad. Moje mateřská kukačka Cuckoo je symbolem nezávislosti, nadhledu a křídel, která dokážou projektům vdechnout život.</p>
-                <p>Ať už pilotuji dron nad polem, píšu kód prémiového webu, nebo řeším milionovou dotaci, uplatňuji stejný princip: <strong>Nadhled kukačky a křídla pro vaše vize.</strong></p>
+                <h2 class="luxury-font">Přírodní inteligence.<br>Technické <i>Mastery</i>.</h2>
+                <p>Cuckoo není jen rozcestník; je to integrace nadhledu kukačky a křídel vašeho byznysu. Jako nezávislé OSVČ zaštiťuji projekty, které mají jasný technologický dopad.</p>
+                <p>Ať už pilotuji dron nad polem, píšu kód prémiového webu, nebo řeším milionový funding, uplatňuji stejný princip: Precizní provedení, které slouží správné věci. <strong>We Hub your ambition.</strong></p>
             </div>
             <div class="vision-badge">
                 <div class="vision-badge-inner">
-                    <i class="fas fa-mountain"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
                     <span>Cuckoo Vision</span>
                 </div>
             </div>
@@ -470,7 +493,7 @@
     <footer id="kontakt">
         <div class="contact-box reveal">
             <h2 class="luxury-font">Bc. Jan Koukal</h2>
-            <p class="titul">CEO & Founder Cuckoo Brand</p>
+            <p class="titul">CEO & Innovation Pilot</p>
             
             <div class="contact-links">
                 <a href="mailto:koukal@cuckoo.cz"><i class="fas fa-envelope"></i> koukal@cuckoo.cz</a>
@@ -481,7 +504,7 @@
         
         <div class="copyright">
             &copy; 2026 CUCKOO. Ucelený digitální ekosystém. Všechna práva vyhrazena.
-            <div style="margin-top: 10px; font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; color: var(--gold);">
+            <div style="margin-top: 10px; font-family: var(--font-tech); letter-spacing: 2px; color: var(--gold);">
                 SYSTEM // ONLINE
             </div>
         </div>
@@ -496,15 +519,11 @@
         function toggleMenu() {
             const nav = document.getElementById('navMenu');
             const icon = document.getElementById('menuIcon');
-            
             nav.classList.toggle('active');
-            
             if(nav.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
+                icon.classList.remove('fa-bars'); icon.classList.add('fa-times');
             } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times'); icon.classList.add('fa-bars');
             }
         }
 
@@ -523,9 +542,7 @@
                     entry.target.classList.add('active');
                     if(entry.target.classList.contains('stat-item')) {
                         const targetEl = entry.target.querySelector('[data-target]');
-                        if(targetEl && !targetEl.classList.contains('counted')) {
-                            countUp(targetEl);
-                        }
+                        if(targetEl && !targetEl.classList.contains('counted')) { countUp(targetEl); }
                     }
                     observer.unobserve(entry.target);
                 }
@@ -545,17 +562,15 @@
             const timer = setInterval(() => {
                 const increment = target > 100 ? Math.floor(Math.random() * 5) + 1 : 1;
                 current += increment;
-                
                 if (current >= target) {
-                    element.innerText = target;
-                    clearInterval(timer);
+                    element.innerText = target; clearInterval(timer);
                 } else {
                     element.innerText = current;
                 }
             }, stepTime);
         }
 
-        // --- 4. LUXUSNÍ 3D TILT EFEKT ---
+        // --- 4. LUXUSNÍ 3D TILT EFEKT (Pouze pro desktopy) ---
         if (window.innerWidth > 768) {
             const cards = document.querySelectorAll('.tilt-card');
             cards.forEach(card => {
@@ -572,9 +587,7 @@
                     card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
                     
                     const glare = card.querySelector('.card-glare');
-                    if(glare) {
-                        glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(249, 211, 113, 0.15), transparent 60%)`;
-                    }
+                    if(glare) { glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(249, 211, 113, 0.15), transparent 60%)`; }
                 });
 
                 card.addEventListener('mouseleave', () => {
@@ -585,7 +598,7 @@
             });
         }
 
-        // --- 5. HIGH-TECH CANAVS PEŘÍČKA ---
+        // --- 5. HIGH-TECH CANVAS PEŘÍČKA ---
         const canvas = document.getElementById('feather-canvas');
         const ctx = canvas.getContext('2d');
         
@@ -598,17 +611,17 @@
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             particles = [];
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 20; i++) {
                 particles.push({
                     x: Math.random() * width,
                     y: Math.random() * height - height,
-                    size: Math.random() * 0.8 + 0.3,
-                    speedY: Math.random() * 1 + 0.5,
+                    size: Math.random() * 0.7 + 0.2, /* O něco jemnější peříčka */
+                    speedY: Math.random() * 0.8 + 0.5,
                     speedX: 0,
                     angle: Math.random() * 360,
                     spin: (Math.random() - 0.5) * 2,
                     swingOffset: Math.random() * Math.PI * 2,
-                    opacity: Math.random() * 0.5 + 0.1
+                    opacity: Math.random() * 0.4 + 0.1
                 });
             }
         }
@@ -632,8 +645,8 @@
                 ctx.scale(p.size, p.size);
                 
                 ctx.fillStyle = `rgba(212, 175, 55, ${p.opacity})`;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = "rgba(249, 211, 113, 0.5)";
+                ctx.shadowBlur = 15; /* Větší high-tech glow */
+                ctx.shadowColor = "rgba(249, 211, 113, 0.6)";
                 ctx.fill(featherPath);
                 
                 ctx.restore();
