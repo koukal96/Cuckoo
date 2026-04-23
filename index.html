@@ -11,7 +11,7 @@
     <style>
         /* --- LUXUSNÍ PROMĚNNÉ --- */
         :root {
-            --bg-deep: #030404;
+            --bg-deep: #030404; /* Absolutní propast */
             --bg-card: #0a0d0b;
             --gold: #D4AF37;
             --gold-bright: #F9D371;
@@ -19,7 +19,7 @@
             --neon-gold: rgba(249, 211, 113, 0.15);
             --text-light: #e0e0e0;
             --text-muted: #888888;
-            --glass: rgba(5, 5, 5, 0.75);
+            --glass: rgba(5, 5, 5, 0.7);
             --border-glow: 1px solid rgba(212, 175, 55, 0.2);
         }
 
@@ -33,12 +33,13 @@
             line-height: 1.6;
             background-image: 
                 linear-gradient(rgba(3, 4, 4, 0.9), rgba(3, 4, 4, 0.95)),
-                url('https://www.transparenttextures.com/patterns/micro-carbon.png');
+                url('https://www.transparenttextures.com/patterns/micro-carbon.png'); /* Jemný karbonový high-tech vzor */
         }
 
-        h1, h2, h3, .luxury-font { font-family: 'Playfair Display', serif; }
+        h1, h2, h3, h4, .luxury-font { font-family: 'Playfair Display', serif; }
         .tech-font { font-family: 'Rajdhani', sans-serif; }
 
+        /* Vlastní posuvník */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-deep); }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
@@ -49,10 +50,10 @@
             pointer-events: none; z-index: 0; opacity: 0.6;
         }
 
-        /* --- HLAVIČKA A NAVIGACE --- */
+        /* --- HLAVIČKA A LOGO --- */
         header {
-            position: fixed; width: 100%; top: 0; z-index: 1000;
-            padding: 25px 50px; display: flex; justify-content: space-between; align-items: center;
+            position: fixed; width: 100%; top: 0; z-index: 100;
+            padding: 25px 50px; display: flex; justify-content: center; align-items: center;
             transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         header.scrolled {
@@ -61,8 +62,9 @@
         }
         
         .logo-container {
-            display: flex; align-items: center; gap: 15px; text-decoration: none; position: relative; z-index: 1001;
+            display: flex; align-items: center; gap: 15px; text-decoration: none;
         }
+        /* Kukačka + Peříčko Logo */
         .logo-icon {
             position: relative; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;
         }
@@ -75,33 +77,13 @@
         }
         .logo-text span { color: var(--gold); }
 
-        /* Hlavní menu */
-        .nav-links {
-            display: flex; gap: 35px; align-items: center; list-style: none; margin: 0; padding: 0;
-        }
-        .nav-links a {
-            color: #fff; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; font-weight: 600;
-        }
-        .nav-links a:hover { color: var(--gold); }
-
-        .contact-btn-head {
-            color: var(--gold) !important; border: 1px solid var(--gold); padding: 10px 25px; border-radius: 30px;
-            text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-            transition: 0.4s; background: rgba(212, 175, 55, 0.05);
-        }
-        .contact-btn-head:hover { background: var(--gold) !important; color: var(--bg-deep) !important; box-shadow: 0 0 20px var(--gold-glow); }
-
-        .mobile-menu-btn {
-            display: none; font-size: 2rem; color: var(--gold); cursor: pointer; z-index: 1001; transition: 0.3s;
-        }
-        .mobile-menu-btn:hover { transform: scale(1.1); }
-
         /* --- HERO SEKCE --- */
         .hero {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; position: relative; z-index: 10; padding: 0 20px;
         }
         
+        /* High-tech kruh v pozadí */
         .hero::before {
             content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 60vw; height: 60vw; border-radius: 50%; border: 1px dashed rgba(212, 175, 55, 0.1);
@@ -112,14 +94,7 @@
             width: 40vw; height: 40vw; border-radius: 50%; border: 1px solid rgba(212, 175, 55, 0.05);
             animation: spin 40s linear infinite reverse; pointer-events: none; z-index: -1;
         }
-        
         @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
-
-        /* ZDE CHYBĚLA TATO ANIMACE PRO TEXTY! */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
 
         .subtitle {
             color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-size: 0.85rem;
@@ -136,18 +111,25 @@
             max-width: 700px; color: #aaa; font-size: 1.25rem; margin-bottom: 50px; line-height: 1.8;
             opacity: 0; animation: fadeUp 1s 0.9s forwards;
         }
-
-        .scroll-indicator {
-            position: absolute; bottom: 40px; color: rgba(255,255,255,0.3); font-size: 1rem;
-            text-transform: uppercase; letter-spacing: 3px; display: flex; flex-direction: column; align-items: center; gap: 10px;
-            opacity: 0; animation: fadeUp 1s 1.5s forwards;
+        
+        .scroll-down {
+            position: absolute; bottom: 40px; color: var(--gold); font-size: 2.5rem;
+            animation: bounce 2s infinite; opacity: 0; animation: fadeUp 1s 1.5s forwards, bounce 2s 2.5s infinite;
         }
-        .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent); animation: pulseLine 2s infinite; }
-        @keyframes pulseLine { 0% { height: 0; opacity: 0;} 50% { height: 50px; opacity: 1;} 100% { height: 50px; opacity: 0; transform: translateY(20px);} }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
 
         /* --- STATISTIKY / BUDÍKY --- */
         .stats-section {
-            padding: 60px 20px; background: linear-gradient(90deg, rgba(3,4,4,1) 0%, rgba(10,13,11,1) 50%, rgba(3,4,4,1) 100%);
+            padding: 80px 20px; background: linear-gradient(90deg, rgba(3,4,4,1) 0%, rgba(10,13,11,1) 50%, rgba(3,4,4,1) 100%);
             border-top: var(--border-glow); border-bottom: var(--border-glow); position: relative; z-index: 10;
         }
         .stats-grid {
@@ -155,12 +137,12 @@
         }
         .stat-item { text-align: center; position: relative; }
         .stat-number {
-            font-size: 4rem; color: var(--gold-bright); text-shadow: 0 0 20px var(--gold-glow);
-            line-height: 1; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 5rem; color: var(--gold-bright); text-shadow: 0 0 20px var(--gold-glow);
+            line-height: 1; margin-bottom: 15px; display: flex; align-items: center; justify-content: center;
         }
-        .stat-suffix { font-size: 2rem; color: var(--gold); margin-left: 5px; font-family: 'Montserrat', sans-serif;}
+        .stat-suffix { font-size: 2.5rem; color: var(--gold); margin-left: 5px; font-family: 'Montserrat', sans-serif;}
         .stat-label {
-            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); font-weight: 600;
+            font-size: 1rem; text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); font-weight: 600;
         }
 
         /* --- EKOSYSTÉM (PROJEKTY) --- */
@@ -169,7 +151,7 @@
         }
         .section-title { text-align: center; margin-bottom: 80px; }
         .section-title h2 { font-size: 3.5rem; color: #fff; margin-bottom: 20px; }
-        .section-title p { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-size: 1rem; font-weight: 600;}
+        .section-title p { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-size: 1.1rem; font-weight: 600;}
 
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; perspective: 1000px; }
 
@@ -202,23 +184,41 @@
         }
         .project-card:hover .card-icon { background: var(--gold); color: var(--bg-deep); transform: rotate(10deg) scale(1.1); box-shadow: 0 0 20px var(--gold-glow);}
         
-        .card-tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); border: 1px solid #333; padding: 5px 12px; border-radius: 20px; }
+        .card-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); border: 1px solid #333; padding: 6px 15px; border-radius: 20px; }
 
         .card-content h3 { font-size: 2rem; color: #fff; margin-bottom: 15px; line-height: 1.2; }
-        .card-content p { color: #aaa; font-size: 1.05rem; margin-bottom: 30px; flex-grow: 1; }
+        .card-content p { color: #aaa; font-size: 1.1rem; margin-bottom: 30px; flex-grow: 1; }
 
         .card-link {
             display: flex; align-items: center; gap: 10px; color: var(--gold); text-transform: uppercase;
-            font-size: 0.85rem; font-weight: 700; letter-spacing: 2px;
+            font-size: 0.9rem; font-weight: 700; letter-spacing: 2px;
         }
         .card-link i { transition: 0.3s; }
         .project-card:hover .card-link i { transform: translateX(10px); }
+
+        /* --- HIGH-TECH FOTOALBUM --- */
+        .gallery-section {
+            padding: 100px 20px; border-top: var(--border-glow); border-bottom: var(--border-glow); position: relative; z-index: 10;
+            background: linear-gradient(180deg, var(--bg-deep) 0%, rgba(10,13,11,1) 100%);
+        }
+        .gallery-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;}
+        .gallery-item {
+            aspect-ratio: 1/1; background-color: rgba(255,255,255,0.02); border-radius: 15px; border: 1px solid rgba(255,255,255,0.05);
+            display: flex; justify-content: center; align-items: center; color: rgba(255,255,255,0.1); font-size: 3rem; position: relative; overflow: hidden;
+            transition: 0.4s;
+        }
+        .gallery-item:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(-5px); }
+        .gallery-item-title {
+            position: absolute; bottom: -100%; left: 0; width: 100%; padding: 20px; text-align: center;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: #fff; transition: 0.4s;
+            font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+        }
+        .gallery-item:hover .gallery-item-title { bottom: 0; }
 
         /* --- O MNĚ / VIZE --- */
         .vision-section {
             position: relative; z-index: 10; padding: 120px 20px;
             background: linear-gradient(to right, rgba(3,4,4,0.9), rgba(10,13,11,0.95), rgba(3,4,4,0.9));
-            border-top: var(--border-glow); border-bottom: var(--border-glow);
         }
         .vision-container { max-width: 1000px; margin: 0 auto; display: flex; gap: 60px; align-items: center; }
         .vision-text { flex: 1; }
@@ -233,7 +233,7 @@
         .vision-badge-inner {
             position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
             background: var(--bg-card); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            animation: spin 20s linear infinite reverse;
+            animation: spin 20s linear infinite reverse; /* Ruší rotaci vnějšku pro text */
         }
         .vision-badge-inner i { font-size: 3rem; color: var(--gold); margin-bottom: 10px; }
         .vision-badge-inner span { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; color: #fff; }
@@ -268,40 +268,33 @@
         .wa-float:hover::before { left: 100%; }
         .wa-float:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6); background: var(--gold); color: #000; }
 
+        /* Scroll animace třídy */
         .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* --- RESPONSIVITA (Úprava pro mobily a menu) --- */
+        /* --- RESPONSIVITA --- */
         @media (max-width: 992px) {
             .vision-container { flex-direction: column; text-align: center; }
             .vision-badge { width: 200px; height: 200px; }
             .hero h1 { font-size: 3.5rem; }
             .stats-grid { gap: 30px; }
-            .stat-number { font-size: 3rem; }
+            .stat-number { font-size: 3.5rem; }
+            .contact-btn { font-size: 1rem; padding: 15px 30px; }
         }
-        
         @media (max-width: 768px) {
             header { padding: 15px 20px; }
             header.scrolled { padding: 10px 20px; }
-            
-            /* Tlačítko na menu (Hamburger) */
-            .mobile-menu-btn { display: block; }
-            
-            /* Celoobrazovkové menu schované napravo */
-            .nav-links {
-                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-                background: rgba(3, 4, 4, 0.98); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-                flex-direction: column; justify-content: center; align-items: center; gap: 40px;
-                transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 1000;
-            }
-            .nav-links.active { right: 0; } /* Zobrazení menu po kliknutí */
-            .nav-links a { font-size: 1.3rem; }
-            .contact-btn-head { margin-top: 20px; padding: 15px 40px; font-size: 1rem; }
-            
-            .grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3rem; }
+            .grid { grid-template-columns: 1fr; gap: 30px; }
             .project-card { padding: 40px 25px; transform: none !important; }
             .card-content { transform: none !important; }
+            .stat-number { font-size: 3rem; }
+            .stat-label { font-size: 0.85rem; }
             .wa-float { bottom: 20px; right: 20px; width: 55px; height: 55px; font-size: 1.8rem; }
+        }
+        @media (max-width: 380px) {
+            .logo-text { font-size: 1.4rem; letter-spacing: 3px;}
+            .stat-number { font-size: 2.5rem;}
         }
     </style>
 </head>
@@ -317,46 +310,33 @@
             </div>
             <div class="logo-text">CUCK<span>OO</span></div>
         </a>
-        
-        <ul class="nav-links" id="navMenu">
-            <li><a href="#projekty" onclick="toggleMenu()">Ekosystém</a></li>
-            <li><a href="#vize" onclick="toggleMenu()">Vize</a></li>
-            <li><a href="#kontakt" class="contact-btn-head" onclick="toggleMenu()">Spojit se</a></li>
-        </ul>
-
-        <div class="mobile-menu-btn" onclick="toggleMenu()">
-            <i class="fas fa-bars" id="menuIcon"></i>
-        </div>
     </header>
 
     <section class="hero">
-        <div class="subtitle">Osobní brand & Tech-Nature Portfolio</div>
+        <div class="subtitle">Osobní OSVČ Brand & Tech-Nature Portfolio</div>
         <h1 class="luxury-font">Vize s křídly.<br><span>High-tech s duší.</span></h1>
-        <p>Jsem <strong>Bc. Jan Koukal</strong>. Spojuji drony v zemědělství, precizní dotační inženýrství pro elektromobilitu a prémiový webdesign do projektů, které mění pravidla hry a mají reálný dopad.</p>
+        <p>Jsem Bc. Jan Koukal. Spojuji inovace, péči o přírodu a precizní technologie do projektů, které mají reálný dopad. Moje mateřská kukačka Cuckoo zaštiťuje drony v zemědělství, kreativní weby a dotační technologie pro udržitelnou budoucnost.</p>
         
-        <div class="scroll-indicator">
-            Objevte ekosystém
-            <div class="scroll-line"></div>
-        </div>
+        <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
     </section>
 
     <section class="stats-section">
         <div class="stats-grid">
             <div class="stat-item reveal">
-                <div class="stat-number tech-font" data-target="500">0</div>
+                <div class="stat-number tech-font" style="display:flex;">
+                    <span data-target="500">0</span><span class="stat-suffix">k</span>
+                </div>
                 <div class="stat-label">Odlétaných hodin (Drony)</div>
             </div>
             <div class="stat-item reveal">
                 <div class="stat-number tech-font" style="display:flex;">
-                    <span data-target="150">0</span><span class="stat-suffix">+</span>
+                    <span data-target="10">0</span><span class="stat-suffix">Mil.+</span>
                 </div>
-                <div class="stat-label">Milionů zajištěno na dotacích</div>
+                <div class="stat-label">Zajištěno na dotačních projektech</div>
             </div>
             <div class="stat-item reveal">
-                <div class="stat-number tech-font" style="display:flex;">
-                    <span data-target="10">0</span><span class="stat-suffix">k+</span>
-                </div>
-                <div class="stat-label">Napsaných řádků kódu</div>
+                <div class="stat-number tech-font" data-target="10000">0</div>
+                <div class="stat-label">Napsaných řádků kódu (Weby)</div>
             </div>
         </div>
     </section>
@@ -368,12 +348,13 @@
         </div>
 
         <div class="grid">
+            
             <a href="https://www.strazce-urody.cz" target="_blank" class="project-card tilt-card reveal">
                 <div class="card-glare"></div>
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-icon"><i class="fas fa-satellite-dish"></i> <i class="fas fa-helicopter"></i></div>
-                        <span class="card-tag">Drony v přírodě</span>
+                        <span class="card-tag">Zemědělství & Tech</span>
                     </div>
                     <h3>Strážce úrody</h3>
                     <p>Moderní technologie pro zemědělství. Využívám špičkové drony pro monitoring, ochranu plodin a zefektivnění práce v naprosté symbióze s přírodou.</p>
@@ -385,8 +366,8 @@
                 <div class="card-glare"></div>
                 <div class="card-content">
                     <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-code"></i></div>
-                        <span class="card-tag">Tvorba webů</span>
+                        <div class="card-icon"><i class="fas fa-code"></i> <i class="fas fa-feather"></i></div>
+                        <span class="card-tag">Prezentace & Code</span>
                     </div>
                     <h3>Filcové království</h3>
                     <p>Ukázka mé tvorby webových prezentací. Návrh a naprogramování kompletního, interaktivního a vizuálně vyladěného webu pro řemeslnou značku na míru.</p>
@@ -398,28 +379,42 @@
                 <div class="card-glare"></div>
                 <div class="card-content">
                     <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-charging-station"></i></div>
-                        <span class="card-tag">Dotační inženýrství</span>
+                        <div class="card-icon"><i class="fas fa-id-card-alt"></i> <i class="fas fa-truck-loading"></i></div>
+                        <span class="card-tag">Udržitelný rozvoj</span>
                     </div>
                     <h3>K-Unit Elektromobilita</h3>
-                    <p>Technologické inovace v dopravě. Specializuji se na vyřizování dotací a komplexní řešení financování pro zavádění elektro kamionů do firemních flotil.</p>
+                    <p>Technologické inovace v dopravě. Specializuji se na vyřizování dotací a komplexní řešení pro zavádění dotačních elektro kamionů do flotil.</p>
                     <div class="card-link">Prozkoumat dotace <i class="fas fa-arrow-right"></i></div>
                 </div>
             </a>
+
         </div>
     </section>
 
-    <section class="vision-section reveal" id="vize">
+    <section class="gallery-section reveal">
+        <div class="section-title" style="margin-bottom: 50px;">
+            <p>Pohled z křídel</p>
+            <h2 class="luxury-font">Tech-Nature Galerie</h2>
+        </div>
+        <div class="gallery-container">
+            <div class="gallery-item reveal"><i class="fas fa-satellite"></i><div class="gallery-item-title">Ortofoto monitoring</div></div>
+            <div class="gallery-item reveal" style="transition-delay: 0.1s;"><i class="fas fa-solar-panel"></i><div class="gallery-item-title">Dotační fotovoltaika</div></div>
+            <div class="gallery-item reveal" style="transition-delay: 0.2s;"><i class="fas fa-vr-cardboard"></i><div class="gallery-item-title">Webdev vizualizace</div></div>
+            <div class="gallery-item reveal" style="transition-delay: 0.3s;"><i class="fas fa-charging-station"></i><div class="gallery-item-title">E-mobilita v praxi</div></div>
+        </div>
+    </section>
+
+    <section class="vision-section reveal">
         <div class="vision-container">
             <div class="vision-text">
-                <h2 class="luxury-font">Proč Cuckoo?</h2>
-                <p>Kukačka (Cuckoo) je pro mě symbolem nadhledu, svobody letu a chytrých řešení. Moje "hnízdo" tvoří projekty, které se vzájemně doplňují.</p>
-                <p>Ať už pilotuji dron nad polem, píšu kód prémiového webu, nebo řeším milionovou dotaci na zelenou energii, uplatňuji stejný princip: <strong>Technologickou přesnost, která slouží správné věci.</strong></p>
+                <h2 class="luxury-font">Základní kámen Vize.</h2>
+                <p>Jako nezávislé OSVČ tvořím a zaštiťuji projekty, které mají reálný dopad. Moje mateřská kukačka Cuckoo je symbolem nezávislosti, nadhledu a křídel, která dokážou projektům vdechnout život.</p>
+                <p>Ať už pilotuji dron nad polem, píšu kód prémiového webu, nebo řeším milionovou dotaci, uplatňuji stejný princip: **Nadhled kukačky a křídla pro vaše vize.**</p>
             </div>
             <div class="vision-badge">
                 <div class="vision-badge-inner">
-                    <i class="fas fa-seedling"></i>
-                    <span>Tech&Nature</span>
+                    <i class="fas fa-mountain"></i>
+                    <span>Cuckoo Vision</span>
                 </div>
             </div>
         </div>
@@ -428,7 +423,7 @@
     <footer id="kontakt">
         <div class="contact-box reveal">
             <h2 class="luxury-font">Bc. Jan Koukal</h2>
-            <p class="titul">CEO & Founder Cuckoo</p>
+            <p class="titul">CEO & Founder Cuckoo Brand</p>
             
             <div class="contact-links">
                 <a href="mailto:koukal@cuckoo.cz"><i class="fas fa-envelope"></i> koukal@cuckoo.cz</a>
@@ -438,47 +433,32 @@
         </div>
         
         <div class="copyright">
-            &copy; 2026 CUCKOO. Zastřešující mateřský brand. Všechna práva vyhrazena.
+            &copy; 2026 CUCKOO. Ucelený digitální ekosystém. Všechna práva vyhrazena.
             <div style="margin-top: 10px; font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; color: var(--gold);">
                 SYSTEM // ONLINE
             </div>
         </div>
     </footer>
 
-    <a href="https://wa.me/420604353393" class="wa-float" target="_blank" title="Napsat na WhatsApp">
+    <a href="https://wa.me/420604353393" class="wa-float" target="_blank" title="Napište mi na WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <script>
-        // --- 0. OVLÁDÁNÍ MOBILNÍHO MENU ---
-        function toggleMenu() {
-            const nav = document.getElementById('navMenu');
-            const icon = document.getElementById('menuIcon');
-            
-            nav.classList.toggle('active');
-            
-            if(nav.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        }
-
-        // --- 1. ZMĚNA HLAVIČKY PŘI SCROLLOVÁNÍ ---
+        // --- 1. ZMĚNA HLAVIČKY ---
         window.addEventListener('scroll', () => {
             const header = document.getElementById('header');
             if (window.scrollY > 50) { header.classList.add('scrolled'); } 
             else { header.classList.remove('scrolled'); }
         });
 
-        // --- 2. PLYNULÉ ODHALOVÁNÍ A SPOUŠTĚNÍ BUDÍKŮ ---
+        // --- 2. PLYNULÉ ODHALOVÁNÍ (Intersection Observer) ---
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
+                    // Pokud je to číslo (Budík), spustí se animace počítání
                     if(entry.target.classList.contains('stat-item')) {
                         const targetEl = entry.target.querySelector('[data-target]');
                         if(targetEl && !targetEl.classList.contains('counted')) {
@@ -492,17 +472,19 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // --- 3. LOGIKA PRO POČÍTADLA ---
+        // --- 3. LOGIKA PRO BUDÍKY (Counter) ---
         function countUp(element) {
             element.classList.add('counted');
             const target = parseInt(element.getAttribute('data-target'));
-            const duration = 2000;
+            const duration = 2000; // 2 sekundy
             const stepTime = Math.abs(Math.floor(duration / target));
             let current = 0;
             
             const timer = setInterval(() => {
+                // Přidáváme náhodnější skoky pro rychlejší čísla (aby to vypadalo víc high-tech)
                 const increment = target > 100 ? Math.floor(Math.random() * 5) + 1 : 1;
                 current += increment;
+                
                 if (current >= target) {
                     element.innerText = target;
                     clearInterval(timer);
@@ -542,13 +524,14 @@
             });
         }
 
-        // --- 5. HIGH-TECH CANVAS PEŘÍČKA ---
+        // --- 5. HIGH-TECH CANAVS PEŘÍČKA (Padající s fyzikou) ---
         const canvas = document.getElementById('feather-canvas');
         const ctx = canvas.getContext('2d');
         
         let width, height;
         let particles = [];
         
+        // Zlaté peříčko vykreslené přes SVG Path pro maximální ostrost
         const featherPath = new Path2D("M12.4,2.6C12.4,2.6,9.1,6.8,8.2,9.6C7.3,12.4,7.8,15.6,9.5,18.1C8.2,17.2,6.5,16.5,5.1,16C3.7,15.5,2.1,15.4,0.6,15.6C1.9,16.6,3.6,17.4,5.3,18.1C6.9,18.8,8.8,19.2,10.6,19.3C10.5,21.5,10.8,23.8,11.5,25.8C12,27.3,12.8,28.8,13.8,30C13.5,28.2,13.6,26.3,14,24.5C14.7,21,16.4,17.7,18.7,15.1C21,12.5,23.9,10.4,27.1,8.9C24,9.6,20.8,10.9,18.1,12.7C15.4,14.5,13.2,16.9,11.7,19.7C11.3,17.4,11.3,15,11.8,12.7C12.3,10.4,13.4,8.3,15,6.5C14.1,5.3,13.2,3.9,12.4,2.6Z");
 
         function init() {
