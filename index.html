@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bc. Jan Koukal | CUCKOO - High-Tech & Nature Hub</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* --- LUXUSNÍ PROMĚNNÉ & HIGH-BRAND TEMATIZACE --- */
         :root {
-            --bg-deep: #030404;
+            --bg-deep: #030404; /* Absolutní propast */
             --bg-card: #0a0d0b;
             --gold: #D4AF37;
             --gold-bright: #F9D371;
@@ -36,17 +36,18 @@
             line-height: 1.6;
             background-image: 
                 linear-gradient(rgba(3, 4, 4, 0.9), rgba(3, 4, 4, 0.95)),
-                url('https://www.transparenttextures.com/patterns/micro-carbon.png');
+                url('https://www.transparenttextures.com/patterns/micro-carbon.png'); /* Jemný karbonový high-tech vzor */
         }
 
         h1, h2, h3, h4, .luxury-font { font-family: var(--font-head); }
         .tech-font { font-family: var(--font-tech); }
 
+        /* Vlastní posuvník */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-deep); }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
-        /* --- INTERAKTIVNÍ PEŘÍČKA (CANVAS) --- */
+        /* --- INTERAKTIVNÍ PEŘÍČKA 2.0 (CANVAS) --- */
         #feather-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 0; opacity: 0.6;
@@ -66,17 +67,21 @@
         .logo-container {
             display: flex; align-items: center; gap: 15px; text-decoration: none; position: relative; z-index: 1001;
         }
-        
+        /* Kukačka + Peříčko Logo (Ostré a Polygonální - Jemně upraveno) */
         .logo-icon {
-            position: relative; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
-            filter: drop-shadow(0 0 10px var(--gold-glow));
+            position: relative; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;
         }
+        .logo-icon i.fa-dove { font-size: 1.8rem; color: var(--gold); position: absolute; z-index: 2; text-shadow: 0 0 15px var(--gold-glow); transform: skewY(-2deg);}
+        .logo-icon i.fa-feather { font-size: 1.2rem; color: var(--gold-bright); position: absolute; right: -5px; bottom: -5px; transform: rotate(-30deg); z-index: 1; opacity: 0.8;}
         
+        /* ZTučněno "CUCKOO" a interaktivita */
         .logo-text {
-            font-size: 2rem; font-weight: 300; color: #fff; font-family: var(--font-main);
-            letter-spacing: 9px; text-transform: uppercase; margin-left: 10px;
+            font-size: 1.8rem; font-weight: 800; color: #fff; font-family: var(--font-main);
+            letter-spacing: 6px; text-transform: uppercase; margin-left: 10px;
+            transition: 0.3s;
         }
         .logo-text span { color: var(--gold); }
+        .logo-container:hover .logo-text { text-shadow: 0 0 20px var(--gold-glow); }
 
         /* Hlavní menu */
         .nav-links {
@@ -105,6 +110,7 @@
             text-align: center; position: relative; z-index: 10; padding: 0 20px;
         }
         
+        /* High-tech kruh v pozadí */
         .hero::before {
             content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 60vw; height: 60vw; border-radius: 50%; border: 1px dashed rgba(212, 175, 55, 0.1);
@@ -123,19 +129,19 @@
         }
 
         .subtitle {
-            color: var(--gold); text-transform: uppercase; letter-spacing: 7px; font-size: 0.85rem;
+            color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-size: 0.85rem;
             margin-bottom: 25px; font-weight: 800; opacity: 0; animation: fadeUp 1s 0.3s forwards;
-            background: var(--neon-gold); padding: 8px 25px; border-radius: 50px; border: var(--border-glow);
+            background: var(--neon-gold); padding: 8px 20px; border-radius: 50px; border: var(--border-glow);
         }
         .hero h1 {
-            font-size: clamp(3rem, 7vw, 6.5rem); line-height: 1.1; margin-bottom: 30px; color: #fff;
+            font-size: clamp(3rem, 7vw, 6rem); line-height: 1.1; margin-bottom: 30px; color: #fff;
             opacity: 0; animation: fadeUp 1s 0.6s forwards; text-shadow: 0 10px 40px rgba(0,0,0,1);
         }
         .hero h1 span { font-style: italic; color: var(--gold); font-weight: 400;}
         .hero h1 i { font-style: normal; color: #fff; font-weight: 700;}
         
         .hero p {
-            max-width: 750px; color: #aaa; font-size: 1.25rem; margin-bottom: 50px; line-height: 1.8;
+            max-width: 700px; color: #aaa; font-size: 1.25rem; margin-bottom: 50px; line-height: 1.8;
             opacity: 0; animation: fadeUp 1s 0.9s forwards;
         }
         
@@ -152,7 +158,7 @@
 
         /* --- STATISTIKY / BUDÍKY --- */
         .stats-section {
-            padding: 100px 20px; background: linear-gradient(90deg, rgba(3,4,4,1) 0%, rgba(10,13,11,1) 50%, rgba(3,4,4,1) 100%);
+            padding: 80px 20px; background: linear-gradient(90deg, rgba(3,4,4,1) 0%, rgba(10,13,11,1) 50%, rgba(3,4,4,1) 100%);
             border-top: var(--border-glow); border-bottom: var(--border-glow); position: relative; z-index: 10;
         }
         .stats-grid {
@@ -160,12 +166,12 @@
         }
         .stat-item { text-align: center; position: relative; }
         .stat-number {
-            font-size: 6rem; color: var(--gold-bright); text-shadow: 0 0 20px var(--gold-glow);
+            font-size: 5rem; color: var(--gold-bright); text-shadow: 0 0 20px var(--gold-glow);
             line-height: 1; margin-bottom: 15px; display: flex; align-items: center; justify-content: center;
         }
-        .stat-suffix { font-size: 3rem; color: var(--gold); margin-left: 5px; font-family: var(--font-main);}
+        .stat-suffix { font-size: 2.5rem; color: var(--gold); margin-left: 5px; font-family: var(--font-main);}
         .stat-label {
-            font-size: 1.05rem; text-transform: uppercase; letter-spacing: 5px; color: var(--text-muted); font-weight: 600;
+            font-size: 1rem; text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); font-weight: 600;
         }
 
         /* --- EKOSYSTÉM (PROJEKTY) --- */
@@ -173,16 +179,16 @@
             padding: 120px 20px 150px 20px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 10;
         }
         .section-title { text-align: center; margin-bottom: 80px; }
-        .section-title h2 { font-size: 4rem; color: #fff; margin-bottom: 20px; }
-        .section-title p { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-size: 1.2rem; font-weight: 600;}
+        .section-title h2 { font-size: 3.5rem; color: #fff; margin-bottom: 20px; }
+        .section-title p { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-size: 1.1rem; font-weight: 600;}
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 40px; perspective: 1000px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; perspective: 1000px; }
 
         .project-card {
             background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
             border-radius: 20px; padding: 50px 40px; text-align: left;
             position: relative; overflow: hidden; text-decoration: none; display: flex; flex-direction: column;
-            transform-style: preserve-3d; transition: border-color 0.4s, box-shadow 0.4s; box-shadow: inset 0 0 0 0 transparent;
+            transform-style: preserve-3d; transition: border-color 0.4s; box-shadow: inset 0 0 0 0 transparent;
         }
         .project-card::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -201,47 +207,39 @@
         
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
         .card-icon {
-            width: 75px; height: 75px; border-radius: 15px; background: rgba(212, 175, 55, 0.1);
+            width: 70px; height: 70px; border-radius: 15px; background: rgba(212, 175, 55, 0.1);
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            border: 1px solid rgba(212, 175, 55, 0.3); color: var(--gold); transition: 0.5s;
-        }
+            border: 1px solid rgba(212, 175, 55, 0.3); color: var(--gold); }
         .project-card:hover .card-icon { background: var(--gold); color: var(--bg-deep); transform: rotate(10deg) scale(1.1); box-shadow: 0 0 20px var(--gold-glow);}
         
-        .card-tag { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); border: 1px solid #333; padding: 6px 15px; border-radius: 20px; }
+        .card-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); border: 1px solid #333; padding: 6px 15px; border-radius: 20px; }
 
         .card-content h3 { font-size: 2rem; color: #fff; margin-bottom: 15px; line-height: 1.2; }
-        .card-content p { color: #aaa; font-size: 1.15rem; margin-bottom: 30px; flex-grow: 1; }
+        .card-content p { color: #aaa; font-size: 1.05rem; margin-bottom: 30px; flex-grow: 1; }
 
         .card-link {
             display: flex; align-items: center; gap: 10px; color: var(--gold); text-transform: uppercase;
-            font-size: 0.9rem; font-weight: 700; letter-spacing: 2px;
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 2px;
         }
         .card-link i { transition: 0.3s; }
         .project-card:hover .card-link i { transform: translateX(10px); }
 
-        /* --- HIGH-TECH FOTOALBUM (S reálnými fotkami!) --- */
+        /* --- HIGH-TECH FOTOALBUM --- */
         .gallery-section {
             padding: 100px 20px; border-top: var(--border-glow); border-bottom: var(--border-glow); position: relative; z-index: 10;
             background: linear-gradient(180deg, var(--bg-deep) 0%, rgba(10,13,11,1) 100%);
         }
         .gallery-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;}
-        
         .gallery-item {
             aspect-ratio: 1/1; background-color: rgba(255,255,255,0.02); border-radius: 15px; border: 1px solid rgba(255,255,255,0.05);
             display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;
-            transition: 0.4s; background-size: cover; background-position: center;
+            transition: 0.4s;
         }
-        /* Jemný tmavý filtr přes fotku, který se při najetí odbarví */
-        .gallery-item::before {
-            content: ''; position: absolute; inset: 0; background: rgba(3,4,4,0.6); transition: 0.4s;
-        }
-        .gallery-item:hover::before { background: rgba(3,4,4,0.1); }
-        .gallery-item:hover { border-color: var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.8); transform: translateY(-5px); }
-        
+        .gallery-item:hover { border-color: var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(-5px); }
         .gallery-item-title {
-            position: absolute; bottom: -100%; left: 0; width: 100%; padding: 25px 20px; text-align: center;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: #fff; transition: 0.4s;
-            font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; z-index: 2;
+            position: absolute; bottom: -100%; left: 0; width: 100%; padding: 20px; text-align: center;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: #fff; transition: 0.4s;
+            font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
         }
         .gallery-item:hover .gallery-item-title { bottom: 0; }
 
@@ -252,8 +250,8 @@
         }
         .vision-container { max-width: 1000px; margin: 0 auto; display: flex; gap: 60px; align-items: center; }
         .vision-text { flex: 1; }
-        .vision-text h2 { font-size: 3.5rem; color: var(--gold); margin-bottom: 30px; }
-        .vision-text p { font-size: 1.25rem; color: #bbb; margin-bottom: 20px; line-height: 1.8; }
+        .vision-text h2 { font-size: 3rem; color: var(--gold); margin-bottom: 30px; }
+        .vision-text p { font-size: 1.2rem; color: #bbb; margin-bottom: 20px; line-height: 1.8; }
         
         .vision-badge {
             width: 250px; height: 250px; flex-shrink: 0; border-radius: 50%; border: 2px dashed var(--gold);
@@ -263,10 +261,10 @@
         .vision-badge-inner {
             position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
             background: var(--bg-card); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            animation: spin 20s linear infinite reverse;
+            animation: spin 20s linear infinite reverse; /* Ruší rotaci vnějšku pro text */
         }
-        .vision-badge-inner svg { width: 50px; height: 50px; margin-bottom: 15px; }
-        .vision-badge-inner span { font-family: var(--font-head); font-size: 1.6rem; font-style: italic; color: #fff; }
+        .vision-badge-inner svg { width: 50px; height: 50px; margin-bottom: 10px; }
+        .vision-badge-inner span { font-family: var(--font-head); font-size: 1.5rem; font-style: italic; color: #fff; }
 
         /* --- FOOTER / KONTAKT --- */
         footer {
@@ -274,13 +272,13 @@
             background: radial-gradient(circle at bottom center, rgba(212, 175, 55, 0.05), transparent 50%);
         }
         .contact-box { max-width: 600px; margin: 0 auto 60px auto; }
-        .contact-box h2 { font-size: 3rem; margin-bottom: 10px; color: #fff;}
+        .contact-box h2 { font-size: 3rem; margin-bottom: 10px; color: #fff; font-weight: 800;} /* Tučně "CUCKOO" */
         .contact-box p.titul { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; margin-bottom: 40px; font-weight: 600;}
         
-        .contact-links { display: flex; flex-direction: column; gap: 20px; font-size: 1.3rem; }
+        .contact-links { display: flex; flex-direction: column; gap: 20px; font-size: 1.2rem; }
         .contact-links a { color: #bbb; text-decoration: none; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 15px;}
         .contact-links a:hover { color: var(--gold); transform: scale(1.05); }
-        .contact-links i { color: var(--gold); font-size: 1.6rem; }
+        .contact-links i { color: var(--gold); font-size: 1.5rem; }
 
         .copyright { color: #444; font-size: 0.9rem; margin-top: 60px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; }
         
@@ -307,9 +305,9 @@
             .vision-badge { width: 200px; height: 200px; }
             .hero h1 { font-size: 3.5rem; }
             .stats-grid { gap: 30px; }
-            .stat-number { font-size: 4rem; }
+            .stat-number { font-size: 3.5rem; }
+            .contact-btn { font-size: 1rem; padding: 15px 30px; }
         }
-        
         @media (max-width: 768px) {
             header { padding: 15px 20px; }
             header.scrolled { padding: 10px 20px; }
@@ -324,7 +322,7 @@
             .nav-links a { font-size: 1.3rem; }
             .contact-btn-head { margin-top: 20px; padding: 15px 40px; font-size: 1rem; }
             
-            .hero h1 { font-size: 3.2rem; }
+            .hero h1 { font-size: 3rem; }
             .grid { grid-template-columns: 1fr; gap: 30px; }
             .project-card { padding: 40px 25px; transform: none !important; }
             .card-content { transform: none !important; }
@@ -335,9 +333,8 @@
             .logo-text { font-size: 1.6rem; letter-spacing: 5px;}
         }
         @media (max-width: 380px) {
-            .logo-text { font-size: 1.3rem; letter-spacing: 3px;}
+            .logo-text { font-size: 1.2rem; letter-spacing: 3px;}
             .stat-number { font-size: 2.5rem;}
-            .gallery-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -348,9 +345,8 @@
     <header id="header">
         <a href="#" class="logo-container">
             <div class="logo-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--gold)" width="40" height="40" style="position: absolute; z-index:2; filter: drop-shadow(0 0 5px var(--gold-glow));">
-                    <path d="M21.9 6.8l-8.4 3.6-3.8-4.1-1.3.6 2.4 4.8-4.9 2.1-2.9-2.2-1.3.6 3.6 4 3.7-1.6 3.9 3.5 1.5-.7-2.6-5 9.8-4.2c.4-.2.6-.6.5-1-.1-.3-.4-.5-.8-.3z"/>
-                </svg>
+                <i class="fas fa-dove"></i>
+                <i class="fas fa-feather"></i>
             </div>
             <div class="logo-text">CUCK<span>OO</span></div>
         </a>
@@ -367,9 +363,9 @@
     </header>
 
     <section class="hero">
-        <div class="subtitle">Osobní OSVČ Brand & Tech-Nature Portfolio</div>
-        <h1 class="luxury-font">Vize s křídly.<br><i>High-tech</i> <span>s duší.</span></h1>
-        <p>Jsem <strong>Bc. Jan Koukal</strong>. Cuckoo není jen pták; je to strategie nadhledu. Přetvářím hardware, dotační data a webový kód v udržitelná řešení. Jsem váš innovation <i>Pilot</i> pro budoucnost.</p>
+        <div class="subtitle">Můj Osobní Brand & Technologie s Duší</div>
+        <h1 class="luxury-font">Vize, které mají křídla.<br><i>High-tech</i> <span>s duší.</span></h1>
+        <p>Jsem <strong>Jan Koukal</strong>. Katalyzuji ambice skrze technologie a nadhled. Přetvářím syrová dotační data, hardware a kód v udržitelná řešení. Jsem váš innovation <i>Pilot</i> pro budoucnost.</p>
         
         <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
     </section>
@@ -377,30 +373,26 @@
     <section class="stats-section">
         <div class="stats-grid">
             <div class="stat-item reveal">
-                <div class="stat-number tech-font" style="display:flex;">
-                    <span data-target="500">0</span><span class="stat-suffix">h</span>
-                </div>
+                <div class="stat-number tech-font" data-target="500">0</div>
                 <div class="stat-label">Odlétaných hodin (Drony)</div>
             </div>
             <div class="stat-item reveal">
                 <div class="stat-number tech-font" style="display:flex;">
                     <span data-target="10">0</span><span class="stat-suffix">Mil.+</span>
                 </div>
-                <div class="stat-label">Zajištěno na dotacích</div>
+                <div class="stat-label">Zajištěno na dotačních projektech</div>
             </div>
             <div class="stat-item reveal">
-                <div class="stat-number tech-font" style="display:flex;">
-                    <span data-target="10">0</span><span class="stat-suffix">k+</span>
-                </div>
-                <div class="stat-label">Napsaných řádků kódu</div>
+                <div class="stat-number tech-font" data-target="10000">0</div>
+                <div class="stat-label">Napsaných řádků kódu (Weby)</div>
             </div>
         </div>
     </section>
 
     <section class="projects-section" id="projekty">
         <div class="section-title reveal">
-            <p>Moje větve</p>
-            <h2 class="luxury-font">Digitální Ekosystém Hub</h2>
+            <h2>Moje Větve</h2>
+            <p>Digitální Ekosystém Hub</p>
         </div>
 
         <div class="grid">
@@ -410,15 +402,15 @@
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40">
-                                <rect x="8" y="8" width="8" height="8" rx="2" ry="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/><circle cx="12" cy="12" r="2"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" width="45" height="45">
+                                <rect x="8" y="8" width="8" height="8" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2L12 6M12 18L12 22M2 12L6 12M18 12L22 12M4.9 4.9L7.7 7.7M16.3 16.3L19.1 19.1M19.1 4.9L16.3 7.7M7.7 16.3L4.9 19.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="2"/>
                             </svg>
                         </div>
                         <span class="card-tag">Agtech & Příroda</span>
                     </div>
                     <h3>Strážce úrody</h3>
-                    <p>Nasazujeme <i>Agtech</i> řešení tak přesně, jako kukačka klade vejce. Využívám špičkové drony pro monitoring a ochranu plodin na milimetr přesně.</p>
-                    <div class="card-link">Prozkoumat projekt <i class="fas fa-arrow-right"></i></div>
+                    <p>Moderní technologie pro zemědělství. Využívám špičkové drony pro monitoring, ochranu plodin a zefektivnění práce v naprosté symbióze s přírodou.</p>
+                    <div class="card-link">Prozkoumat můj projekt <i class="fas fa-arrow-right"></i></div>
                 </div>
             </a>
 
@@ -427,10 +419,10 @@
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-icon"><i class="fas fa-code"></i></div>
-                        <span class="card-tag">Code & Prezentace</span>
+                        <span class="card-tag">Prezentace & Code</span>
                     </div>
                     <h3>Filcové království</h3>
-                    <p>Tvorba webových prezentací, které mají duši. Návrh a naprogramování kompletního, interaktivního a vizuálně vyladěného webu pro řemeslnou značku na míru.</p>
+                    <p>Ukázka mé tvorby webových prezentací. Návrh a naprogramování kompletního, interaktivního a vizuálně vyladěného webu pro řemeslnou značku na míru.</p>
                     <div class="card-link">Prozkoumat webdesign <i class="fas fa-arrow-right"></i></div>
                 </div>
             </a>
@@ -439,11 +431,15 @@
                 <div class="card-glare"></div>
                 <div class="card-content">
                     <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-charging-station"></i></div>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" width="45" height="45">
+                                <path d="M22.5 10H18V5.5C18 4.7 17.3 4 16.5 4H7.5C6.7 4 6 4.7 6 5.5V10H1.5C0.7 10 0 10.7 0 11.5V15H24V11.5C24 10.7 23.3 10 22.5 10zM12 18H9V21.5C9 22.3 9.7 23 10.5 23H13.5C14.3 23 15 22.3 15 21.5V18H12z"/><path d="M12 2v2M2 12h2M20 12h2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                            </svg>
+                        </div>
                         <span class="card-tag">Udržitelný Funding</span>
                     </div>
                     <h3>K-Unit Elektromobilita</h3>
-                    <p>Zajišťuji strategický <i>funding</i> pro udržitelný rozvoj. Komplexní řešení a technologické inovace pro zavádění dotačních elektro kamionů do flotil.</p>
+                    <p>Technologické inovace v dopravě. Specializuji se na vyřizování dotací a komplexní řešení pro zavádění dotačních elektro kamionů do flotil.</p>
                     <div class="card-link">Prozkoumat dotace <i class="fas fa-arrow-right"></i></div>
                 </div>
             </a>
@@ -454,14 +450,14 @@
     <section class="gallery-section reveal">
         <div class="section-title" style="margin-bottom: 50px;">
             <p>Pohled z křídel</p>
-            <h2 class="luxury-font">Tech-Nature Galerie</h2>
+            <h2 class="luxury-font">Galerie Tech & Příroda</h2>
         </div>
         <div class="gallery-container">
-            <div class="gallery-item reveal" style="background-image: url('https://images.unsplash.com/photo-1559038234-904abacbd23b?q=80&w=800&auto=format&fit=crop');">
-                <div class="gallery-item-title">Agtech monitoring</div>
+            <div class="gallery-item reveal" style="background-image: url('https://images.unsplash.com/photo-159038234-904abacbd23b?q=80&w=800&auto=format&fit=crop');">
+                <div class="gallery-item-title">Ortofoto monitoring</div>
             </div>
             <div class="gallery-item reveal" style="transition-delay: 0.1s; background-image: url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800&auto=format&fit=crop');">
-                <div class="gallery-item-title">Dotační zdroje</div>
+                <div class="gallery-item-title">Zelené zdroje</div>
             </div>
             <div class="gallery-item reveal" style="transition-delay: 0.2s; background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop');">
                 <div class="gallery-item-title">Webdev vizualizace</div>
@@ -472,18 +468,16 @@
         </div>
     </section>
 
-    <section class="vision-section reveal" id="vize">
+    <section class="vision-section reveal">
         <div class="vision-container">
             <div class="vision-text">
-                <h2 class="luxury-font">Přírodní inteligence.<br>Technické <i>Mastery</i>.</h2>
-                <p>Cuckoo není jen rozcestník; je to integrace nadhledu kukačky a křídel vašeho byznysu. Jako nezávislé OSVČ zaštiťuji projekty, které mají jasný technologický dopad.</p>
-                <p>Ať už pilotuji dron nad polem, píšu kód prémiového webu, nebo řeším milionový funding, uplatňuji stejný princip: Precizní provedení, které slouží správné věci. <strong>We Hub your ambition.</strong></p>
+                <h2 class="luxury-font">Přírodní inteligence. Technické Mistrovství.</h2>
+                <p>Cuckoo (Kukačka) je symbolem nadhledu, svobody a chytrých řešení. Moje "hnízdo" tvoří projekty, které se vzájemně doplňují. Katalyzuji vaše ambice skrze udržitelný <i>Funding</i>, inovativní drony a kreativní kódování.</p>
+                <p>Ať už pilotuji dron nad polem, píšu kód prémiového webu, nebo řeším milionovou dotaci, uplatňuji stejný princip: Precizní provedení, které slouží správné věci. *Jsme středobodem vašich vizí.* </p>
             </div>
             <div class="vision-badge">
                 <div class="vision-badge-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
+                    <i class="fas fa-feather" style="font-size: 3rem; color: var(--gold); margin-bottom: 15px;"></i>
                     <span>Cuckoo Vision</span>
                 </div>
             </div>
@@ -492,8 +486,7 @@
 
     <footer id="kontakt">
         <div class="contact-box reveal">
-            <h2 class="luxury-font">Bc. Jan Koukal</h2>
-            <p class="titul">CEO & Innovation Pilot</p>
+            <h2 class="luxury-font">BC. JAN KOUKAL</h2> <p class="titul">CEO & Innovation Pilot</p>
             
             <div class="contact-links">
                 <a href="mailto:koukal@cuckoo.cz"><i class="fas fa-envelope"></i> koukal@cuckoo.cz</a>
@@ -598,30 +591,31 @@
             });
         }
 
-        // --- 5. HIGH-TECH CANVAS PEŘÍČKA ---
+        // --- 5. HIGH-TECH CANAVS PEŘÍČKA (Padající s fyzikou) ---
         const canvas = document.getElementById('feather-canvas');
         const ctx = canvas.getContext('2d');
         
         let width, height;
         let particles = [];
         
+        // PŮVODNÍ JEMNÉ PEŘÍČKO (SVG Path z tvého loga) - recreate as SVG path
         const featherPath = new Path2D("M12.4,2.6C12.4,2.6,9.1,6.8,8.2,9.6C7.3,12.4,7.8,15.6,9.5,18.1C8.2,17.2,6.5,16.5,5.1,16C3.7,15.5,2.1,15.4,0.6,15.6C1.9,16.6,3.6,17.4,5.3,18.1C6.9,18.8,8.8,19.2,10.6,19.3C10.5,21.5,10.8,23.8,11.5,25.8C12,27.3,12.8,28.8,13.8,30C13.5,28.2,13.6,26.3,14,24.5C14.7,21,16.4,17.7,18.7,15.1C21,12.5,23.9,10.4,27.1,8.9C24,9.6,20.8,10.9,18.1,12.7C15.4,14.5,13.2,16.9,11.7,19.7C11.3,17.4,11.3,15,11.8,12.7C12.3,10.4,13.4,8.3,15,6.5C14.1,5.3,13.2,3.9,12.4,2.6Z");
 
         function init() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             particles = [];
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 particles.push({
                     x: Math.random() * width,
                     y: Math.random() * height - height,
-                    size: Math.random() * 0.7 + 0.2, /* O něco jemnější peříčka */
-                    speedY: Math.random() * 0.8 + 0.5,
+                    size: Math.random() * 0.8 + 0.3,
+                    speedY: Math.random() * 1 + 0.5,
                     speedX: 0,
                     angle: Math.random() * 360,
                     spin: (Math.random() - 0.5) * 2,
                     swingOffset: Math.random() * Math.PI * 2,
-                    opacity: Math.random() * 0.4 + 0.1
+                    opacity: Math.random() * 0.5 + 0.1
                 });
             }
         }
@@ -645,8 +639,8 @@
                 ctx.scale(p.size, p.size);
                 
                 ctx.fillStyle = `rgba(212, 175, 55, ${p.opacity})`;
-                ctx.shadowBlur = 15; /* Větší high-tech glow */
-                ctx.shadowColor = "rgba(249, 211, 113, 0.6)";
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = "rgba(249, 211, 113, 0.5)";
                 ctx.fill(featherPath);
                 
                 ctx.restore();
