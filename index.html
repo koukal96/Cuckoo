@@ -108,7 +108,7 @@
             --shadow-gold-laser: 0px 0px 20px rgba(212, 175, 55, 0.8);
             
             /* Typography Scale */
-            --font-family-primary: 'Montserrat', -apple-system, sans-serif;
+            --font-family-primary: 'Montserrat', system-ui, -apple-system, sans-serif;
             --font-family-display: 'Playfair Display', Georgia, serif;
             --font-family-data: 'Rajdhani', monospace;
             
@@ -127,23 +127,49 @@
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 4.2: AGGRESSIVE BROWSER RESET & iOS PROTECTION
+         * MODULE 4.2: AGGRESSIVE BROWSER RESET & iOS PROTECTION (VERBOSE)
+         * Zde vypisujeme každou vlastnost absolutně odděleně. Žádné zkratky.
          * -------------------------------------------------------------------------- */
-        *, *::before, *::after {
-            margin-top: 0;
-            margin-right: 0;
-            margin-bottom: 0;
-            margin-left: 0;
-            padding-top: 0;
-            padding-right: 0;
-            padding-bottom: 0;
-            padding-left: 0;
+        * {
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
             box-sizing: border-box;
-            outline-width: 0;
+            outline-width: 0px;
             outline-style: none;
+            outline-color: transparent;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             -webkit-tap-highlight-color: transparent;
+        }
+
+        *::before {
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+            box-sizing: border-box;
+        }
+
+        *::after {
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+            box-sizing: border-box;
         }
 
         html {
@@ -154,7 +180,8 @@
             background-color: var(--color-core-black);
             width: 100%;
             max-width: 100vw;
-            overflow-x: hidden !important; /* Striktní X-axis zámek proti utíkání */
+            overflow-x: hidden !important; /* Strict X-axis lock */
+            overflow-y: scroll;
             cursor: none; /* Skryje defaultní kurzor na desktopu pro Custom Cursor */
         }
 
@@ -174,25 +201,39 @@
                 url('https://www.transparenttextures.com/patterns/micro-carbon.png');
             background-attachment: fixed;
             background-size: cover, auto;
+            background-repeat: no-repeat, repeat;
+            background-position: center top, left top;
         }
 
         /* Reset odkazů - Ochrana proti modrým iOS odkazům */
-        a, a:link, a:visited, a:hover, a:active {
+        a {
             text-decoration-line: none !important;
             text-decoration-style: solid !important;
+            text-decoration-color: transparent !important;
             color: inherit;
             background-color: transparent;
             cursor: none;
         }
 
-        img, svg, canvas, video {
-            display: block;
-            max-width: 100%;
-            height: auto;
-        }
+        a:link { text-decoration-line: none !important; color: inherit; }
+        a:visited { text-decoration-line: none !important; color: inherit; }
+        a:hover { text-decoration-line: none !important; color: inherit; }
+        a:active { text-decoration-line: none !important; color: inherit; }
 
-        ul, ol { list-style-type: none; }
-        button { border-width: 0; background-color: transparent; cursor: none; font-family: inherit; }
+        img { display: block; max-width: 100%; height: auto; }
+        svg { display: block; max-width: 100%; height: auto; }
+        canvas { display: block; max-width: 100%; height: auto; }
+        video { display: block; max-width: 100%; height: auto; }
+
+        ul { list-style-type: none; list-style-position: outside; list-style-image: none; }
+        ol { list-style-type: none; list-style-position: outside; list-style-image: none; }
+        
+        button { 
+            border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; 
+            border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none;
+            background-color: transparent; background-image: none; 
+            cursor: none; font-family: inherit; 
+        }
 
         ::selection {
             background-color: var(--glow-gold-60);
@@ -200,12 +241,23 @@
             text-shadow: none;
         }
 
-        /* --- LUXURY SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-moz-selection {
+            background-color: var(--glow-gold-60);
+            color: var(--color-text-pure);
+            text-shadow: none;
+        }
+
+        /* --------------------------------------------------------------------------
+         * MODULE 4.3: CUSTOM SCROLLBAR (MAYBACH EDITION)
+         * -------------------------------------------------------------------------- */
+        ::-webkit-scrollbar { 
+            width: 8px; 
+            height: 8px; 
+        }
         ::-webkit-scrollbar-track { 
             background-color: var(--color-core-black); 
             border-left-width: 1px; 
-            border-left-style: solid; 
+            border-left-style: solid;
             border-left-color: var(--glass-border-light); 
         }
         ::-webkit-scrollbar-thumb { 
@@ -227,14 +279,16 @@
             border-bottom-color: var(--color-core-black);
             border-left-color: var(--color-core-black);
         }
-        ::-webkit-scrollbar-thumb:hover { background-color: var(--color-gold-500); }
+        ::-webkit-scrollbar-thumb:hover { 
+            background-color: var(--color-gold-500); 
+        }
 
         /* --------------------------------------------------------------------------
-         * MODULE 4.3: CUSTOM CURSOR (AVANTGARDE INTERACTION)
+         * MODULE 4.4: CUSTOM CURSOR ENGINE (AVANTGARDE INTERACTION)
          * -------------------------------------------------------------------------- */
         .custom-cursor-dot {
             position: fixed;
-            top: 0; left: 0;
+            top: 0px; left: 0px;
             width: 8px; height: 8px;
             background-color: var(--color-gold-500);
             border-top-left-radius: 50%;
@@ -246,29 +300,19 @@
             transform: translate(-50%, -50%);
             transition-property: width, height, background-color;
             transition-duration: 0.3s;
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
             mix-blend-mode: difference;
         }
 
         .custom-cursor-ring {
             position: fixed;
-            top: 0; left: 0;
+            top: 0px; left: 0px;
             width: 40px; height: 40px;
-            border-top-width: 1px;
-            border-right-width: 1px;
-            border-bottom-width: 1px;
-            border-left-width: 1px;
-            border-top-style: solid;
-            border-right-style: solid;
-            border-bottom-style: solid;
-            border-left-style: solid;
-            border-top-color: var(--color-gold-500);
-            border-right-color: var(--color-gold-500);
-            border-bottom-color: var(--color-gold-500);
-            border-left-color: var(--color-gold-500);
-            border-top-left-radius: 50%;
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-            border-bottom-left-radius: 50%;
+            border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;
+            border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid;
+            border-top-color: var(--color-gold-500); border-right-color: var(--color-gold-500); border-bottom-color: var(--color-gold-500); border-left-color: var(--color-gold-500);
+            border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%;
+            background-color: transparent;
             pointer-events: none;
             z-index: var(--z-custom-cursor);
             transform: translate(-50%, -50%);
@@ -277,9 +321,9 @@
             transition-timing-function: ease-out;
         }
 
-        /* Hover states pro kurzor na odkazech */
+        /* Hover states pro kurzor na odkazech (Aplikováno přes JS) */
         .cursor-hover-active .custom-cursor-dot {
-            width: 0; height: 0; opacity: 0;
+            width: 0px; height: 0px; opacity: 0;
         }
         .cursor-hover-active .custom-cursor-ring {
             width: 60px; height: 60px;
@@ -291,18 +335,22 @@
             mix-blend-mode: screen;
         }
 
-        /* Vypnutí custom kurzoru na dotykových zařízeních */
+        /* Vypnutí custom kurzoru na dotykových zařízeních a tabletech */
         @media (hover: none) and (pointer: coarse) {
-            .custom-cursor-dot, .custom-cursor-ring { display: none !important; }
-            html, a, button { cursor: auto !important; }
+            .custom-cursor-dot { display: none !important; }
+            .custom-cursor-ring { display: none !important; }
+            html { cursor: auto !important; }
+            a { cursor: pointer !important; }
+            button { cursor: pointer !important; }
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 4.4: CINEMATIC PRELOADER (MAYBACH ENTRANCE)
+         * MODULE 4.5: CINEMATIC PRELOADER (MAYBACH ENTRANCE)
          * -------------------------------------------------------------------------- */
         .cinematic-preloader {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0px; right: 0px; bottom: 0px; left: 0px;
+            width: 100vw; height: 100vh;
             background-color: var(--color-core-black);
             z-index: var(--z-preloader);
             display: flex;
@@ -312,6 +360,8 @@
             transition-property: opacity, visibility;
             transition-duration: 1.5s;
             transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 1;
+            visibility: visible;
         }
         
         .cinematic-preloader.is-loaded {
@@ -322,21 +372,24 @@
 
         .preloader-brand {
             display: flex;
+            flex-direction: row;
             align-items: center;
             gap: 20px;
-            margin-bottom: 40px;
+            margin-top: 0px; margin-right: 0px; margin-bottom: 40px; margin-left: 0px;
             opacity: 0;
             animation-name: preloaderPulse, preloaderFadeIn;
             animation-duration: 2s, 1s;
-            animation-timing-function: ease-in-out, forwards;
+            animation-timing-function: ease-in-out, ease-out;
             animation-iteration-count: infinite, 1;
             animation-direction: alternate, normal;
+            animation-fill-mode: none, forwards;
         }
 
         .preloader-icon {
             font-size: 4rem;
             color: var(--color-gold-500);
-            filter: drop-shadow(0 0 20px var(--color-gold-500));
+            -webkit-filter: drop-shadow(0px 0px 20px var(--color-gold-500));
+            filter: drop-shadow(0px 0px 20px var(--color-gold-500));
         }
 
         .preloader-text {
@@ -345,14 +398,17 @@
             font-weight: 900;
             color: var(--color-text-pure);
             letter-spacing: 8px;
+            text-transform: uppercase;
         }
 
-        .preloader-text span { color: var(--color-gold-500); }
+        .preloader-text span { 
+            color: var(--color-gold-500); 
+        }
 
         .preloader-progress-bar-container {
             width: 300px;
             height: 2px;
-            background-color: rgba(255,255,255,0.1);
+            background-color: rgba(255, 255, 255, 0.1);
             position: relative;
             overflow-x: hidden;
             overflow-y: hidden;
@@ -360,40 +416,74 @@
 
         .preloader-progress-bar {
             position: absolute;
-            top: 0; left: 0; height: 100%; width: 0%;
+            top: 0px; left: 0px; height: 100%; width: 0%;
             background-color: var(--color-gold-500);
-            box-shadow: 0 0 15px var(--color-gold-500);
+            box-shadow: 0px 0px 15px var(--color-gold-500);
             transition-property: width;
             transition-duration: 0.2s;
             transition-timing-function: ease;
         }
 
         .preloader-status-text {
-            margin-top: 15px;
+            margin-top: 15px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;
             font-family: var(--font-family-data);
             font-size: 1rem;
             color: var(--color-gold-500);
             letter-spacing: 4px;
             text-transform: uppercase;
+            text-align: center;
         }
 
+        /* Preloader Animations */
+        @-webkit-keyframes preloaderPulse {
+            0% { transform: scale(0.95); -webkit-filter: brightness(0.8); filter: brightness(0.8); }
+            100% { transform: scale(1.05); -webkit-filter: brightness(1.2); filter: brightness(1.2); }
+        }
         @keyframes preloaderPulse {
             0% { transform: scale(0.95); filter: brightness(0.8); }
             100% { transform: scale(1.05); filter: brightness(1.2); }
+        }
+
+        @-webkit-keyframes preloaderFadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes preloaderFadeIn {
             0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-                /* --------------------------------------------------------------------------
-         * MODULE 3.5: CANVAS LAYERS & BACKGROUND ENGINES
+
+        /* --------------------------------------------------------------------------
+         * MODULE 4.6: CANVAS LAYERS
          * -------------------------------------------------------------------------- */
         .canvas-layer-global-particles {
             position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
+            top: 0px; right: 0px; bottom: 0px; left: 0px;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: var(--z-canvas-bg);
+            opacity: 0.85;
+            display: block;
+        }
+
+        .canvas-layer-local-fractal {
+            position: absolute;
+            right: 0px; bottom: 0px; left: 0px;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: var(--z-canvas-fractal);
+            opacity: 1.0;
+            display: block;
+        }
+                /* --------------------------------------------------------------------------
+         * MODULE 4.6: CANVAS LAYERS (PARTICLES & FRACTALS)
+         * -------------------------------------------------------------------------- */
+        .canvas-layer-global-particles {
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
             width: 100vw;
             height: 100vh;
             pointer-events: none;
@@ -405,20 +495,20 @@
 
         .canvas-layer-local-fractal {
             position: absolute;
-            right: 0;
-            bottom: 0;
-            left: 0;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: var(--z-canvas-bg); /* Roste za kartami */
+            z-index: var(--z-canvas-fractal); /* Roste přímo za kartami */
             opacity: 1.0;
             display: block;
             visibility: visible;
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 3.6: GLOBAL FLYING EAGLE (PHYSICS OBJECT)
+         * MODULE 4.7: GLOBAL FLYING EAGLE (PHYSICS OBJECT)
          * -------------------------------------------------------------------------- */
         .entity-flying-eagle {
             position: fixed;
@@ -429,9 +519,9 @@
             pointer-events: none;
             z-index: var(--z-eagle-engine);
             will-change: transform, opacity, left, top;
-            opacity: 0; /* Zviditelní se přes JS Engine po startu */
-            -webkit-filter: drop-shadow(0px 25px 35px rgba(0,0,0,0.95));
-            filter: drop-shadow(0px 25px 35px rgba(0,0,0,0.95));
+            opacity: 0; /* Zviditelní se přes JS Engine po startu a preloaderu */
+            -webkit-filter: drop-shadow(0px 25px 35px rgba(0, 0, 0, 0.95));
+            filter: drop-shadow(0px 25px 35px rgba(0, 0, 0, 0.95));
             display: block;
         }
 
@@ -442,6 +532,8 @@
             display: block;
         }
 
+        /* * Pokročilá asymetrická animace mávání křídel (Hardwarově akcelerovaná)
+         */
         .eagle-part-wing-left {
             transform-origin: 50% 50%;
             animation-name: keyframesFlapWingLeft;
@@ -459,7 +551,7 @@
             animation-timing-function: ease-in-out;
             animation-iteration-count: infinite;
             animation-direction: alternate;
-            animation-delay: 0.05s; /* Organická asymetrie letu */
+            animation-delay: 0.05s; /* Zajišťuje organickou nedokonalost letu */
             animation-fill-mode: both;
         }
 
@@ -482,13 +574,13 @@
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 3.7: MASTER HEADER & DESKTOP NAVIGATION
+         * MODULE 4.8: MASTER HEADER & DESKTOP NAVIGATION
          * -------------------------------------------------------------------------- */
         .layout-header-primary {
             position: fixed;
-            top: 0;
-            right: 0;
-            left: 0;
+            top: 0px;
+            right: 0px;
+            left: 0px;
             width: 100%;
             padding-top: 30px;
             padding-right: 60px;
@@ -516,6 +608,8 @@
             background-color: var(--glass-bg-dark);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
             border-bottom-color: var(--glass-border-gold);
             box-shadow: var(--shadow-elevated);
         }
@@ -529,7 +623,7 @@
             transition-property: transform;
             transition-duration: 0.4s;
             transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: none; /* Custom cursor takes over */
+            cursor: none; /* Custom cursor override */
         }
         
         .brand-link-wrapper:hover {
@@ -541,6 +635,7 @@
             width: 50px;
             height: 50px;
             display: flex;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
         }
@@ -594,9 +689,14 @@
             align-items: center;
             gap: 45px;
             list-style-type: none;
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-left: 0;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
         }
 
         .navigation-desktop-item {
@@ -661,11 +761,14 @@
         }
 
         .button-mobile-hamburger {
-            display: none; 
+            display: none; /* Blocked on desktop */
             font-size: 2.5rem;
             color: var(--color-gold-500);
             background-color: transparent;
-            border-width: 0;
+            border-top-width: 0px;
+            border-right-width: 0px;
+            border-bottom-width: 0px;
+            border-left-width: 0px;
             cursor: none;
             z-index: 2001;
             padding-top: 10px;
@@ -681,17 +784,18 @@
         .button-mobile-hamburger:focus {
             transform: scale(1.15) rotate(5deg);
             color: var(--color-gold-300);
-            outline: none;
+            outline-width: 0px;
+            outline-style: none;
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 3.8: MOBILE FULLSCREEN OVERLAY MENU
+         * MODULE 4.9: FULLSCREEN MOBILE OVERLAY
          * -------------------------------------------------------------------------- */
         .layer-mobile-menu-overlay {
             position: fixed;
-            top: 0;
-            right: -100vw; 
-            bottom: 0;
+            top: 0px;
+            right: -100vw; /* Schováno mimo viewport */
+            bottom: 0px;
             width: 100vw;
             height: 100vh;
             background-color: var(--glass-bg-darker);
@@ -710,7 +814,7 @@
         }
 
         .layer-mobile-menu-overlay.state-is-open {
-            right: 0;
+            right: 0px;
             visibility: visible;
             transition-delay: 0s, 0s;
         }
@@ -721,7 +825,9 @@
             font-weight: 800;
             color: var(--color-text-pure) !important;
             margin-top: 30px;
+            margin-right: 0px;
             margin-bottom: 30px;
+            margin-left: 0px;
             text-transform: uppercase;
             letter-spacing: 8px;
             display: block;
@@ -735,7 +841,8 @@
             color: var(--color-gold-500) !important;
             transform: scale(1.1) translateX(10px);
             text-shadow: var(--shadow-gold-bloom);
-            outline: none;
+            outline-width: 0px;
+            outline-style: none;
         }
 
         .button-mobile-close {
@@ -745,13 +852,16 @@
             font-size: 5rem;
             color: var(--color-gold-500);
             background-color: transparent;
-            border-width: 0;
+            border-top-width: 0px;
+            border-right-width: 0px;
+            border-bottom-width: 0px;
+            border-left-width: 0px;
             cursor: none;
             line-height: 1;
-            padding-top: 0;
-            padding-right: 0;
-            padding-bottom: 0;
-            padding-left: 0;
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
             transition-property: color, transform;
             transition-duration: 0.5s;
             transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -761,11 +871,12 @@
         .button-mobile-close:focus {
             color: var(--color-gold-300);
             transform: rotate(90deg) scale(1.2);
-            outline: none;
+            outline-width: 0px;
+            outline-style: none;
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 3.9: HERO SECTION (LASERS & MAIN BRAND)
+         * MODULE 4.10: HERO SECTION (LASER BEAMS & FIRST FOLD)
          * -------------------------------------------------------------------------- */
         .layout-section-hero {
             width: 100%;
@@ -813,7 +924,10 @@
             border-top-right-radius: 50px;
             border-bottom-right-radius: 50px;
             border-bottom-left-radius: 50px;
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 40px;
+            margin-left: 0px;
             box-shadow: var(--shadow-ambient);
             animation-name: keyframesSlideUpFade;
             animation-duration: 1.5s;
@@ -828,14 +942,18 @@
             padding-right: 60px;
             padding-bottom: 40px;
             padding-left: 60px;
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 30px;
+            margin-left: 0px;
             display: flex;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
             z-index: 1;
         }
 
-        /* EPIC CONIC GRADIENT LASERS */
+        /* EPIC CONIC GRADIENT LASERS (Hardwarově akcelerováno) */
         .hero-laser-stage::before {
             content: '';
             position: absolute;
@@ -876,10 +994,10 @@
             line-height: 1.05;
             color: var(--color-text-pure);
             text-shadow: 0px 20px 50px rgba(0, 0, 0, 1);
-            margin-top: 0;
-            margin-right: 0;
-            margin-bottom: 0;
-            margin-left: 0;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
             animation-name: keyframesSlideUpFade;
             animation-duration: 1.5s;
             animation-delay: 0.3s;
@@ -902,7 +1020,10 @@
             text-transform: uppercase;
             letter-spacing: 6px;
             text-shadow: var(--shadow-gold-bloom);
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 50px;
+            margin-left: 0px;
             animation-name: keyframesSlideUpFade;
             animation-duration: 1.5s;
             animation-delay: 0.6s;
@@ -917,7 +1038,10 @@
             font-size: 1.35rem;
             color: var(--color-text-primary);
             line-height: 1.9;
+            margin-top: 0px;
+            margin-right: auto;
             margin-bottom: 80px;
+            margin-left: auto;
             font-weight: 300;
             animation-name: keyframesSlideUpFade;
             animation-duration: 1.5s;
@@ -968,7 +1092,7 @@
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 3.10: ODOMETER STATISTICS
+         * MODULE 4.11: ODOMETER STATISTICS
          * -------------------------------------------------------------------------- */
         .layout-section-statistics {
             width: 100%;
@@ -991,8 +1115,10 @@
 
         .statistics-grid-container {
             max-width: 1400px;
-            margin-left: auto;
+            margin-top: 0px;
             margin-right: auto;
+            margin-bottom: 0px;
+            margin-left: auto;
             display: flex;
             flex-direction: row;
             justify-content: space-around;
@@ -1014,7 +1140,10 @@
             flex-direction: row;
             align-items: baseline;
             justify-content: center;
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 15px;
+            margin-left: 0px;
         }
 
         .statistic-number-odometer {
@@ -1032,6 +1161,9 @@
             font-size: clamp(3rem, 6vw, 4.5rem);
             font-weight: 800;
             color: var(--color-gold-500);
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
             margin-left: 8px;
             display: block;
         }
@@ -1047,7 +1179,7 @@
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 3.11: SERVICES & BRANCHES (FRACTAL LAYER)
+         * MODULE 4.12: SERVICES & BRANCHES (FRACTAL LAYER BACKGROUND)
          * -------------------------------------------------------------------------- */
         .layout-section-branches {
             width: 100%;
@@ -1063,7 +1195,10 @@
 
         .branches-header-wrapper {
             text-align: center;
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 120px;
+            margin-left: 0px;
             position: relative;
             z-index: var(--z-content-float);
             display: block;
@@ -1076,7 +1211,10 @@
             color: var(--color-gold-500);
             text-transform: uppercase;
             letter-spacing: 8px;
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 20px;
+            margin-left: 0px;
             display: block;
         }
 
@@ -1092,10 +1230,13 @@
         .branches-cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            grid-gap: 50px;
+            grid-column-gap: 50px;
+            grid-row-gap: 50px;
             max-width: 1500px;
-            margin-left: auto;
+            margin-top: 0px;
             margin-right: auto;
+            margin-bottom: 0px;
+            margin-left: auto;
             perspective: 2000px;
             position: relative;
             z-index: var(--z-content-float);
@@ -1146,6 +1287,7 @@
             box-shadow: var(--shadow-floating);
         }
 
+        /* Ambient Glow behind card - Creates depth */
         .card-ambient-glow-layer {
             position: absolute;
             bottom: -60px;
@@ -1165,6 +1307,7 @@
             display: block;
         }
         
+        /* Dynamic Glow Colors Based on Category */
         .card-service-branch[data-category="agtech"] .card-ambient-glow-layer { 
             background-image: radial-gradient(circle, var(--glow-gold-40) 0%, transparent 70%); 
         }
@@ -1179,7 +1322,7 @@
             opacity: 1;
             transform: scale(3.0);
         }
-
+                /* Content Layer inside Card */
         .card-content-foreground-layer {
             position: relative;
             z-index: 2;
@@ -1195,20 +1338,26 @@
             color: var(--color-gold-500);
             text-transform: uppercase;
             letter-spacing: 4px;
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 40px;
+            margin-left: 0px;
             display: inline-block;
         }
 
-        /* Visual Stage */
+        /* Visual Stage for Card Effects */
         .card-visual-effect-stage {
             height: 90px;
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 40px;
+            margin-left: 0px;
             display: flex;
             flex-direction: row;
             align-items: center;
         }
 
-        /* 1. Karta Dron */
+        /* CARD 1: Dron (Statická ikona, Orel létá mimo) */
         .card-icon-static-drone {
             font-size: 4rem;
             color: var(--color-gold-500);
@@ -1217,18 +1366,20 @@
             display: inline-block;
         }
 
-        /* 2. Karta Weby */
+        /* CARD 2: Matrix Kódování */
         .card-effect-matrix-wrapper {
             display: flex;
             flex-direction: row;
             align-items: center;
             gap: 20px;
         }
+        
         .icon-solid-laptop {
             font-size: 3.5rem;
             color: var(--color-text-pure);
             display: block;
         }
+        
         .typing-matrix-code {
             font-family: var(--font-family-data);
             font-size: 3rem;
@@ -1246,22 +1397,24 @@
             animation-iteration-count: infinite;
             display: block;
         }
+        
         @-webkit-keyframes keyframesTypewriterCode {
-            0% { width: 0; }
+            0% { width: 0px; }
             50%, 100% { width: 130px; }
         }
         @keyframes keyframesTypewriterCode {
-            0% { width: 0; }
+            0% { width: 0px; }
             50%, 100% { width: 130px; }
         }
 
-        /* 3. Karta Elektro */
+        /* CARD 3: Nabíjecí kabel Elektro */
         .card-effect-electro-wrapper {
             display: flex;
             flex-direction: column;
             justify-content: center;
             gap: 12px;
         }
+        
         .icon-energy-bolt {
             font-size: 4rem;
             color: var(--color-tech-green-base);
@@ -1271,6 +1424,7 @@
             animation-iteration-count: infinite;
             display: block;
         }
+        
         @-webkit-keyframes keyframesPulseBoltGlow {
             0% { -webkit-filter: drop-shadow(0px 0px 5px var(--color-tech-green-base)); transform: scale(1); }
             100% { -webkit-filter: drop-shadow(0px 0px 30px var(--color-tech-green-base)); transform: scale(1.1); }
@@ -1279,6 +1433,7 @@
             0% { filter: drop-shadow(0px 0px 5px var(--color-tech-green-base)); transform: scale(1); }
             100% { filter: drop-shadow(0px 0px 30px var(--color-tech-green-base)); transform: scale(1.1); }
         }
+        
         .energy-flowing-cable-line {
             width: 120px;
             height: 8px;
@@ -1300,11 +1455,12 @@
             animation-iteration-count: infinite;
             display: block;
         }
+        
         @-webkit-keyframes keyframesEnergyFlowRight {
-            100% { background-position: 25px 0; }
+            100% { background-position: 25px 0px; }
         }
         @keyframes keyframesEnergyFlowRight {
-            100% { background-position: 25px 0; }
+            100% { background-position: 25px 0px; }
         }
 
         .card-typography-h3 {
@@ -1312,7 +1468,10 @@
             font-size: 3rem;
             font-weight: 800;
             color: var(--color-text-pure);
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 25px;
+            margin-left: 0px;
             line-height: 1.1;
             display: block;
         }
@@ -1321,7 +1480,10 @@
             font-family: var(--font-family-primary);
             font-size: 1.25rem;
             color: var(--color-text-secondary);
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 50px;
+            margin-left: 0px;
             flex-grow: 1;
             line-height: 1.8;
             font-weight: 300;
@@ -1356,48 +1518,17 @@
         }
 
         /* --------------------------------------------------------------------------
-         * MEDIA QUERIES (PARTIAL - FOR UP TO HERO/BRANCHES)
-         * Ostatní v další části
-         * -------------------------------------------------------------------------- */
-        @media screen and (max-width: 768px) {
-            .hero-title-main { font-size: 4rem; }
-            .statistic-number-odometer { font-size: 5rem; }
-            .branches-header-title h2 { font-size: 3.5rem; }
-        }
-
-        /* --- KONEC CSS PRO ČÁST 1 --- */
-    </style>
-</head>
-<body class="app-body-container">
-
-    <div class="cinematic-preloader" id="js-preloader" aria-hidden="false" role="alert">
-        <div class="preloader__brand">
-            <i class="fas fa-dove preloader__icon" aria-hidden="true"></i>
-            <div class="preloader__text">CUCK<span>OO</span></div>
-        </div>
-        <div class="preloader__bar-wrapper">
-            <div class="preloader__bar-fill" id="js-preloader-bar"></div>
-        </div>
-        <div class="preloader__status" id="js-preloader-status">INICIALIZACE ENTERPRISE JÁDRA... 0%</div>
-    </div>
-
-    <div class="custom-cursor-dot" id="js-cursor-dot" aria-hidden="true"></div>
-    <div class="custom-cursor-ring" id="js-cursor-ring" aria-hidden="true"></div>
-
-    <canvas id="particle-engine-canvas" class="canvas-layer-global-particles" aria-hidden="true" role="presentation"></canvas>
-    <style>
-        /* --------------------------------------------------------------------------
-         * MODULE 4.10: SECTION - FOTOGALERIE (VIZUÁLNÍ STOPY)
+         * MODULE 4.12: SECTION - FOTOGALERIE (VIZUÁLNÍ STOPY)
          * -------------------------------------------------------------------------- */
         .layout-section-gallery {
             width: 100%;
             padding-top: 140px;
+            padding-right: 20px;
             padding-bottom: 140px;
             padding-left: 20px;
-            padding-right: 20px;
             background-color: var(--color-abyss-surface);
             position: relative;
-            z-index: var(--z-index-content-base);
+            z-index: var(--z-content-base);
             border-top-width: 1px;
             border-top-style: solid;
             border-top-color: rgba(255, 255, 255, 0.05);
@@ -1413,8 +1544,10 @@
             grid-column-gap: 30px;
             grid-row-gap: 30px;
             max-width: 1400px;
-            margin-left: auto;
+            margin-top: 0px;
             margin-right: auto;
+            margin-bottom: 0px;
+            margin-left: auto;
         }
 
         .gallery-image-wrapper {
@@ -1441,7 +1574,7 @@
             position: relative;
             overflow-x: hidden;
             overflow-y: hidden;
-            cursor: none; /* Custom cursor override */
+            cursor: none; /* Override pro Custom Cursor */
             transition-property: transform, border-color, box-shadow;
             transition-duration: 0.6s;
             transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -1451,7 +1584,7 @@
         .gallery-image-wrapper::before {
             content: '';
             position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
+            top: 0px; right: 0px; bottom: 0px; left: 0px;
             background-color: rgba(0, 0, 0, 0.75);
             transition-property: background-color;
             transition-duration: 0.5s;
@@ -1496,14 +1629,14 @@
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 4.11: SECTION - EXPERTÍZA (RADAR)
+         * MODULE 4.13: SECTION - EXPERTÍZA (RADAR)
          * -------------------------------------------------------------------------- */
         .layout-section-expertise {
             width: 100%;
             padding-top: 180px;
+            padding-right: 20px;
             padding-bottom: 180px;
             padding-left: 20px;
-            padding-right: 20px;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -1522,10 +1655,9 @@
             align-items: center;
         }
 
-        /* Outer Radar Ring */
         .radar-outer-ring-dashed {
             position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
+            top: 0px; right: 0px; bottom: 0px; left: 0px;
             width: 100%;
             height: 100%;
             border-top-width: 2px;
@@ -1554,7 +1686,6 @@
         @-webkit-keyframes keyframesSpinRadarOuter { 100% { transform: rotate(360deg); } }
         @keyframes keyframesSpinRadarOuter { 100% { transform: rotate(360deg); } }
 
-        /* Inner Radar Core */
         .radar-core-shield {
             width: 75%;
             height: 75%;
@@ -1585,11 +1716,10 @@
             overflow-y: hidden;
         }
 
-        /* Radar Scanner Beam */
         .radar-core-shield::after {
             content: '';
             position: absolute;
-            top: 0;
+            top: 0px;
             left: 50%;
             width: 50%;
             height: 50%;
@@ -1636,14 +1766,14 @@
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 4.12: SECTION - FOOTER & CONTACT
+         * MODULE 4.14: SECTION - FOOTER & CONTACT
          * -------------------------------------------------------------------------- */
         .layout-section-footer {
             width: 100%;
             padding-top: 150px;
+            padding-right: 20px;
             padding-bottom: 60px;
             padding-left: 20px;
-            padding-right: 20px;
             text-align: center;
             position: relative;
             z-index: var(--z-content-base);
@@ -1653,9 +1783,10 @@
 
         .footer-content-stage {
             max-width: 1000px;
-            margin-left: auto;
+            margin-top: 0px;
             margin-right: auto;
             margin-bottom: 90px;
+            margin-left: auto;
             display: block;
         }
 
@@ -1664,7 +1795,10 @@
             font-size: clamp(3.5rem, 8vw, 6rem);
             font-weight: 900;
             color: var(--color-text-pure);
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 15px;
+            margin-left: 0px;
             letter-spacing: 3px;
             display: block;
         }
@@ -1676,7 +1810,10 @@
             color: var(--color-gold-500);
             text-transform: uppercase;
             letter-spacing: 8px;
+            margin-top: 0px;
+            margin-right: 0px;
             margin-bottom: 70px;
+            margin-left: 0px;
             display: block;
         }
 
@@ -1733,7 +1870,7 @@
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 4.13: FLOATING ACTION BUTTON (WHATSAPP)
+         * MODULE 4.15: FLOATING ACTION BUTTON (WHATSAPP)
          * -------------------------------------------------------------------------- */
         .floating-action-btn-whatsapp {
             position: fixed;
@@ -1780,7 +1917,7 @@
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 4.14: JAVASCRIPT ANIMATION CLASSES
+         * MODULE 4.16: JAVASCRIPT ANIMATION CLASSES
          * -------------------------------------------------------------------------- */
         .js-class-animate-reveal {
             opacity: 0;
@@ -1793,11 +1930,11 @@
 
         .js-class-animate-reveal.state-is-revealed-now {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0px);
         }
 
         /* --------------------------------------------------------------------------
-         * MODULE 4.15: STRICT MEDIA QUERIES (MOBILE PROTECTION)
+         * MODULE 4.17: STRICT MEDIA QUERIES (MOBILE PROTECTION)
          * -------------------------------------------------------------------------- */
         
         /* Velké obrazovky, tablety na šířku */
@@ -1815,7 +1952,7 @@
 
         /* Smartphony (iPhone / Android) */
         @media screen and (max-width: 768px) {
-            /* Nejdůležitější pravidlo pro mobily: Dvojitý zámek šířky */
+            /* NEJDŮLEŽITĚJŠÍ PRAVIDLO: Dvojitý zámek šířky proti utíkání stránky na iOS */
             body, html { 
                 overflow-x: hidden !important; 
                 width: 100vw !important; 
@@ -1864,7 +2001,25 @@
             .footer-contact-link-item { font-size: 1.2rem; }
         }
     </style>
+</head>
+<body class="app-body-container">
 
+    <div class="cinematic-preloader" id="js-preloader" aria-hidden="false" role="alert">
+        <div class="preloader__brand">
+            <i class="fas fa-dove preloader__icon" aria-hidden="true"></i>
+            <div class="preloader__text">CUCK<span>OO</span></div>
+        </div>
+        <div class="preloader__bar-wrapper">
+            <div class="preloader__bar-fill" id="js-preloader-bar"></div>
+        </div>
+        <div class="preloader__status" id="js-preloader-status">INICIALIZACE ENTERPRISE JÁDRA... 0%</div>
+    </div>
+
+    <div class="custom-cursor-dot" id="js-cursor-dot" aria-hidden="true"></div>
+    <div class="custom-cursor-ring" id="js-cursor-ring" aria-hidden="true"></div>
+
+    <canvas id="particle-engine-canvas" class="canvas-layer-global-particles" aria-hidden="true" role="presentation"></canvas>
+    
     <div id="global-flying-eagle" class="entity-flying-eagle" aria-hidden="true" role="presentation">
         <svg class="eagle-svg-vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
             <path d="M256,180 C270,180 290,250 290,320 C290,350 256,400 256,400 C256,400 222,350 222,320 C222,250 242,180 256,180 Z" />
@@ -1954,7 +2109,8 @@
 
             </div>
         </section>
-                <section class="layout-section-branches" id="sluzby" aria-labelledby="branches-section-title">
+
+        <section class="layout-section-branches" id="sluzby" aria-labelledby="branches-section-title">
             
             <canvas id="fractal-tree-canvas" class="layer-canvas-fractal" aria-hidden="true" role="presentation"></canvas>
 
@@ -1972,7 +2128,7 @@
                         
                         <div class="card-visual-effect-stage">
                             <i class="card-icon-static-drone fas fa-satellite-dish" aria-hidden="true"></i>
-                            <i class="card-icon-static-drone fas fa-helicopter" style="margin-left: 15px;" aria-hidden="true"></i>
+                            <i class="card-icon-static-drone fas fa-helicopter" style="margin-left: 10px;" aria-hidden="true"></i>
                         </div>
                         
                         <h3 class="card-typography-h3">Strážce úrody</h3>
@@ -2039,25 +2195,23 @@
         </section>
 
         <section class="layout-section-gallery" aria-label="Fotogalerie realizací">
-            <div class="branches-header-wrapper js-class-animate-reveal" style="margin-bottom: 80px;">
+            <div class="branches-header-wrapper js-class-animate-reveal" style="margin-bottom: 70px;">
                 <p class="branches-header-subtitle">Pohled z křídel</p>
                 <h2 class="branches-header-title">Vizuální stopy</h2>
             </div>
             
             <div class="gallery-grid-layout">
-                
                 <div class="gallery-image-wrapper js-class-animate-reveal" style="background-image: url('https://images.unsplash.com/photo-1508197149814-0cc02e8b7f74?q=80&w=800&auto=format&fit=crop');" role="img" aria-label="Fotografie: Monitoring pole s dronem">
                     <div class="gallery-caption-text">Monitoring Pole & Drony</div>
                 </div>
                 
-                <div class="gallery-image-wrapper js-class-animate-reveal" style="transition-delay: 0.15s; background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop');" role="img" aria-label="Fotografie: Kódování a vývoj aplikací">
+                <div class="gallery-image-wrapper js-class-animate-reveal" style="transition-delay: 0.1s; background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop');" role="img" aria-label="Fotografie: Kódování a vývoj aplikací">
                     <div class="gallery-caption-text">Kódování & Vývoj</div>
                 </div>
                 
-                <div class="gallery-image-wrapper js-class-animate-reveal" style="transition-delay: 0.3s; background-image: url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=800&auto=format&fit=crop');" role="img" aria-label="Fotografie: Nabíjení zelené elektromobility">
+                <div class="gallery-image-wrapper js-class-animate-reveal" style="transition-delay: 0.2s; background-image: url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=800&auto=format&fit=crop');" role="img" aria-label="Fotografie: Nabíjení zelené elektromobility">
                     <div class="gallery-caption-text">Zelená Energie & Dotace</div>
                 </div>
-
             </div>
         </section>
 
@@ -2091,6 +2245,278 @@
         </div>
         
         <div class="footer-legal-copyright-bar">
+            &copy; 2026 ZNAČKA CUCKOO. DIGITÁLNÍ EKOSYSTÉM HUB. VŠECHNA PRÁVA VYHRAZENA.
+        </div>
+    </footer>
+
+    <a href="https://wa.me/420604353393" target="_blank" class="floating-action-btn-whatsapp" title="Napsat na WhatsApp" rel="noopener noreferrer" aria-label="Otevřít chat v aplikaci WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+    <div id="global-flying-eagle" class="entity-flying-eagle" aria-hidden="true" role="presentation" data-engine-status="standby">
+        <svg class="eagle-svg-vector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
+            <g class="eagle-body-group">
+                <path d="M256,180 C270,180 290,250 290,320 C290,350 256,400 256,400 C256,400 222,350 222,320 C222,250 242,180 256,180 Z" />
+            </g>
+            <g class="eagle-head-group">
+                <circle cx="256" cy="180" r="20" />
+            </g>
+            <g class="eagle-tail-group">
+                <path d="M230,380 L200,480 L256,440 L312,480 L282,380 Z" />
+            </g>
+            <g class="eagle-wings-group">
+                <path class="eagle-part-wing-left" d="M230,250 C120,200 20,250 20,250 C80,300 150,320 230,280 Z" />
+                <path class="eagle-part-wing-right" d="M282,250 C392,200 492,250 492,250 C432,300 362,320 282,280 Z" />
+            </g>
+        </svg>
+    </div>
+
+    <header class="layout-header-primary" id="main-header" role="banner" data-scroll-state="top">
+        <a href="#" class="brand-link-wrapper" aria-label="Návrat na domovskou stránku - Značka Cuckoo" role="link">
+            <div class="brand-icon-container" aria-hidden="true">
+                <i class="fas fa-dove brand-icon-primary-dove"></i>
+                <i class="fas fa-feather brand-icon-secondary-feather"></i>
+            </div>
+            <div class="brand-text-logotype">
+                Cuck<span>oo</span>
+            </div>
+        </a>
+        
+        <nav role="navigation" aria-label="Hlavní desktopová navigace">
+            <ul class="navigation-desktop-list" role="menubar">
+                <li role="none">
+                    <a href="#sluzby" class="navigation-desktop-item" role="menuitem" tabindex="0">Moje Větve</a>
+                </li>
+                <li role="none">
+                    <a href="#expertiza" class="navigation-desktop-item" role="menuitem" tabindex="0">Expertíza</a>
+                </li>
+                <li role="none">
+                    <a href="#kontakt" class="button-cta-outline-gold" role="menuitem" tabindex="0">Spojit se</a>
+                </li>
+            </ul>
+        </nav>
+        
+        <button class="button-mobile-hamburger" id="burger-btn" aria-label="Otevřít mobilní menu" aria-expanded="false" aria-controls="mobile-overlay" type="button">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
+    </header>
+
+    <nav class="layer-mobile-menu-overlay" id="mobile-overlay" role="navigation" aria-hidden="true" aria-label="Mobilní fullscreen navigace">
+        <button class="button-mobile-close" id="close-btn" aria-label="Zavřít mobilní menu" type="button" tabindex="-1">
+            &times;
+        </button>
+        <ul role="menu" style="display:flex; flex-direction:column; align-items:center; padding:0; margin:0;">
+            <li role="none" style="margin: 20px 0;">
+                <a href="#sluzby" class="mobile-menu-anchor" role="menuitem" tabindex="-1">Moje Větve</a>
+            </li>
+            <li role="none" style="margin: 20px 0;">
+                <a href="#expertiza" class="mobile-menu-anchor" role="menuitem" tabindex="-1">Expertíza</a>
+            </li>
+            <li role="none" style="margin: 20px 0;">
+                <a href="#kontakt" class="mobile-menu-anchor" role="menuitem" tabindex="-1">Kontakt</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main role="main" id="main-content">
+        
+        <section class="layout-section-hero" aria-labelledby="hero-main-title-id" id="hero-section">
+            <div class="hero-badge-pill" role="text">
+                Osobní Brand & Technologie s duší
+            </div>
+            
+            <div class="hero-laser-stage" aria-hidden="true">
+                <h1 id="hero-main-title-id" class="hero-title-main">
+                    ZNAČKA<br><span>CUCKOO</span>
+                </h1>
+            </div>
+            
+            <div class="hero-subtitle-vision" role="heading" aria-level="2">
+                Jsme středobodem vašich vizí.
+            </div>
+            
+            <p class="hero-paragraph-description">
+                Spojení nadhledu, přírody a špičkových technologií. Jako <b>Bc. Jan Koukal</b> 
+                urychluji realizaci vizí, které mají smysl a mění budoucnost. Jsem váš Inovační Pilot 🚀.
+            </p>
+            
+            <div class="hero-scroll-mouse" aria-hidden="true">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <section class="layout-section-statistics" aria-label="Statistiky a Milníky" id="statistiky-section">
+            <div class="statistics-grid-container">
+                
+                <div class="statistic-item-block js-class-animate-reveal" data-reveal-type="fade-up">
+                    <div class="statistic-numeric-group" aria-hidden="true">
+                        <span class="statistic-number-odometer js-odometer-counter" data-target="500" data-status-done="false">0</span>
+                        <span class="statistic-symbol-plus">h</span>
+                    </div>
+                    <div class="statistic-label-text" aria-label="500 hodin nalétaných s drony">
+                        Nalétaných hodin (Drony)
+                    </div>
+                </div>
+                
+                <div class="statistic-item-block js-class-animate-reveal" data-reveal-type="fade-up" style="transition-delay: 0.1s;">
+                    <div class="statistic-numeric-group" aria-hidden="true">
+                        <span class="statistic-number-odometer js-odometer-counter" data-target="10" data-status-done="false">0</span>
+                        <span class="statistic-symbol-plus">Mil.+</span>
+                    </div>
+                    <div class="statistic-label-text" aria-label="10 Milionů plus zajištěné financování a dotace">
+                        Zajištěné financování a dotace
+                    </div>
+                </div>
+                
+                <div class="statistic-item-block js-class-animate-reveal" data-reveal-type="fade-up" style="transition-delay: 0.2s;">
+                    <div class="statistic-numeric-group" aria-hidden="true">
+                        <span class="statistic-number-odometer js-odometer-counter" data-target="10" data-status-done="false">0</span>
+                        <span class="statistic-symbol-plus">k+</span>
+                    </div>
+                    <div class="statistic-label-text" aria-label="10 tisíc plus řádků čistého kódu">
+                        Řádků čistého kódu
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="layout-section-branches" id="sluzby" aria-labelledby="branches-section-title">
+            
+            <canvas id="fractal-tree-canvas" class="layer-canvas-fractal" aria-hidden="true" role="presentation" data-engine="lsystem"></canvas>
+
+            <div class="branches-header-wrapper js-class-animate-reveal" data-reveal-type="fade-in">
+                <p class="branches-header-subtitle">Digitální Ekosystém</p>
+                <h2 id="branches-section-title" class="branches-header-title">Moje Větve</h2>
+            </div>
+            
+            <div class="branches-cards-grid" role="list">
+                
+                <a href="https://www.strazce-urody.cz" target="_blank" class="card-service-branch js-class-animate-reveal" data-category="agtech" role="listitem" aria-label="Otevřít projekt Strážce úrody v novém okně" rel="noopener noreferrer">
+                    <div class="card-ambient-glow-layer" aria-hidden="true"></div>
+                    <div class="card-content-foreground-layer">
+                        <span class="card-category-label">Zemědělství & Hardware</span>
+                        
+                        <div class="card-visual-effect-stage" aria-hidden="true">
+                            <i class="card-icon-static-drone fas fa-satellite-dish"></i>
+                            <i class="card-icon-static-drone fas fa-helicopter" style="margin-left: 15px;"></i>
+                        </div>
+                        
+                        <h3 class="card-typography-h3">Strážce úrody</h3>
+                        <p class="card-typography-p">
+                            Špičkové technologie pro efektivní hospodaření. Využívám drony pro precizní 
+                            monitoring a ochranu plodin v dokonalé harmonii s přírodou.
+                        </p>
+                        
+                        <div class="card-action-link-btn" aria-hidden="true">
+                            Prozkoumat projekt <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://koukal96.github.io/Filcovekralovstvi/" target="_blank" class="card-service-branch js-class-animate-reveal" data-category="digital" style="transition-delay: 0.15s;" role="listitem" aria-label="Otevřít projekt Tvorba Webů v novém okně" rel="noopener noreferrer">
+                    <div class="card-ambient-glow-layer" aria-hidden="true"></div>
+                    <div class="card-content-foreground-layer">
+                        <span class="card-category-label" style="color: var(--color-tech-blue-base);">Digitální Prezentace</span>
+                        
+                        <div class="card-visual-effect-stage" aria-hidden="true">
+                            <div class="card-effect-matrix-wrapper">
+                                <i class="fas fa-laptop-code icon-solid-laptop"></i>
+                                <div class="typing-matrix-code">{'</>'}</div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="card-typography-h3">Tvorba webů</h3>
+                        <p class="card-typography-p">
+                            Architektura a kód, který prodává. Vytvářím interaktivní, luxusní webové prezentace 
+                            na míru, které posouvají váš brand do digitální elity.
+                        </p>
+                        
+                        <div class="card-action-link-btn" style="color: var(--color-tech-blue-base) !important;" aria-hidden="true">
+                            Zobrazit realizace <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://koukal96.github.io/K-unit/" target="_blank" class="card-service-branch js-class-animate-reveal" data-category="electro" style="transition-delay: 0.3s;" role="listitem" aria-label="Otevřít projekt Elektromobilita v novém okně" rel="noopener noreferrer">
+                    <div class="card-ambient-glow-layer" aria-hidden="true"></div>
+                    <div class="card-content-foreground-layer">
+                        <span class="card-category-label" style="color: var(--color-tech-green-base);">Dotace a Udržitelnost</span>
+                        
+                        <div class="card-visual-effect-stage" aria-hidden="true">
+                            <div class="card-effect-electro-wrapper">
+                                <i class="fas fa-bolt icon-energy-bolt"></i>
+                                <div class="energy-flowing-cable-line"></div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="card-typography-h3">Elektromobilita</h3>
+                        <p class="card-typography-p">
+                            Urychluji váš přechod na zelenou energii. Zajišťuji komplexní financování a dotační 
+                            management pro elektro kamiony a udržitelné flotily.
+                        </p>
+                        
+                        <div class="card-action-link-btn" style="color: var(--color-tech-green-base) !important;" aria-hidden="true">
+                            Dotační příležitosti <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <section class="layout-section-gallery" aria-label="Fotogalerie realizací" id="galerie-section">
+            <div class="branches-header-wrapper js-class-animate-reveal" style="margin-bottom: 80px;" data-reveal-type="fade-up">
+                <p class="branches-header-subtitle">Pohled z křídel</p>
+                <h2 class="branches-header-title">Vizuální stopy</h2>
+            </div>
+            
+            <div class="gallery-grid-layout" role="list">
+                
+                <div class="gallery-image-wrapper js-class-animate-reveal" style="background-image: url('https://images.unsplash.com/photo-1508197149814-0cc02e8b7f74?q=80&w=800&auto=format&fit=crop');" role="listitem" aria-label="Fotografie: Monitoring pole s dronem">
+                    <div class="gallery-caption-text" aria-hidden="true">Monitoring Pole & Drony</div>
+                </div>
+                
+                <div class="gallery-image-wrapper js-class-animate-reveal" style="transition-delay: 0.15s; background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop');" role="listitem" aria-label="Fotografie: Kódování a vývoj aplikací">
+                    <div class="gallery-caption-text" aria-hidden="true">Kódování & Vývoj</div>
+                </div>
+                
+                <div class="gallery-image-wrapper js-class-animate-reveal" style="transition-delay: 0.3s; background-image: url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=800&auto=format&fit=crop');" role="listitem" aria-label="Fotografie: Nabíjení zelené elektromobility">
+                    <div class="gallery-caption-text" aria-hidden="true">Zelená Energie & Dotace</div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="layout-section-expertise" id="expertiza" aria-labelledby="expertise-heading">
+            <div class="radar-hardware-container js-class-animate-reveal" data-reveal-type="zoom-in">
+                <div class="radar-outer-ring-dashed" aria-hidden="true"></div>
+                <div class="radar-core-shield" aria-hidden="true">
+                    <div class="radar-foreground-content">
+                        <i class="fas fa-feather radar-icon-center-feather"></i>
+                        <h2 id="expertise-heading" class="radar-typography-heading">EXPERTÍZA</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="layout-section-footer" id="kontakt" role="contentinfo">
+        <div class="footer-content-stage js-class-animate-reveal" data-reveal-type="fade-up">
+            <h2 class="footer-name-heading">BC. JAN KOUKAL</h2>
+            <p class="footer-role-text">Inovační Pilot pro vaši budoucnost</p>
+            
+            <address class="footer-contact-grid-box" style="font-style: normal;">
+                <a href="mailto:koukal@cuckoo.cz" class="footer-contact-link-item" aria-label="Napsat e-mail na koukal@cuckoo.cz">
+                    <i class="fas fa-envelope" aria-hidden="true"></i> koukal@cuckoo.cz
+                </a>
+                <a href="tel:+420604353393" class="footer-contact-link-item" aria-label="Zavolat na číslo +420 604 353 393">
+                    <i class="fas fa-phone" aria-hidden="true"></i> +420 604 353 393
+                </a>
+            </address>
+        </div>
+        
+        <div class="footer-legal-copyright-bar">
             &copy; <span id="current-year">2026</span> ZNAČKA CUCKOO. DIGITÁLNÍ EKOSYSTÉM HUB. VŠECHNA PRÁVA VYHRAZENA.
         </div>
     </footer>
@@ -2098,553 +2524,4 @@
     <a href="https://wa.me/420604353393" target="_blank" class="floating-action-btn-whatsapp" title="Napsat na WhatsApp" rel="noopener noreferrer" aria-label="Otevřít chat v aplikaci WhatsApp">
         <i class="fab fa-whatsapp" aria-hidden="true"></i>
     </a>
-
-    <script>
-        'use strict';
-
-        /**
-         * @namespace CuckooConfig
-         * @description Centrální konfigurační objekt aplikace. Umožňuje snadnou změnu chování modulů.
-         */
-        const CuckooConfig = {
-            timing: {
-                preloaderDuration: 1800, // Ms
-                preloaderInterval: 20,
-                fractalGrowthDelay: 90,
-                odometerRefreshRate: 35
-            },
-            physics: {
-                eagleFlightSpeed: 2.5,
-                eagleOscillationAmplitude: 130,
-                eagleOscillationFrequency: 0.025,
-                particleGravityMin: 0.2,
-                particleGravityMax: 0.7,
-                particleWindMultiplier: 0.6
-            },
-            rendering: {
-                particleCountDesktop: 25,
-                particleCountMobile: 12,
-                fractalMaxDepth: 6,
-                fractalMinLength: 15
-            },
-            thresholds: {
-                scrollReveal: 0.15,
-                fractalTrigger: 0.25,
-                mobileBreakpoint: 768
-            }
-        };
-
-        /**
-         * @class CuckooLogger
-         * @description Abstraktní vrstva pro logování stavů, varování a chyb.
-         */
-        class CuckooLogger {
-            static info(moduleName, message) {
-                console.info(`[CUCKOO OS] [${moduleName}] -> ${message}`);
-            }
-            static warn(moduleName, message) {
-                console.warn(`[CUCKOO OS WARN] [${moduleName}] -> ${message}`);
-            }
-            static error(moduleName, message, errObj = null) {
-                console.error(`[CUCKOO OS FATAL] [${moduleName}] -> ${message}`, errObj);
-            }
-        }
-
-        /**
-         * @class CustomCursorManager
-         * @description Řídí pozici a stav avantgardního custom kurzoru na desktopových zařízeních.
-         */
-        class CustomCursorManager {
-            constructor() {
-                // Detekce dotykových zařízení (zde kurzor nespouštíme)
-                this.isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-                if (this.isTouchDevice) {
-                    CuckooLogger.info('CustomCursorManager', 'Touch device detected. Custom cursor disabled.');
-                    return;
-                }
-
-                this.cursorDot = document.getElementById('js-cursor-dot');
-                this.cursorRing = document.getElementById('js-cursor-ring');
-                
-                if (!this.cursorDot || !this.cursorRing) {
-                    CuckooLogger.warn('CustomCursorManager', 'Cursor elements not found in DOM.');
-                    return;
-                }
-
-                this.mouseX = window.innerWidth / 2;
-                this.mouseY = window.innerHeight / 2;
-                this.ringX = this.mouseX;
-                this.ringY = this.mouseY;
-
-                this.initEvents();
-                this.renderLoop();
-                CuckooLogger.info('CustomCursorManager', 'Initialized and rendering.');
-            }
-
-            initEvents() {
-                window.addEventListener('mousemove', (e) => {
-                    this.mouseX = e.clientX;
-                    this.mouseY = e.clientY;
-                }, { passive: true });
-
-                // Přidání hover efektů na všechny interaktivní elementy
-                const interactives = document.querySelectorAll('a, button, .gallery-image-wrapper');
-                interactives.forEach(el => {
-                    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover-active'));
-                    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover-active'));
-                });
-            }
-
-            renderLoop() {
-                // Okamžitý přesun malé tečky
-                this.cursorDot.style.left = `${this.mouseX}px`;
-                this.cursorDot.style.top = `${this.mouseY}px`;
-
-                // Lerp (Linear Interpolation) pro zpožděný pohyb prstence
-                this.ringX += (this.mouseX - this.ringX) * 0.15;
-                this.ringY += (this.mouseY - this.ringY) * 0.15;
-                
-                this.cursorRing.style.left = `${this.ringX}px`;
-                this.cursorRing.style.top = `${this.ringY}px`;
-
-                requestAnimationFrame(this.renderLoop.bind(this));
-            }
-        }
-
-        /**
-         * @class PreloaderManager
-         * @description Zpracovává filmový nástup stránky a synchronizuje zobrazení obsahu.
-         */
-        class PreloaderManager {
-            constructor() {
-                this.preloaderEl = document.getElementById('js-preloader');
-                this.barEl = document.getElementById('js-preloader-bar');
-                this.statusEl = document.getElementById('js-preloader-status');
-                
-                if (!this.preloaderEl) return;
-                
-                this.progress = 0;
-                this.bootSequence();
-            }
-
-            bootSequence() {
-                // Falešný progress bar pro dramatický efekt
-                const interval = setInterval(() => {
-                    // Random increment
-                    this.progress += Math.random() * 15;
-                    if (this.progress >= 100) {
-                        this.progress = 100;
-                        clearInterval(interval);
-                        this.finalizeBoot();
-                    }
-                    
-                    this.barEl.style.width = `${this.progress}%`;
-                    this.statusEl.innerText = `INICIALIZACE ENTERPRISE JÁDRA... ${Math.floor(this.progress)}%`;
-                }, CuckooConfig.timing.preloaderInterval);
-            }
-
-            finalizeBoot() {
-                this.statusEl.innerText = "SYSTÉM ONLINE. VÍTEJTE.";
-                this.statusEl.style.color = "#10b981"; // Green status
-                
-                setTimeout(() => {
-                    this.preloaderEl.classList.add('is-loaded');
-                    document.body.style.overflowY = 'auto'; // Povolí scrollování
-                    CuckooLogger.info('PreloaderManager', 'Boot sequence completed. Hiding preloader.');
-                }, 500);
-            }
-        }
-
-        /**
-         * @class NavigationController
-         * @description Správa uživatelského rozhraní, posunu hlavičky a zamykání mobilního menu.
-         */
-        class NavigationController {
-            constructor() {
-                this.headerEl = document.getElementById('main-header');
-                this.burgerBtn = document.getElementById('burger-btn');
-                this.closeBtn = document.getElementById('close-btn');
-                this.mobileOverlay = document.getElementById('mobile-overlay');
-                
-                if (!this.headerEl || !this.burgerBtn || !this.mobileOverlay) return;
-
-                this.navLinks = this.mobileOverlay.querySelectorAll('a');
-                this.bindEvents();
-            }
-
-            bindEvents() {
-                let isScrolling = false;
-                window.addEventListener('scroll', () => {
-                    if (!isScrolling) {
-                        window.requestAnimationFrame(() => {
-                            this.handleScroll();
-                            isScrolling = false;
-                        });
-                        isScrolling = true;
-                    }
-                }, { passive: true });
-
-                this.burgerBtn.addEventListener('click', () => this.openMenu());
-                this.closeBtn.addEventListener('click', () => this.closeMenu());
-                
-                this.navLinks.forEach(link => {
-                    link.addEventListener('click', () => this.closeMenu());
-                });
-            }
-
-            handleScroll() {
-                if (window.scrollY > 80) {
-                    this.headerEl.classList.add('state-is-scrolled');
-                } else {
-                    this.headerEl.classList.remove('state-is-scrolled');
-                }
-            }
-
-            openMenu() {
-                this.mobileOverlay.classList.add('state-is-open');
-                this.burgerBtn.setAttribute('aria-expanded', 'true');
-                // Strict body lock to prevent background scrolling on mobile
-                document.body.style.overflow = 'hidden'; 
-                document.documentElement.style.overflow = 'hidden';
-            }
-
-            closeMenu() {
-                this.mobileOverlay.classList.remove('state-is-open');
-                this.burgerBtn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-                document.documentElement.style.overflow = '';
-            }
-        }
-
-        /**
-         * @class IntersectionObserverEngine
-         * @description Detekuje scroll pozici a spouští vizuální odkrývání a odometer budíky.
-         */
-        class IntersectionObserverEngine {
-            constructor() {
-                this.revealNodes = document.querySelectorAll('.js-class-animate-reveal');
-                this.observerOptions = { 
-                    root: null, 
-                    rootMargin: '0px', 
-                    threshold: CuckooConfig.thresholds.scrollReveal 
-                };
-                
-                if (this.revealNodes.length > 0) {
-                    this.initObserver();
-                }
-            }
-
-            initObserver() {
-                try {
-                    const observer = new IntersectionObserver((entries, obs) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('state-is-revealed-now');
-                                
-                                const counters = entry.target.querySelectorAll('.js-odometer-counter');
-                                counters.forEach(counter => this.animateOdometerNumber(counter));
-                                
-                                obs.unobserve(entry.target);
-                            }
-                        });
-                    }, this.observerOptions);
-
-                    this.revealNodes.forEach(node => observer.observe(node));
-                } catch (e) {
-                    CuckooLogger.error('IntersectionObserverEngine', 'Failed to init Observer', e);
-                    this.revealNodes.forEach(node => node.classList.add('state-is-revealed-now'));
-                }
-            }
-
-            animateOdometerNumber(node) {
-                if (node.getAttribute('data-status-done') === 'true') return;
-                node.setAttribute('data-status-done', 'true');
-                
-                const targetValue = parseInt(node.getAttribute('data-target'), 10);
-                if (isNaN(targetValue)) return;
-
-                let currentValue = 0;
-                const incrementStep = Math.max(1, Math.ceil(targetValue / (1500 / CuckooConfig.timing.odometerRefreshRate))); 
-                
-                const interval = setInterval(() => {
-                    currentValue += incrementStep;
-                    if (currentValue >= targetValue) {
-                        node.innerText = targetValue;
-                        clearInterval(interval);
-                    } else {
-                        node.innerText = currentValue;
-                    }
-                }, CuckooConfig.timing.odometerRefreshRate);
-            }
-        }
-
-        /**
-         * @class BackgroundParticleEngine
-         * @description Vykresluje majestátní zlatá peříčka padající po celém webu (Hardware Accelerated Canvas).
-         */
-        class BackgroundParticleEngine {
-            constructor() {
-                this.canvas = document.getElementById('particle-engine-canvas');
-                if (!this.canvas) return;
-
-                this.ctx = this.canvas.getContext('2d');
-                this.particlesArray = [];
-                
-                // Převedení SVG Cesty do nativního Path2D
-                this.featherSVGPath2D = new Path2D("M12.4,2.6C12.4,2.6,9.1,6.8,8.2,9.6C7.3,12.4,7.8,15.6,9.5,18.1C8.2,17.2,6.5,16.5,5.1,16C3.7,15.5,2.1,15.4,0.6,15.6C1.9,16.6,3.6,17.4,5.3,18.1C6.9,18.8,8.8,19.2,10.6,19.3C10.5,21.5,10.8,23.8,11.5,25.8C12,27.3,12.8,28.8,13.8,30C13.5,28.2,13.6,26.3,14,24.5C14.7,21,16.4,17.7,18.7,15.1C21,12.5,23.9,10.4,27.1,8.9C24,9.6,20.8,10.9,18.1,12.7C15.4,14.5,13.2,16.9,11.7,19.7C11.3,17.4,11.3,15,11.8,12.7C12.3,10.4,13.4,8.3,15,6.5C14.1,5.3,13.2,3.9,12.4,2.6Z");
-
-                this.handleScreenResize();
-                window.addEventListener('resize', this.handleScreenResize.bind(this), { passive: true });
-                
-                requestAnimationFrame(this.executeRenderLoop.bind(this));
-            }
-
-            handleScreenResize() {
-                this.canvasWidth = this.canvas.width = window.innerWidth;
-                this.canvasHeight = this.canvas.height = window.innerHeight;
-                this.seedInitialParticles();
-            }
-
-            seedInitialParticles() {
-                this.particlesArray = [];
-                const particleAmount = window.innerWidth > CuckooConfig.thresholds.mobileBreakpoint 
-                    ? CuckooConfig.rendering.particleCountDesktop 
-                    : CuckooConfig.rendering.particleCountMobile; 
-                
-                for (let i = 0; i < particleAmount; i++) {
-                    this.particlesArray.push({
-                        posX: Math.random() * this.canvasWidth,
-                        posY: Math.random() * this.canvasHeight - this.canvasHeight,
-                        scaleRatio: Math.random() * 0.7 + 0.3,
-                        velocityGravityY: Math.random() * (CuckooConfig.physics.particleGravityMax - CuckooConfig.physics.particleGravityMin) + CuckooConfig.physics.particleGravityMin,
-                        rotationDegree: Math.random() * 360,
-                        rotationVelocity: Math.random() * 0.8 - 0.4,
-                        windPhaseOffset: Math.random() * Math.PI * 2,
-                        alphaChannel: Math.random() * 0.4 + 0.1
-                    });
-                }
-            }
-
-            drawSingleFeatherPath(particle) {
-                this.ctx.save();
-                this.ctx.translate(particle.posX, particle.posY);
-                this.ctx.rotate(particle.rotationDegree * Math.PI / 180);
-                this.ctx.scale(particle.scaleRatio, particle.scaleRatio);
-                
-                this.ctx.fillStyle = `rgba(212, 175, 55, ${particle.alphaChannel})`;
-                this.ctx.shadowBlur = 15;
-                this.ctx.shadowColor = "rgba(212, 175, 55, 0.5)";
-                
-                this.ctx.fill(this.featherSVGPath2D);
-                this.ctx.restore();
-            }
-
-            executeRenderLoop() {
-                this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-                
-                this.particlesArray.forEach(p => {
-                    p.posY += p.velocityGravityY; 
-                    p.posX += Math.sin(p.posY * 0.005 + p.windPhaseOffset) * CuckooConfig.physics.particleWindMultiplier;
-                    p.rotationDegree += p.rotationVelocity; 
-                    
-                    if (p.posY > this.canvasHeight + 50) {
-                        p.posY = -50;
-                        p.posX = Math.random() * this.canvasWidth;
-                    }
-                    
-                    this.drawSingleFeatherPath(p);
-                });
-                
-                requestAnimationFrame(this.executeRenderLoop.bind(this));
-            }
-        }
-
-        /**
-         * @module LSystemFractalEngine
-         * @description Nativní generátor fraktálních stromů. Roste organicky odspodu, kreslí větve a na koncích rozkvete.
-         */
-        class LSystemFractalEngine {
-            constructor() {
-                this.canvasDom = document.getElementById('fractal-tree-canvas');
-                this.sectionContainer = document.getElementById('sluzby');
-                
-                if(!this.canvasDom || !this.sectionContainer) return;
-                
-                this.ctx = this.canvasDom.getContext('2d');
-                this.growthTriggered = false;
-
-                this.synchronizeDimensions();
-                window.addEventListener('resize', this.synchronizeDimensions.bind(this), { passive: true });
-                this.setupIntersectionTrigger();
-            }
-
-            synchronizeDimensions() {
-                this.canvasWidth = this.canvasDom.width = this.sectionContainer.offsetWidth;
-                this.canvasHeight = this.canvasDom.height = this.sectionContainer.offsetHeight;
-            }
-
-            setupIntersectionTrigger() {
-                const growthObserver = new IntersectionObserver((entries) => {
-                    if(entries[0].isIntersecting && !this.growthTriggered) {
-                        this.growthTriggered = true;
-                        this.igniteForestGrowthSequence();
-                    }
-                }, { threshold: CuckooConfig.thresholds.fractalTrigger });
-                
-                growthObserver.observe(this.sectionContainer);
-            }
-
-            igniteForestGrowthSequence() {
-                CuckooLogger.info('LSystemFractalEngine', 'Forest ignition sequence started.');
-                
-                // X souřadnice kořenů pro 3 karty (20%, 50%, 80%)
-                const treeSpawnsXPositions = [0.2, 0.5, 0.8];
-                
-                treeSpawnsXPositions.forEach((positionX, index) => {
-                    setTimeout(() => {
-                        this.calculateRecursiveBranch(
-                            this.canvasWidth * positionX, 
-                            this.canvasHeight, 
-                            -90, 
-                            130, 
-                            12, 
-                            0
-                        );
-                    }, index * 400); // Postupné vyrostení
-                });
-            }
-
-            calculateRecursiveBranch(startX, startY, angleDeg, length, lineWidth, depthLevel) {
-                // Base Case: Ukončení větve a vykreslení květu (Bloom)
-                if (depthLevel > CuckooConfig.rendering.fractalMaxDepth || length < CuckooConfig.rendering.fractalMinLength) {
-                    this.renderBloomBlossom(startX, startY);
-                    return;
-                }
-
-                // Výpočet vektoru
-                const angleRad = angleDeg * Math.PI / 180;
-                const endX = startX + length * Math.cos(angleRad);
-                const endY = startY + length * Math.sin(angleRad);
-
-                this.ctx.beginPath();
-                this.ctx.moveTo(startX, startY);
-                this.ctx.lineTo(endX, endY);
-                
-                // Color Morphing algoritmus: Od zlaté (kořeny) po smaragdově zelenou (vrcholky)
-                const depthRatio = depthLevel / CuckooConfig.rendering.fractalMaxDepth;
-                const rgbR = 212 - (212 - 16) * depthRatio;
-                const rgbG = 175 - (175 - 185) * depthRatio;
-                const rgbB = 55 - (55 - 129) * depthRatio;
-                
-                this.ctx.strokeStyle = `rgba(${rgbR}, ${rgbG}, ${rgbB}, 0.35)`;
-                this.ctx.lineWidth = lineWidth;
-                this.ctx.lineCap = 'round';
-                this.ctx.stroke();
-
-                // Fyzické zpoždění generování pro organický vizuální efekt
-                setTimeout(() => {
-                    this.calculateRecursiveBranch(
-                        endX, endY, 
-                        angleDeg - 22, 
-                        length * 0.75, 
-                        lineWidth * 0.7, 
-                        depthLevel + 1
-                    );
-                    
-                    this.calculateRecursiveBranch(
-                        endX, endY, 
-                        angleDeg + 22, 
-                        length * 0.75, 
-                        lineWidth * 0.7, 
-                        depthLevel + 1
-                    );
-                }, CuckooConfig.timing.fractalGrowthDelay);
-            }
-
-            renderBloomBlossom(positionX, positionY) {
-                this.ctx.beginPath();
-                this.ctx.arc(positionX, positionY, Math.random() * 3 + 2, 0, Math.PI * 2);
-                this.ctx.fillStyle = 'rgba(16, 185, 129, 0.85)'; // Smaragdový květ
-                this.ctx.shadowBlur = 18;
-                this.ctx.shadowColor = "rgba(249, 211, 113, 0.9)"; // Zlatá aura kolem květu
-                this.ctx.fill();
-                this.ctx.shadowBlur = 0; // Ochrana kontextu
-            }
-        }
-
-        /**
-         * @module EagleFlightVectorEngine
-         * @description Fyzikální motor řídící globální let vektoru orla po sinusové trajektorii.
-         */
-        class EagleFlightVectorEngine {
-            constructor() {
-                this.eagleDomNode = document.getElementById('global-flying-eagle');
-                if(!this.eagleDomNode) return;
-
-                this.currentXPosition = -250;
-                this.baseYAxisAltitude = window.innerHeight / 2.5;
-                this.sineWavePhaseAccumulator = 0;
-                
-                // Orel vyletí těsně po dokončení Preloader animace
-                setTimeout(() => {
-                    this.eagleDomNode.style.opacity = "1";
-                    CuckooLogger.info('EagleFlightVectorEngine', 'Eagle taking off.');
-                    this.executeFlightTrajectory();
-                }, CuckooConfig.timing.preloaderDuration + 1000);
-            }
-
-            executeFlightTrajectory() {
-                const computeNextFlightFrame = () => {
-                    this.currentXPosition += CuckooConfig.physics.eagleFlightSpeed;
-                    this.sineWavePhaseAccumulator += CuckooConfig.physics.eagleOscillationFrequency;
-                    
-                    const dynamicAltitudeY = this.baseYAxisAltitude + Math.sin(this.sineWavePhaseAccumulator) * CuckooConfig.physics.eagleOscillationAmplitude;
-                    // Dynamické naklánění orla v závislosti na křivce (derivace)
-                    const flightPitchRotation = Math.cos(this.sineWavePhaseAccumulator) * 15;
-
-                    this.eagleDomNode.style.transform = `translate3d(${this.currentXPosition}px, ${dynamicAltitudeY}px, 0) rotate(${flightPitchRotation}deg)`;
-
-                    // Pokud vyletí ven z obrazovky, resetuje se vlevo s novou náhodnou letovou hladinou
-                    if (this.currentXPosition > window.innerWidth + 250) {
-                        this.currentXPosition = -250;
-                        this.baseYAxisAltitude = Math.random() * (window.innerHeight * 0.6) + 150;
-                    }
-
-                    requestAnimationFrame(computeNextFlightFrame);
-                };
-                
-                requestAnimationFrame(computeNextFlightFrame);
-            }
-        }
-
-        /**
-         * ======================================================================
-         * SYSTÉMOVÝ BOOTSTRAPPER (MASTER INIT)
-         * Oživí aplikaci po bezpečném zparsování DOM stromu.
-         * ======================================================================
-         */
-        document.addEventListener('DOMContentLoaded', () => {
-            try {
-                // Instancování nezávislých modulů
-                const preloader = new PreloaderManager();
-                const cursor = new CustomCursorManager();
-                const ui = new NavigationController();
-                const observer = new IntersectionObserverEngine();
-                const particles = new BackgroundParticleEngine();
-                const fractal = new LSystemFractalEngine();
-                const eagle = new EagleFlightVectorEngine();
-                
-                // Udržování aktuálního roku v copyrightu
-                const yearSpan = document.getElementById('current-year');
-                if(yearSpan) yearSpan.textContent = new Date().getFullYear();
-                
-                CuckooLogger.info('SYSTEM BOOTSTRAP', 'All engines engaged. Cuckoo OS v6.0 running.');
-            } catch (sysError) {
-                console.error("[CUCKOO KERNEL PANIC] Application failed to initialize.", sysError);
-            }
-        });
-
-    </script>
-</body>
-</html>
 
