@@ -33,6 +33,7 @@
             --font-serif: 'Playfair Display', serif;
             --font-mono: 'Rajdhani', monospace;
             --z-preloader: 9999;
+            --z-mobile-menu: 2000;
             --z-nav: 1000;
             --z-bird: 500;
             --z-content: 10;
@@ -71,9 +72,9 @@
         
         .preloader-text { font-family: var(--font-sans); font-size: 3rem; font-weight: 900; color: #fff; letter-spacing: 8px; }
         .preloader-text span { color: var(--color-gold-base); }
-        .preloader-bar-wrap { width: 300px; height: 2px; background: rgba(255,255,255,0.1); position: relative; }
+        .preloader-bar-wrap { width: 350px; height: 2px; background: rgba(255,255,255,0.1); position: relative; max-width: 80vw;}
         .preloader-bar { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--color-gold-base); box-shadow: 0 0 15px var(--color-gold-base); transition: width 0.2s ease; }
-        .preloader-status { margin-top: 15px; font-family: var(--font-mono); font-size: 1rem; color: var(--color-gold-base); letter-spacing: 4px; text-transform: uppercase; }
+        .preloader-status { margin-top: 15px; font-family: var(--font-mono); font-size: 0.95rem; color: var(--color-gold-base); letter-spacing: 4px; text-transform: uppercase; text-align: center; }
         @keyframes pulse { 0% { transform: scale(0.95); filter: brightness(0.8); } 100% { transform: scale(1.05); filter: brightness(1.2); } }
 
         /* CANVASY (POZADÍ) */
@@ -105,35 +106,25 @@
         .btn-cta { border: 2px solid var(--color-gold-base); color: var(--color-gold-base) !important; padding: 10px 25px; border-radius: 50px; background: rgba(212,175,55,0.1); font-weight: 800; letter-spacing: 2px; text-transform: uppercase; transition: all 0.4s; }
         .btn-cta:hover { background: var(--color-gold-base); color: #000 !important; box-shadow: 0 0 25px rgba(212,175,55,0.8); transform: translateY(-2px); }
 
-        /* OPRAVA HAMBURGER MENU (INTERAKTIVNÍ) */
+        /* HAMBURGER TLAČÍTKO PRO MOBIL */
         .burger-btn { 
-            display: none; position: absolute; right: 25px; top: 32px; width: 35px; height: 22px; 
-            background: transparent !important; border: none !important; cursor: pointer; z-index: 2001; 
-            flex-direction: column; justify-content: space-between; padding: 0; outline: none; -webkit-appearance: none;
+            display: none; font-size: 2.2rem; color: var(--color-gold-base); 
+            position: absolute; right: 25px; top: 25px; z-index: 2001; transition: transform 0.3s; 
+            background: transparent !important; border: none !important; -webkit-appearance: none;
         }
-        .burger-line { 
-            display: block; width: 100%; height: 3px; background: var(--color-gold-base); 
-            border-radius: 3px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: left center; 
-        }
-        .burger-btn:hover .burger-line:nth-child(1) { transform: scaleX(0.7); }
-        .burger-btn:hover .burger-line:nth-child(3) { transform: scaleX(0.7); }
-        /* Aktivní stav (Křížek) */
-        .burger-btn.is-active .burger-line:nth-child(1) { transform: rotate(40deg); width: 110%; }
-        .burger-btn.is-active .burger-line:nth-child(2) { width: 0; opacity: 0; }
-        .burger-btn.is-active .burger-line:nth-child(3) { transform: rotate(-40deg); width: 110%; }
+        .burger-btn:hover { transform: scale(1.1) rotate(5deg); }
 
-        /* LUXUSNÍ MOBILNÍ MENU (FADE IN EFEKT) */
-        .mobile-menu { 
-            position: fixed; inset: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.95); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 2000; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            opacity: 0; visibility: hidden; transition: opacity 0.5s, visibility 0.5s; 
-        }
-        .mobile-menu.is-open { opacity: 1; visibility: visible; }
-        .mobile-menu-inner { display: flex; flex-direction: column; align-items: center; gap: 40px; transform: translateY(30px); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        /* MOBILNÍ MENU S PEVNÝM KŘÍŽKEM */
+        .mobile-menu { position: fixed; top: 0; right: -100vw; width: 100vw; height: 100vh; background: rgba(2,3,3,0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: var(--z-mobile-menu); display: flex; flex-direction: column; justify-content: center; align-items: center; transition: right 0.5s cubic-bezier(0.8, 0, 0.2, 1); }
+        .mobile-menu.is-open { right: 0; }
+        .mobile-menu-inner { display: flex; flex-direction: column; align-items: center; gap: 40px; transform: translateY(20px); transition: transform 0.5s; }
         .mobile-menu.is-open .mobile-menu-inner { transform: translateY(0); }
         .mobile-link { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 600; color: #fff !important; text-transform: uppercase; letter-spacing: 6px; transition: color 0.3s; text-align: center;}
         .mobile-link:hover { color: var(--color-gold-base) !important; }
+        
+        /* PEVNÝ KŘÍŽEK PRO ZAVŘENÍ MENU (Spolehlivý na iOS) */
+        .close-btn { position: absolute; top: 25px; right: 30px; font-size: 4.5rem; color: var(--color-gold-base); background: transparent; border: none; cursor: pointer; line-height: 0.8; transition: transform 0.3s; -webkit-appearance: none; z-index: 2005; }
+        .close-btn:hover { transform: rotate(90deg); }
 
         /* HERO & ZAMLŽENÁ ŠKVÍRA */
         .hero-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 150px 20px 50px 20px; position: relative; z-index: var(--z-content); overflow: hidden; }
@@ -229,7 +220,7 @@
         .radar-feather { font-size: 3rem; color: var(--color-gold-light); margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--color-gold-base)); }
         .radar-heading { font-family: var(--font-serif); font-size: clamp(1rem, 5vw, 1.8rem); font-weight: 900; color: #fff; letter-spacing: 4px; text-transform: uppercase; text-align: center; }
 
-        /* PATIČKA (OPTIMALIZOVÁNO PRO MOBIL) */
+        /* PATIČKA & COPYRIGHT */
         .footer-section { width: 100%; padding: 120px 20px 40px 20px; text-align: center; position: relative; z-index: 10; background: radial-gradient(circle at bottom center, rgba(212,175,55,0.05), transparent 70%); }
         .footer-box { max-width: 800px; margin: 0 auto 70px auto; }
         .footer-name { font-family: var(--font-serif); font-size: clamp(2rem, 7vw, 4rem); font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: 4px; text-transform: uppercase; white-space: nowrap; }
@@ -250,23 +241,24 @@
         .reveal-node { opacity: 0; transform: translateY(60px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
         .reveal-node.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* NEPRŮSTŘELNÁ RESPONSIVITA */
-        @media screen and (max-width: 1024px) { .desktop-nav { display: none !important; } .burger-btn { display: flex !important; } .footer-contacts { flex-direction: column; gap: 30px; } }
+        /* NEPRŮSTŘELNÁ RESPONSIVITA PRO MOBILY */
+        @media screen and (max-width: 1024px) { .desktop-nav { display: none !important; } .burger-btn { display: block !important; } .footer-contacts { flex-direction: column; gap: 30px; align-items: center; } }
         @media screen and (max-width: 768px) {
             body, html { overflow-x: hidden !important; width: 100vw !important; max-width: 100vw !important; }
-            .master-header { padding: 15px 20px; } .master-header.is-scrolled { padding: 12px 20px; }
-            .brand-text { font-size: 1.5rem; letter-spacing: 3px; margin-left: 5px; } .brand-icon-box { width: 30px; height: 30px; } .brand-dove { font-size: 1.6rem; }
+            .master-header { padding: 15px 20px; } .master-header.is-scrolled { padding: 10px 20px; }
+            .brand-text { font-size: 1.6rem; letter-spacing: 4px; margin-left: 5px; } .brand-icon-box { width: 35px; height: 35px; } .brand-dove { font-size: 1.8rem; }
             
-            .burger-btn { right: 20px; top: 22px; width: 32px; height: 22px; }
+            .burger-btn { right: 20px; top: 16px; font-size: 2.2rem; background-color: transparent !important; }
+            .close-btn { right: 25px; top: 25px; font-size: 3.5rem; }
             .mobile-link { font-size: 1.8rem; letter-spacing: 4px; margin: 15px 0;}
             
-            .hero-section { padding-top: 130px; padding-left: 15px; padding-right: 15px; } .hero-title { font-size: 3.2rem; } .hero-vision { font-size: 1.1rem; }
-            .stats-grid { gap: 40px; } .stat-num { font-size: 4rem; } .stat-sym { font-size: 2rem; }
-            .branches-head h2 { font-size: 2.8rem; } .branches-grid { grid-template-columns: 1fr; } .branch-card { padding: 35px 25px; }
-            .gallery-grid { grid-template-columns: 1fr; } .radar-container { width: 250px; height: 250px; }
+            .hero-section { padding-top: 130px; padding-left: 15px; padding-right: 15px; } .hero-title { font-size: 3.5rem; } .hero-vision { font-size: 1.1rem; }
+            .stats-grid { gap: 40px; } .stat-num { font-size: 4.5rem; } .stat-sym { font-size: 2.2rem; }
+            .branches-head h2 { font-size: 3rem; } .branches-grid { grid-template-columns: 1fr; } .branch-card { padding: 40px 25px; }
+            .gallery-grid { grid-template-columns: 1fr; } .radar-container { width: 280px; height: 280px; }
             .wa-float { width: 60px; height: 60px; font-size: 2.5rem; bottom: 20px; right: 20px; }
         }
-        @media screen and (max-width: 380px) { .hero-title { font-size: 2.5rem; } .stat-num { font-size: 3.2rem; } .footer-name { font-size: 1.8rem; letter-spacing: 2px;} }
+        @media screen and (max-width: 400px) { .brand-text { font-size: 1.2rem; letter-spacing: 2px; } .hero-title { font-size: 2.8rem; } .stat-num { font-size: 3.5rem; } .footer-name { font-size: 2.5rem; } .footer-link { font-size: 1.1rem; } }
     </style>
 </head>
 <body>
@@ -280,7 +272,7 @@
             <div class="preloader-text opt-center-8">CUCK<span>ÖO</span></div>
         </div>
         <div class="preloader-bar-wrap"><div class="preloader-bar" id="js-preloader-bar"></div></div>
-        <div class="preloader-status opt-center-4" id="js-preloader-status">INICIALIZACE SYSTÉMU... 0%</div>
+        <div class="preloader-status opt-center-4" id="js-preloader-status">NAČÍTÁNÍ TECHNOLOGICKÉHO SYSTÉMU... 0%</div>
     </div>
 
     <canvas id="particle-canvas" class="canvas-particles"></canvas>
@@ -310,15 +302,11 @@
                 <li><a href="#kontakt" class="btn-cta">Spojit se</a></li>
             </ul>
         </nav>
-        
-        <button class="burger-btn" id="burger-btn" aria-label="Menu">
-            <span class="burger-line"></span>
-            <span class="burger-line"></span>
-            <span class="burger-line"></span>
-        </button>
+        <button class="burger-btn" id="burger-btn"><i class="fas fa-bars"></i></button>
     </header>
 
     <nav class="mobile-menu" id="mobile-menu">
+        <button class="close-btn" id="close-btn">&times;</button>
         <div class="mobile-menu-inner">
             <a href="#sluzby" class="mobile-link opt-center-4">Klíčové Pilíře</a>
             <a href="#expertiza" class="mobile-link opt-center-4">Analýza</a>
@@ -329,7 +317,7 @@
     <main>
         
         <section class="hero-section">
-            <div class="hero-badge opt-center-4">EXKLUZIVNÍ DIGITÁLNÍ EKOSYSTÉMY</div>
+            <div class="hero-badge opt-center-4">TECHNOLOGIE S DUŠÍ</div>
             
             <div class="laser-stage">
                 <div class="laser-slit"></div>
@@ -451,8 +439,8 @@
             </div>
         </div>
         <div class="footer-copy opt-center-4">
-            <span>&copy; <span id="cyear">2026</span> CUCKÖO.</span>
-            <span>Digitální Ekosystém Hub. Navrženo s precizností.</span>
+            <span>&copy; <span id="cyear">2026</span> ZNAČKA CUCKÖO.</span>
+            <span>Digitální Ekosystém. Navrženo s precizností.</span>
         </div>
     </footer>
 
@@ -489,21 +477,22 @@
                     if(progress >= 100) {
                         progress = 100;
                         clearInterval(interval);
-                        if(status) { status.innerText = "SYSTÉM ONLINE. VÍTEJTE."; status.style.color = "#10b981"; }
+                        if(status) { status.innerText = "TECHNOLOGICKÝ SYSTÉM ONLINE. VÍTEJTE."; status.style.color = "#10b981"; }
                         setTimeout(() => {
                             preloader.classList.add('is-loaded');
                             document.body.style.overflow = '';
-                        }, 500);
+                        }, 600);
                     }
                     if(bar) bar.style.width = `${progress}%`;
-                    if(status && progress < 100) status.innerText = `INICIALIZACE JÁDRA... ${Math.floor(progress)}%`;
-                }, 30);
+                    if(status && progress < 100) status.innerText = `NAČÍTÁNÍ TECHNOLOGICKÉHO SYSTÉMU... ${Math.floor(progress)}%`;
+                }, 35);
             }
 
-            // 2. NAVIGACE A ANIMOVANÝ HAMBURGER
+            // 2. NAVIGACE A MENU (S křížkem pro iOS Fix)
             static initNavigation() {
                 const header = document.getElementById('main-header');
                 const burger = document.getElementById('burger-btn');
+                const closeBtn = document.getElementById('close-btn');
                 const menu = document.getElementById('mobile-menu');
                 if(!header || !burger || !menu) return;
 
@@ -512,23 +501,22 @@
                     else header.classList.remove('is-scrolled');
                 }, {passive: true});
 
-                const toggleMenu = (forceClose = false) => {
-                    if (forceClose || menu.classList.contains('is-open')) {
-                        menu.classList.remove('is-open');
-                        burger.classList.remove('is-active');
-                        document.body.style.overflow = '';
-                    } else {
-                        menu.classList.add('is-open');
-                        burger.classList.add('is-active');
-                        document.body.style.overflow = 'hidden';
-                    }
+                const openMenu = () => {
+                    menu.classList.add('is-open');
+                    document.body.style.overflow = 'hidden';
                 };
 
-                burger.addEventListener('click', () => toggleMenu());
-                menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => toggleMenu(true)));
+                const closeMenu = () => {
+                    menu.classList.remove('is-open');
+                    document.body.style.overflow = '';
+                };
+
+                burger.addEventListener('click', openMenu);
+                if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+                menu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
             }
 
-            // 3. SCROLL REVEAL & ODOMETER
+            // 3. SCROLL REVEAL & ODOMETER (Formátovaný s mezerami)
             static initScrollReveal() {
                 const formatNum = (n) => n.toLocaleString('cs-CZ');
 
@@ -587,7 +575,7 @@
                 resize(); loop();
             }
 
-            // 5. L-SYSTEM FRAKTÁLY
+            // 5. L-SYSTEM FRAKTÁLY (Rostou shora od nadpisu)
             static initFractalForest() {
                 const canvas = document.getElementById('fractal-canvas');
                 const section = document.getElementById('sluzby');
@@ -629,7 +617,7 @@
                 }, { threshold: 0.25 }).observe(section);
             }
 
-            // 6. SWOOP ENGINE (Kukačka z hnízda)
+            // 6. SWOOP ENGINE: Kukačka vyletí z hnízda (vlevo nahoře) a plachtí
             static initBirdSwoopPhysics() {
                 const bird = document.getElementById('global-bird');
                 if(!bird) return;
