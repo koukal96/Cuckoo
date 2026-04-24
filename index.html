@@ -2524,4 +2524,1239 @@
     <a href="https://wa.me/420604353393" target="_blank" class="floating-action-btn-whatsapp" title="Napsat na WhatsApp" rel="noopener noreferrer" aria-label="Otevřít chat v aplikaci WhatsApp">
         <i class="fab fa-whatsapp" aria-hidden="true"></i>
     </a>
+        <script>
+        'use strict';
 
+        /**
+         * @namespace CuckooEnterpriseConfiguration
+         * @description Centrální statický konfigurační objekt.
+         * Definuje chování veškerých fyzikálních a vizuálních modulů v aplikaci.
+         */
+        const CuckooEnterpriseConfiguration = {
+            timingAndDelays: {
+                preloaderMinimumDurationMs: 1800,
+                preloaderStepIntervalMs: 25,
+                fractalNodeGrowthDelayMs: 90,
+                odometerRefreshIntervalMs: 35,
+                eagleTakeoffDelayMs: 3500
+            },
+            physicsAndEnvironment: {
+                eagleHorizontalFlightSpeed: 2.5,
+                eagleVerticalOscillationAmplitude: 130,
+                eagleVerticalOscillationFrequency: 0.025,
+                particleGravityMinimumPull: 0.25,
+                particleGravityMaximumPull: 0.75,
+                particleWindDisplacementMultiplier: 0.65
+            },
+            renderingAndLimits: {
+                particleMaximumCountDesktop: 28,
+                particleMaximumCountMobile: 12,
+                fractalMaximumRecursionDepth: 6,
+                fractalMinimumBranchLengthPx: 15
+            },
+            intersectionThresholds: {
+                scrollRevealActivationPoint: 0.15,
+                fractalGrowthActivationPoint: 0.25,
+                mobileViewportBreakpointWidth: 768
+            }
+        };
+
+        /**
+         * @class EnterpriseSystemLogger
+         * @description Centralizovaná abstraktní vrstva pro logování aplikačních stavů, 
+         * varování a kritických chyb do systémové konzole.
+         */
+        class EnterpriseSystemLogger {
+            static logInformation(moduleIdentifier, messageContent) {
+                console.info(`[CUCKOO OS INFO] [${moduleIdentifier}] -> ${messageContent}`);
+            }
+            static logWarning(moduleIdentifier, warningContent) {
+                console.warn(`[CUCKOO OS WARN] [${moduleIdentifier}] -> ${warningContent}`);
+            }
+            static logFatalError(moduleIdentifier, errorContent, errorObject = null) {
+                console.error(`[CUCKOO OS FATAL] [${moduleIdentifier}] -> ${errorContent}`, errorObject);
+            }
+        }
+
+        /**
+         * @class AdvancedCustomCursorEngine
+         * @description Hardwarově akcelerovaný modul pro výpočet a překreslování
+         * avantgardního kurzoru. Využívá Lineární Interpolaci (LERP) pro plynulost.
+         */
+        class AdvancedCustomCursorEngine {
+            constructor() {
+                // Detekce dotykových rozhraní (Kurzor deaktivujeme pro dotyková zařízení)
+                this.isTouchCapableDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+                if (this.isTouchCapableDevice) {
+                    EnterpriseSystemLogger.logInformation('AdvancedCustomCursorEngine', 'Touch input detected. Suspending custom cursor deployment.');
+                    return;
+                }
+
+                this.cursorDotElement = document.getElementById('js-cursor-dot');
+                this.cursorRingElement = document.getElementById('js-cursor-ring');
+                
+                if (!this.cursorDotElement || !this.cursorRingElement) {
+                    EnterpriseSystemLogger.logWarning('AdvancedCustomCursorEngine', 'Cursor DOM nodes missing. Aborting initialization.');
+                    return;
+                }
+
+                // Inicializace souřadnicových matic
+                this.targetMousePositionX = window.innerWidth / 2;
+                this.targetMousePositionY = window.innerHeight / 2;
+                this.currentRingPositionX = this.targetMousePositionX;
+                this.currentRingPositionY = this.targetMousePositionY;
+
+                this.bindMouseMovementEvents();
+                this.bindInteractiveElementHoverEvents();
+                this.executeRenderLoop();
+                
+                EnterpriseSystemLogger.logInformation('AdvancedCustomCursorEngine', 'Cursor engine fully operational.');
+            }
+
+            bindMouseMovementEvents() {
+                window.addEventListener('mousemove', (mouseEvent) => {
+                    this.targetMousePositionX = mouseEvent.clientX;
+                    this.targetMousePositionY = mouseEvent.clientY;
+                }, { passive: true });
+            }
+
+            bindInteractiveElementHoverEvents() {
+                // Selektory pro interaktivní elementy, kde má kurzor reagovat zvětšením
+                const interactiveNodeList = document.querySelectorAll('a, button, .gallery-image-wrapper');
+                
+                interactiveNodeList.forEach(nodeElement => {
+                    nodeElement.addEventListener('mouseenter', () => {
+                        document.body.classList.add('cursor-hover-active');
+                    });
+                    nodeElement.addEventListener('mouseleave', () => {
+                        document.body.classList.remove('cursor-hover-active');
+                    });
+                });
+            }
+
+            executeRenderLoop() {
+                // Exaktní přiřazení pozice pro vnitřní tečku (okamžitá odezva)
+                this.cursorDotElement.style.left = `${this.targetMousePositionX}px`;
+                this.cursorDotElement.style.top = `${this.targetMousePositionY}px`;
+
+                // Aplikace matematické lineární interpolace (LERP) pro vnější prstenec
+                const lerpFactor = 0.15;
+                this.currentRingPositionX += (this.targetMousePositionX - this.currentRingPositionX) * lerpFactor;
+                this.currentRingPositionY += (this.targetMousePositionY - this.currentRingPositionY) * lerpFactor;
+                
+                this.cursorRingElement.style.left = `${this.currentRingPositionX}px`;
+                this.cursorRingElement.style.top = `${this.currentRingPositionY}px`;
+
+                // Rekurzivní volání smyčky navázané na obnovovací frekvenci monitoru
+                requestAnimationFrame(this.executeRenderLoop.bind(this));
+            }
+        }
+
+        /**
+         * @class CinematicBootSequenceController
+         * @description Zpracovává úvodní načítací obrazovku (Preloader), generuje umělý
+         * progres pro dramatický efekt a zajišťuje synchronní zobrazení obsahu.
+         */
+        class CinematicBootSequenceController {
+            constructor() {
+                this.preloaderContainerElement = document.getElementById('js-preloader');
+                this.progressBarFillElement = document.getElementById('js-preloader-bar');
+                this.statusTextElement = document.getElementById('js-preloader-status');
+                
+                if (!this.preloaderContainerElement) {
+                    EnterpriseSystemLogger.logWarning('CinematicBootSequenceController', 'Preloader container not found.');
+                    return;
+                }
+                
+                this.currentLoadingProgressPercentage = 0;
+                this.initiateArtificialBootSequence();
+            }
+
+            initiateArtificialBootSequence() {
+                EnterpriseSystemLogger.logInformation('CinematicBootSequenceController', 'Executing boot sequence protocols.');
+                
+                const progressIntervalReference = setInterval(() => {
+                    // Generování náhodného přírůstku procent pro asymetrický, lidský pocit načítání
+                    const randomProgressIncrement = Math.random() * 15;
+                    this.currentLoadingProgressPercentage += randomProgressIncrement;
+                    
+                    if (this.currentLoadingProgressPercentage >= 100) {
+                        this.currentLoadingProgressPercentage = 100;
+                        clearInterval(progressIntervalReference);
+                        this.executeBootFinalization();
+                    }
+                    
+                    // Aktualizace DOM struktur
+                    this.progressBarFillElement.style.width = `${this.currentLoadingProgressPercentage}%`;
+                    this.statusTextElement.innerText = `INICIALIZACE ENTERPRISE JÁDRA... ${Math.floor(this.currentLoadingProgressPercentage)}%`;
+                    
+                }, CuckooEnterpriseConfiguration.timingAndDelays.preloaderStepIntervalMs);
+            }
+
+            executeBootFinalization() {
+                this.statusTextElement.innerText = "SYSTÉM ONLINE. VÍTEJTE V EKOSYSTÉMU.";
+                this.statusTextElement.style.color = "var(--color-tech-green-base)";
+                
+                // Časová prodleva pro vizuální vstřebání 100% stavu uživatelem
+                setTimeout(() => {
+                    this.preloaderContainerElement.classList.add('is-loaded');
+                    // Odstranění dočasného zámku overflow aplikovaného prohlížečem
+                    document.body.style.overflowY = 'auto'; 
+                    document.documentElement.style.overflowY = 'auto';
+                    EnterpriseSystemLogger.logInformation('CinematicBootSequenceController', 'Boot sequence finalized. Removing overlay.');
+                }, 600);
+            }
+        }
+
+        /**
+         * @class HeaderStateAndNavigationController
+         * @description Poskytuje logiku pro změnu stavu hlavičky při scrollování
+         * a kompletně spravuje otevírání a zavírání mobilního overlay menu.
+         */
+        class HeaderStateAndNavigationController {
+            constructor() {
+                this.mainHeaderElement = document.getElementById('main-header');
+                this.hamburgerTriggerElement = document.getElementById('burger-btn');
+                this.closeTriggerElement = document.getElementById('close-btn');
+                this.mobileOverlayElement = document.getElementById('mobile-overlay');
+                
+                if (!this.mainHeaderElement || !this.hamburgerTriggerElement || !this.mobileOverlayElement) {
+                    EnterpriseSystemLogger.logFatalError('HeaderStateAndNavigationController', 'Critical DOM dependencies are missing.');
+                    return;
+                }
+
+                this.mobileNavigationLinks = this.mobileOverlayElement.querySelectorAll('a');
+                this.isScrollEventThrottled = false;
+                
+                this.attachEventListeners();
+                EnterpriseSystemLogger.logInformation('HeaderStateAndNavigationController', 'Navigation routing logic established.');
+            }
+
+            attachEventListeners() {
+                // Optimalizovaný Scroll Listener pomocí RequestAnimationFrame
+                window.addEventListener('scroll', () => {
+                    if (!this.isScrollEventThrottled) {
+                        window.requestAnimationFrame(() => {
+                            this.evaluateHeaderScrollState();
+                            this.isScrollEventThrottled = false;
+                        });
+                        this.isScrollEventThrottled = true;
+                    }
+                }, { passive: true });
+
+                // Event listenery pro mobilní interakce
+                this.hamburgerTriggerElement.addEventListener('click', () => this.executeMenuOpenSequence());
+                this.closeTriggerElement.addEventListener('click', () => this.executeMenuCloseSequence());
+                
+                // Iterace přes všechny odkazy a navěšení logiky pro zavření menu po kliknutí
+                this.mobileNavigationLinks.forEach(linkNode => {
+                    linkNode.addEventListener('click', () => this.executeMenuCloseSequence());
+                });
+            }
+
+            evaluateHeaderScrollState() {
+                const currentScrollVerticalPosition = window.scrollY || document.documentElement.scrollTop;
+                
+                if (currentScrollVerticalPosition > 80) {
+                    this.mainHeaderElement.classList.add('state-is-scrolled');
+                } else {
+                    this.mainHeaderElement.classList.remove('state-is-scrolled');
+                }
+            }
+
+            executeMenuOpenSequence() {
+                this.mobileOverlayElement.classList.add('state-is-open');
+                this.hamburgerTriggerElement.setAttribute('aria-expanded', 'true');
+                
+                // Kritický zámek: Zamezuje uživateli scrollovat dokumentem na pozadí, když je menu otevřené
+                document.body.style.overflow = 'hidden'; 
+                document.documentElement.style.overflow = 'hidden';
+            }
+
+            executeMenuCloseSequence() {
+                this.mobileOverlayElement.classList.remove('state-is-open');
+                this.hamburgerTriggerElement.setAttribute('aria-expanded', 'false');
+                
+                // Uvolnění kritického zámku
+                document.body.style.overflow = '';
+                document.documentElement.style.overflow = '';
+            }
+        }
+
+        /**
+         * @class ViewportIntersectionEngine
+         * @description Využívá nativní IntersectionObserver API k detekci prvků ve viewportu.
+         * Spouští CSS animace a složité matematické odpočty (Odometer) na milisekundu přesně.
+         */
+        class ViewportIntersectionEngine {
+            constructor() {
+                this.animatableNodeCollection = document.querySelectorAll('.js-class-animate-reveal');
+                this.intersectionConfigurationObject = { 
+                    root: null, 
+                    rootMargin: '0px', 
+                    threshold: CuckooEnterpriseConfiguration.intersectionThresholds.scrollRevealActivationPoint 
+                };
+                
+                if (this.animatableNodeCollection.length > 0) {
+                    this.initializeIntersectionObserver();
+                } else {
+                    EnterpriseSystemLogger.logWarning('ViewportIntersectionEngine', 'No animatable nodes found in the document.');
+                }
+            }
+
+            initializeIntersectionObserver() {
+                try {
+                    const genericObserverInstance = new IntersectionObserver((intersectionEntries, observerReference) => {
+                        intersectionEntries.forEach(entryItem => {
+                            if (entryItem.isIntersecting) {
+                                // Aplikace třídy, která odstartuje definovanou CSS Transition
+                                entryItem.target.classList.add('state-is-revealed-now');
+                                
+                                // Detekce přítomnosti numerických čítačů uvnitř odhaleného bloku
+                                const odometerNodes = entryItem.target.querySelectorAll('.js-odometer-counter');
+                                odometerNodes.forEach(odometerElement => this.executeNumericOdometerAnimation(odometerElement));
+                                
+                                // Optimalizace paměti: Zastavení sledování elementu po jeho odhalení
+                                observerReference.unobserve(entryItem.target);
+                            }
+                        });
+                    }, this.intersectionConfigurationObject);
+
+                    // Navěšení observeru na všechny cílové uzly
+                    this.animatableNodeCollection.forEach(nodeItem => genericObserverInstance.observe(nodeItem));
+                    EnterpriseSystemLogger.logInformation('ViewportIntersectionEngine', `Active. Monitoring ${this.animatableNodeCollection.length} UI components.`);
+                    
+                } catch (observationError) {
+                    EnterpriseSystemLogger.logFatalError('ViewportIntersectionEngine', 'IntersectionObserver API is not supported or failed.', observationError);
+                    // Fallback mechanika: Zobrazit vše okamžitě, pokud prohlížeč selže
+                    this.animatableNodeCollection.forEach(nodeItem => nodeItem.classList.add('state-is-revealed-now'));
+                }
+            }
+
+            executeNumericOdometerAnimation(targetDomElement) {
+                // Ochrana proti vícenásobnému spuštění stejné animace
+                if (targetDomElement.getAttribute('data-status-done') === 'true') {
+                    return;
+                }
+                targetDomElement.setAttribute('data-status-done', 'true');
+                
+                const finalTargetValue = parseInt(targetDomElement.getAttribute('data-target'), 10);
+                if (isNaN(finalTargetValue)) {
+                    EnterpriseSystemLogger.logWarning('ViewportIntersectionEngine', 'Odometer target is NaN. Skipping animation.');
+                    return;
+                }
+
+                let currentCalculatedValue = 0;
+                // Inteligentní výpočet kroku: Cílem je, aby všechny budíky, bez ohledu na jejich 
+                // maximální hodnotu (500 vs 10), dojely do cíle za zhruba 1500 milisekund.
+                const totalAnimationDurationGoalMs = 1500;
+                const calculationStep = Math.max(1, Math.ceil(finalTargetValue / (totalAnimationDurationGoalMs / CuckooEnterpriseConfiguration.timingAndDelays.odometerRefreshIntervalMs))); 
+                
+                const recursiveIntervalTimer = setInterval(() => {
+                    currentCalculatedValue += calculationStep;
+                    
+                    if (currentCalculatedValue >= finalTargetValue) {
+                        targetDomElement.innerText = finalTargetValue;
+                        clearInterval(recursiveIntervalTimer);
+                    } else {
+                        targetDomElement.innerText = currentCalculatedValue;
+                    }
+                }, CuckooEnterpriseConfiguration.timingAndDelays.odometerRefreshIntervalMs);
+            }
+        }
+
+        /**
+         * @class HardwareAcceleratedParticleSystem
+         * @description Nejpokročilejší třída pro renderování stovek zlatých pírek na pozadí 
+         * pomocí Canvas API 2D. Využívá Path2D strukturu pro maximální odlehčení CPU.
+         */
+        class HardwareAcceleratedParticleSystem {
+            constructor() {
+                this.canvasDomElement = document.getElementById('particle-engine-canvas');
+                if (!this.canvasDomElement) {
+                    EnterpriseSystemLogger.logFatalError('HardwareAcceleratedParticleSystem', 'Particle Canvas element is missing.');
+                    return;
+                }
+
+                this.canvasRenderingContext = this.canvasDomElement.getContext('2d', { alpha: true });
+                this.particleEntitiesCollection = [];
+                
+                // Převedení složitého SVG stringu pera do nativního objektu Path2D
+                // Tím se dramaticky šetří výkon při opakovaném překreslování
+                this.optimizedFeatherVectorPath = new Path2D("M12.4,2.6C12.4,2.6,9.1,6.8,8.2,9.6C7.3,12.4,7.8,15.6,9.5,18.1C8.2,17.2,6.5,16.5,5.1,16C3.7,15.5,2.1,15.4,0.6,15.6C1.9,16.6,3.6,17.4,5.3,18.1C6.9,18.8,8.8,19.2,10.6,19.3C10.5,21.5,10.8,23.8,11.5,25.8C12,27.3,12.8,28.8,13.8,30C13.5,28.2,13.6,26.3,14,24.5C14.7,21,16.4,17.7,18.7,15.1C21,12.5,23.9,10.4,27.1,8.9C24,9.6,20.8,10.9,18.1,12.7C15.4,14.5,13.2,16.9,11.7,19.7C11.3,17.4,11.3,15,11.8,12.7C12.3,10.4,13.4,8.3,15,6.5C14.1,5.3,13.2,3.9,12.4,2.6Z");
+
+                this.synchronizeViewportDimensions();
+                window.addEventListener('resize', this.synchronizeViewportDimensions.bind(this), { passive: true });
+                
+                EnterpriseSystemLogger.logInformation('HardwareAcceleratedParticleSystem', 'Particle Physics Engine Online.');
+                requestAnimationFrame(this.executeContinuousRenderLoop.bind(this));
+            }
+
+            synchronizeViewportDimensions() {
+                this.internalCanvasWidth = this.canvasDomElement.width = window.innerWidth;
+                this.internalCanvasHeight = this.canvasDomElement.height = window.innerHeight;
+                this.seedInitialParticleEntities();
+            }
+
+            seedInitialParticleEntities() {
+                this.particleEntitiesCollection = [];
+                
+                // Adaptivní detekce výkonu podle šířky obrazovky
+                const targetParticleAmount = window.innerWidth > CuckooEnterpriseConfiguration.intersectionThresholds.mobileViewportBreakpointWidth 
+                    ? CuckooEnterpriseConfiguration.renderingAndLimits.particleMaximumCountDesktop 
+                    : CuckooEnterpriseConfiguration.renderingAndLimits.particleMaximumCountMobile; 
+                
+                for (let iterator = 0; iterator < targetParticleAmount; iterator++) {
+                    const minimumGravity = CuckooEnterpriseConfiguration.physicsAndEnvironment.particleGravityMinimumPull;
+                    const maximumGravity = CuckooEnterpriseConfiguration.physicsAndEnvironment.particleGravityMaximumPull;
+                    
+                    this.particleEntitiesCollection.push({
+                        coordinateX: Math.random() * this.internalCanvasWidth,
+                        coordinateY: Math.random() * this.internalCanvasHeight - this.internalCanvasHeight,
+                        scaleMultiplier: Math.random() * 0.7 + 0.3,
+                        velocityGravityVectorY: Math.random() * (maximumGravity - minimumGravity) + minimumGravity,
+                        currentRotationAngleDegrees: Math.random() * 360,
+                        rotationVelocityVector: Math.random() * 0.8 - 0.4,
+                        windPhaseAccumulatorOffset: Math.random() * Math.PI * 2,
+                        transparencyAlphaChannel: Math.random() * 0.4 + 0.1
+                    });
+                }
+            }
+
+            renderSingleFeatherEntity(particleObject) {
+                this.canvasRenderingContext.save();
+                
+                // Matrix transformace pro daný objekt
+                this.canvasRenderingContext.translate(particleObject.coordinateX, particleObject.coordinateY);
+                this.canvasRenderingContext.rotate(particleObject.currentRotationAngleDegrees * Math.PI / 180);
+                this.canvasRenderingContext.scale(particleObject.scaleMultiplier, particleObject.scaleMultiplier);
+                
+                // Aplikace materiálů a světelných efektů
+                this.canvasRenderingContext.fillStyle = `rgba(212, 175, 55, ${particleObject.transparencyAlphaChannel})`;
+                this.canvasRenderingContext.shadowBlur = 15;
+                this.canvasRenderingContext.shadowColor = "rgba(212, 175, 55, 0.5)";
+                
+                // Vykreslení optimalizované cesty
+                this.canvasRenderingContext.fill(this.optimizedFeatherVectorPath);
+                
+                this.canvasRenderingContext.restore();
+            }
+
+            executeContinuousRenderLoop() {
+                // Vyčištění celého bufferu pro nový frame
+                this.canvasRenderingContext.clearRect(0, 0, this.internalCanvasWidth, this.internalCanvasHeight);
+                
+                this.particleEntitiesCollection.forEach(particleEntity => {
+                    // Aplikace fyziky gravitačního pole
+                    particleEntity.coordinateY += particleEntity.velocityGravityVectorY; 
+                    
+                    // Aplikace fyziky vzdušných proudů (Sinusová vlna)
+                    const windForce = Math.sin(particleEntity.coordinateY * 0.005 + particleEntity.windPhaseAccumulatorOffset);
+                    particleEntity.coordinateX += windForce * CuckooEnterpriseConfiguration.physicsAndEnvironment.particleWindDisplacementMultiplier;
+                    
+                    // Aplikace momentu hybnosti (Rotace)
+                    particleEntity.currentRotationAngleDegrees += particleEntity.rotationVelocityVector; 
+                    
+                    // Boundary Collision Resolution: Pokud propadne pod okraj, vrátíme ho na začátek
+                    if (particleEntity.coordinateY > this.internalCanvasHeight + 50) {
+                        particleEntity.coordinateY = -50;
+                        particleEntity.coordinateX = Math.random() * this.internalCanvasWidth;
+                    }
+                    
+                    this.renderSingleFeatherEntity(particleEntity);
+                });
+                
+                // Zaregistrování dalšího cyklu v Browser Engine
+                requestAnimationFrame(this.executeContinuousRenderLoop.bind(this));
+            }
+        }
+
+        /**
+         * @class RecursiveLSystemFractalRenderer
+         * @description Absolutní vrchol vizuálního programování v tomto projektu.
+         * Generuje organicky rostoucí strom využívající modifikovaný Lindenmayerův systém (L-System).
+         * Každá větev se rekurzivně větví na dvě další a na úplném konci vygeneruje zářící květ.
+         */
+        class RecursiveLSystemFractalRenderer {
+            constructor() {
+                this.canvasTargetElement = document.getElementById('fractal-tree-canvas');
+                this.sectionBoundingElement = document.getElementById('sluzby');
+                
+                if(!this.canvasTargetElement || !this.sectionBoundingElement) {
+                    EnterpriseSystemLogger.logWarning('RecursiveLSystemFractalRenderer', 'Fractal Canvas or Binding Section is missing.');
+                    return;
+                }
+                
+                this.canvasGraphicsContext = this.canvasTargetElement.getContext('2d', { alpha: true });
+                this.hasGrowthSequenceBeenTriggered = false;
+
+                this.synchronizeViewportDimensions();
+                window.addEventListener('resize', this.synchronizeViewportDimensions.bind(this), { passive: true });
+                this.bindIntersectionTrigger();
+                
+                EnterpriseSystemLogger.logInformation('RecursiveLSystemFractalRenderer', 'Fractal Engine standing by for intersection activation.');
+            }
+
+            synchronizeViewportDimensions() {
+                // Přizpůsobení velikosti interního rozlišení canvasu přesným rozměrům rodičovské sekce
+                this.internalCanvasWidth = this.canvasTargetElement.width = this.sectionBoundingElement.offsetWidth;
+                this.internalCanvasHeight = this.canvasTargetElement.height = this.sectionBoundingElement.offsetHeight;
+            }
+
+            bindIntersectionTrigger() {
+                const regionalGrowthObserver = new IntersectionObserver((intersectionEntries) => {
+                    const targetEntry = intersectionEntries[0];
+                    if(targetEntry.isIntersecting && !this.hasGrowthSequenceBeenTriggered) {
+                        this.hasGrowthSequenceBeenTriggered = true;
+                        this.executeInitialRootIgnition();
+                    }
+                }, { threshold: CuckooEnterpriseConfiguration.intersectionThresholds.fractalGrowthActivationPoint });
+                
+                regionalGrowthObserver.observe(this.sectionBoundingElement);
+            }
+
+            executeInitialRootIgnition() {
+                EnterpriseSystemLogger.logInformation('RecursiveLSystemFractalRenderer', 'Roots ignited. Constructing L-System Forest.');
+                
+                // Deklarace pevných bodů osy X pro zasazení tří nezávislých kmenů stromů
+                const rootPlacementXAxisRatios = [0.2, 0.5, 0.8];
+                
+                rootPlacementXAxisRatios.forEach((ratioValue, indexIterator) => {
+                    // Aplikace asynchronního zpoždění pro efekt postupného růstu lesa
+                    setTimeout(() => {
+                        this.computeAndRenderRecursiveBranch(
+                            this.internalCanvasWidth * ratioValue,  // Počáteční bod X
+                            this.internalCanvasHeight,              // Počáteční bod Y (úplně dole)
+                            -90,                                    // Výchozí úhel (Směřuje přímo nahoru)
+                            130,                                    // Délka hlavního kmene
+                            12,                                     // Tloušťka hlavního kmene
+                            0                                       // Současná úroveň rekurzivní hloubky
+                        );
+                    }, indexIterator * 400); 
+                });
+            }
+
+            /**
+             * Samotné rekurzivní srdce enginu.
+             */
+            computeAndRenderRecursiveBranch(originCoordinateX, originCoordinateY, currentAngleDegrees, currentSegmentLength, currentSegmentWidth, currentRecursionDepthLevel) {
+                
+                // Logická výstupní klauzule (Base Case): Pokud jsme dosáhli maximální hloubky 
+                // nebo je větev příliš krátká, vykreslí se na jejím konci energetický květ.
+                if (currentRecursionDepthLevel > CuckooEnterpriseConfiguration.renderingAndLimits.fractalMaximumRecursionDepth || 
+                    currentSegmentLength < CuckooEnterpriseConfiguration.renderingAndLimits.fractalMinimumBranchLengthPx) {
+                    this.renderTerminalBloomBlossom(originCoordinateX, originCoordinateY);
+                    return;
+                }
+
+                // Výpočet koncového vektoru větve pomocí komplexní goniometrie
+                const angleInRadians = currentAngleDegrees * Math.PI / 180;
+                const destinationCoordinateX = originCoordinateX + currentSegmentLength * Math.cos(angleInRadians);
+                const destinationCoordinateY = originCoordinateY + currentSegmentLength * Math.sin(angleInRadians);
+
+                // Konstrukce grafické cesty
+                this.canvasGraphicsContext.beginPath();
+                this.canvasGraphicsContext.moveTo(originCoordinateX, originCoordinateY);
+                this.canvasGraphicsContext.lineTo(destinationCoordinateX, destinationCoordinateY);
+                
+                // Color Morphing Engine: 
+                // Procentuální výpočet transformace barvy od Zlaté (Kořeny) do Smaragdově Tech Zelené (Vrcholky)
+                const depthProgressionRatio = currentRecursionDepthLevel / CuckooEnterpriseConfiguration.renderingAndLimits.fractalMaximumRecursionDepth;
+                const calculatedRedChannel = 212 - (212 - 16) * depthProgressionRatio;
+                const calculatedGreenChannel = 175 - (175 - 185) * depthProgressionRatio;
+                const calculatedBlueChannel = 55 - (55 - 129) * depthProgressionRatio;
+                
+                this.canvasGraphicsContext.strokeStyle = `rgba(${calculatedRedChannel}, ${calculatedGreenChannel}, ${calculatedBlueChannel}, 0.35)`;
+                this.canvasGraphicsContext.lineWidth = currentSegmentWidth;
+                this.canvasGraphicsContext.lineCap = 'round';
+                
+                // Fyzické aplikování vykreslení tahu na plátno
+                this.canvasGraphicsContext.stroke();
+
+                // Vyvolání další generace rekurze s asynchronním zpožděním.
+                // Tento Timeout způsobuje, že strom neroste okamžitě, ale vizuálně "pučí" a prodlužuje se.
+                setTimeout(() => {
+                    // Odštěpení levé sub-větve (úhel se mění o -22 stupňů)
+                    this.computeAndRenderRecursiveBranch(
+                        destinationCoordinateX, destinationCoordinateY, 
+                        currentAngleDegrees - 22, 
+                        currentSegmentLength * 0.75, // Zkrácení délky další generace
+                        currentSegmentWidth * 0.7,   // Ztenčení šířky další generace
+                        currentRecursionDepthLevel + 1
+                    );
+                    
+                    // Odštěpení pravé sub-větve (úhel se mění o +22 stupňů)
+                    this.computeAndRenderRecursiveBranch(
+                        destinationCoordinateX, destinationCoordinateY, 
+                        currentAngleDegrees + 22, 
+                        currentSegmentLength * 0.75, 
+                        currentSegmentWidth * 0.7, 
+                        currentRecursionDepthLevel + 1
+                    );
+                }, CuckooEnterpriseConfiguration.timingAndDelays.fractalNodeGrowthDelayMs);
+            }
+
+            renderTerminalBloomBlossom(centerCoordinateX, centerCoordinateY) {
+                this.canvasGraphicsContext.beginPath();
+                // Generování náhodného poloměru pro zajištění organické asymetrie přírody
+                const randomizedRadius = Math.random() * 3 + 2;
+                this.canvasGraphicsContext.arc(centerCoordinateX, centerCoordinateY, randomizedRadius, 0, Math.PI * 2);
+                
+                // Aplikace Smaragdového materiálu pro tělo květu
+                this.canvasGraphicsContext.fillStyle = 'rgba(16, 185, 129, 0.85)'; 
+                
+                // Aplikace Zlaté aury kolem květu (Bloom efekt)
+                this.canvasGraphicsContext.shadowBlur = 18;
+                this.canvasGraphicsContext.shadowColor = "rgba(249, 211, 113, 0.9)"; 
+                
+                this.canvasGraphicsContext.fill();
+                
+                // Resetování stínového kontextu, aby neovlivnil vykreslování jiných větví
+                this.canvasGraphicsContext.shadowBlur = 0; 
+            }
+        }
+
+        /**
+         * @class VectorPhysicsEagleEngine
+         * @description Nezávislý fyzikální engine kontrolující letový model globálního orla.
+         * Pohybuje objektem na ose X a dynamicky počítá výškovou sinusoidu a rotační Pitch.
+         */
+        class VectorPhysicsEagleEngine {
+            constructor() {
+                this.eagleVectorDomNode = document.getElementById('global-flying-eagle');
+                if(!this.eagleVectorDomNode) {
+                    EnterpriseSystemLogger.logWarning('VectorPhysicsEagleEngine', 'Eagle DOM entity missing.');
+                    return;
+                }
+
+                // Iniciální vektory a konstanty letu
+                this.currentHorizontalPositionX = -250;
+                this.baseAltitudeReferenceY = window.innerHeight / 2.5;
+                this.sineWaveAccumulationPhase = 0;
+                
+                // Zpoždění startu orla. Necháme uživatele dokončit čtení preloaderu,
+                // a teprve poté orel vletí do scény.
+                const startDelayCalculation = CuckooEnterpriseConfiguration.timingAndDelays.preloaderMinimumDurationMs + CuckooEnterpriseConfiguration.timingAndDelays.eagleTakeoffDelayMs;
+                
+                setTimeout(() => {
+                    this.eagleVectorDomNode.style.opacity = "1";
+                    EnterpriseSystemLogger.logInformation('VectorPhysicsEagleEngine', 'Takeoff clearance granted. Executing flight model.');
+                    this.executeContinuousFlightTrajectory();
+                }, startDelay
+                   <script>
+        'use strict';
+
+        /**
+         * @namespace CuckooConfig
+         * @description Centrální konfigurační objekt. Umožňuje snadnou a bezpečnou modifikaci 
+         * parametrů bez nutnosti zasahovat hluboko do logiky jednotlivých enginů.
+         */
+        const CuckooConfig = {
+            timing: {
+                preloaderDuration: 1800,      // Celková minimální doba zobrazení preloaderu (ms)
+                preloaderInterval: 25,        // Rychlost updatu progress baru (ms)
+                fractalGrowthDelay: 90,       // Zpoždění růstu větví pro organický efekt (ms)
+                odometerRefreshRate: 35       // Rychlost přetáčení číselníku (ms)
+            },
+            physics: {
+                eagleFlightSpeed: 2.5,        // Posun orla na ose X (px/frame)
+                eagleOscillationAmplitude: 130, // Výška houpání orla
+                eagleOscillationFrequency: 0.025, // Rychlost houpání orla
+                particleGravityMin: 0.2,      // Minimální rychlost pádu pírka
+                particleGravityMax: 0.7,      // Maximální rychlost pádu pírka
+                particleWindMultiplier: 0.6   // Síla vlivu větru na pírka
+            },
+            rendering: {
+                particleCountDesktop: 25,     // Hustota pírek na PC
+                particleCountMobile: 12,      // Hustota pírek na mobilu (optimalizace)
+                fractalMaxDepth: 6,           // Počet rozvětvení stromu
+                fractalMinLength: 15          // Minimální délka větvičky před vykvetením
+            },
+            thresholds: {
+                scrollReveal: 0.15,           // Kolik % elementu musí být vidět pro odkrytí
+                fractalTrigger: 0.25,         // Kdy začne růst strom
+                mobileBreakpoint: 768         // Zlom bod pro mobilní UI
+            }
+        };
+
+        /**
+         * @class CuckooLogger
+         * @description Abstraktní vrstva pro bezpečné logování stavů do konzole (Enterprise standard).
+         */
+        class CuckooLogger {
+            static info(moduleName, message) {
+                console.info(`[CUCKOO OS] [${moduleName}] -> ${message}`);
+            }
+            static warn(moduleName, message) {
+                console.warn(`[CUCKOO OS WARN] [${moduleName}] -> ${message}`);
+            }
+            static error(moduleName, message, errObj = null) {
+                console.error(`[CUCKOO OS FATAL] [${moduleName}] -> ${message}`, errObj);
+            }
+        }
+
+        /**
+         * @class CustomCursorManager
+         * @description Řídí pozici a stav avantgardního custom kurzoru na desktopových zařízeních.
+         */
+        class CustomCursorManager {
+            constructor() {
+                // Detekce dotykových zařízení (Kurzor nezapínáme na mobilech)
+                this.isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+                
+                if (this.isTouchDevice) {
+                    CuckooLogger.info('CustomCursorManager', 'Touch device detected. Custom cursor globally disabled.');
+                    return;
+                }
+
+                this.cursorDot = document.getElementById('js-cursor-dot');
+                this.cursorRing = document.getElementById('js-cursor-ring');
+                
+                if (!this.cursorDot || !this.cursorRing) {
+                    CuckooLogger.warn('CustomCursorManager', 'Cursor DOM elements not found.');
+                    return;
+                }
+
+                // Výchozí pozice uprostřed obrazovky
+                this.mouseX = window.innerWidth / 2;
+                this.mouseY = window.innerHeight / 2;
+                this.ringX = this.mouseX;
+                this.ringY = this.mouseY;
+
+                this.initEventListeners();
+                this.executeRenderLoop();
+                CuckooLogger.info('CustomCursorManager', 'Initialized and actively rendering.');
+            }
+
+            initEventListeners() {
+                // Sledování myši s pasivním listenerem pro maximální výkon
+                window.addEventListener('mousemove', (e) => {
+                    this.mouseX = e.clientX;
+                    this.mouseY = e.clientY;
+                }, { passive: true });
+
+                // Přiřazení hover efektů pro všechny proklikávací elementy
+                const interactiveElements = document.querySelectorAll('a, button, .gallery-image-wrapper');
+                interactiveElements.forEach(element => {
+                    element.addEventListener('mouseenter', () => {
+                        document.body.classList.add('cursor-hover-active');
+                    });
+                    element.addEventListener('mouseleave', () => {
+                        document.body.classList.remove('cursor-hover-active');
+                    });
+                });
+            }
+
+            executeRenderLoop() {
+                // Přímý přesun centrální tečky
+                this.cursorDot.style.left = `${this.mouseX}px`;
+                this.cursorDot.style.top = `${this.mouseY}px`;
+
+                // Aplikace Lerp (Linear Interpolation) pro plynulé tažení vnějšího kroužku
+                this.ringX += (this.mouseX - this.ringX) * 0.15;
+                this.ringY += (this.mouseY - this.ringY) * 0.15;
+                
+                this.cursorRing.style.left = `${this.ringX}px`;
+                this.cursorRing.style.top = `${this.ringY}px`;
+
+                // Navázání na obnovovací frekvenci monitoru
+                requestAnimationFrame(this.executeRenderLoop.bind(this));
+            }
+        }
+
+        /**
+         * @class PreloaderManager
+         * @description Zpracovává filmový nástup stránky a synchronizuje zobrazení obsahu.
+         */
+        class PreloaderManager {
+            constructor() {
+                this.preloaderEl = document.getElementById('js-preloader');
+                this.barEl = document.getElementById('js-preloader-bar');
+                this.statusEl = document.getElementById('js-preloader-status');
+                
+                if (!this.preloaderEl) return;
+                
+                this.progressPercentage = 0;
+                
+                // Uzamčení pozadí během načítání
+                document.body.style.overflow = 'hidden';
+                
+                this.initiateBootSequence();
+            }
+
+            initiateBootSequence() {
+                // Simulace načítání komplexních systémů
+                const bootInterval = setInterval(() => {
+                    // Náhodný skokový přírůstek pro realističtější dojem
+                    this.progressPercentage += Math.random() * 12;
+                    
+                    if (this.progressPercentage >= 100) {
+                        this.progressPercentage = 100;
+                        clearInterval(bootInterval);
+                        this.finalizeBootSequence();
+                    }
+                    
+                    if (this.barEl) {
+                        this.barEl.style.width = `${this.progressPercentage}%`;
+                    }
+                    if (this.statusEl) {
+                        this.statusEl.innerText = `INICIALIZACE ENTERPRISE JÁDRA... ${Math.floor(this.progressPercentage)}%`;
+                    }
+                }, CuckooConfig.timing.preloaderInterval);
+            }
+
+            finalizeBootSequence() {
+                if (this.statusEl) {
+                    this.statusEl.innerText = "SYSTÉM ONLINE. VÍTEJTE.";
+                    this.statusEl.style.color = "#10b981"; // Tech Green
+                }
+                
+                setTimeout(() => {
+                    this.preloaderEl.classList.add('is-loaded');
+                    document.body.style.overflow = ''; // Odemknutí scrollu
+                    CuckooLogger.info('PreloaderManager', 'Boot sequence completed. User access granted.');
+                }, 500);
+            }
+        }
+
+        /**
+         * @class NavigationController
+         * @description Správa uživatelského rozhraní, sledování pozice scrollu a mobilní overlay.
+         */
+        class NavigationController {
+            constructor() {
+                this.headerEl = document.getElementById('main-header');
+                this.burgerBtn = document.getElementById('burger-btn');
+                this.closeBtn = document.getElementById('close-btn');
+                this.mobileOverlay = document.getElementById('mobile-overlay');
+                
+                if (!this.headerEl || !this.burgerBtn || !this.mobileOverlay) {
+                    CuckooLogger.error('NavigationController', 'Critical DOM Elements missing.');
+                    return;
+                }
+
+                this.navLinks = this.mobileOverlay.querySelectorAll('a');
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                // Throttling scroll eventu pro optimalizaci výkonu
+                let isScrolling = false;
+                window.addEventListener('scroll', () => {
+                    if (!isScrolling) {
+                        window.requestAnimationFrame(() => {
+                            this.evaluateHeaderState();
+                            isScrolling = false;
+                        });
+                        isScrolling = true;
+                    }
+                }, { passive: true });
+
+                // Přiřazení tlačítek menu
+                this.burgerBtn.addEventListener('click', () => this.openMobileMenu());
+                this.closeBtn.addEventListener('click', () => this.closeMobileMenu());
+                
+                // Zavření overlaye po kliknutí na libovolný odkaz v menu
+                this.navLinks.forEach(link => {
+                    link.addEventListener('click', () => this.closeMobileMenu());
+                });
+            }
+
+            evaluateHeaderState() {
+                // Přidání glassmorphism třídy pokud sjedeme dolů
+                if (window.scrollY > 80) {
+                    this.headerEl.classList.add('state-is-scrolled');
+                } else {
+                    this.headerEl.classList.remove('state-is-scrolled');
+                }
+            }
+
+            openMobileMenu() {
+                this.mobileOverlay.classList.add('state-is-open');
+                this.burgerBtn.setAttribute('aria-expanded', 'true');
+                
+                // Tvrdý zámek proti posunu stránky v pozadí (iOS fix)
+                document.body.style.overflow = 'hidden'; 
+                document.documentElement.style.overflow = 'hidden';
+            }
+
+            closeMobileMenu() {
+                this.mobileOverlay.classList.remove('state-is-open');
+                this.burgerBtn.setAttribute('aria-expanded', 'false');
+                
+                // Uvolnění zámků
+                document.body.style.overflow = '';
+                document.documentElement.style.overflow = '';
+            }
+        }
+
+        /**
+         * @class IntersectionObserverEngine
+         * @description Detekuje scroll pozici. Slouží k odkrývání prvků (Reveal) a točení číselníků.
+         */
+        class IntersectionObserverEngine {
+            constructor() {
+                this.revealNodes = document.querySelectorAll('.js-class-animate-reveal');
+                this.observerOptions = { 
+                    root: null, 
+                    rootMargin: '0px', 
+                    threshold: CuckooConfig.thresholds.scrollReveal 
+                };
+                
+                if (this.revealNodes.length > 0) {
+                    this.initObserver();
+                }
+            }
+
+            initObserver() {
+                try {
+                    const intersectionObserver = new IntersectionObserver((entries, observerInstance) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                // Aktivace CSS animace
+                                entry.target.classList.add('state-is-revealed-now');
+                                
+                                // Vyhledání a spuštění budíků (Odometer) uvnitř daného elementu
+                                const counterNodes = entry.target.querySelectorAll('.js-odometer-counter');
+                                counterNodes.forEach(node => this.igniteOdometer(node));
+                                
+                                // Zastavení sledování elementu po jeho odkrytí (šetří výkon)
+                                observerInstance.unobserve(entry.target);
+                            }
+                        });
+                    }, this.observerOptions);
+
+                    this.revealNodes.forEach(node => intersectionObserver.observe(node));
+                } catch (error) {
+                    CuckooLogger.error('IntersectionObserverEngine', 'IntersectionObserver is not supported', error);
+                    // Fallback pro velmi staré prohlížeče
+                    this.revealNodes.forEach(node => node.classList.add('state-is-revealed-now'));
+                }
+            }
+
+            igniteOdometer(domNode) {
+                // Prevence dvojitého spuštění
+                if (domNode.getAttribute('data-status-done') === 'true') return;
+                domNode.setAttribute('data-status-done', 'true');
+                
+                const finalTargetValue = parseInt(domNode.getAttribute('data-target'), 10);
+                if (isNaN(finalTargetValue)) return;
+
+                let currentCountingValue = 0;
+                
+                // Dynamický výpočet kroku, aby všechna čísla dojela zhruba za stejný čas
+                const calculationStep = Math.max(1, Math.ceil(finalTargetValue / (1500 / CuckooConfig.timing.odometerRefreshRate))); 
+                
+                const countingInterval = setInterval(() => {
+                    currentCountingValue += calculationStep;
+                    
+                    if (currentCountingValue >= finalTargetValue) {
+                        domNode.innerText = finalTargetValue;
+                        clearInterval(countingInterval);
+                    } else {
+                        domNode.innerText = currentCountingValue;
+                    }
+                }, CuckooConfig.timing.odometerRefreshRate);
+            }
+        }
+
+        /**
+         * @class BackgroundParticleEngine
+         * @description Akcelerovaný systém pro renderování padajících pírek. Vykresluje vlastní SVG cesty do Canvasu.
+         */
+        class BackgroundParticleEngine {
+            constructor() {
+                this.canvasDom = document.getElementById('particle-engine-canvas');
+                if (!this.canvasDom) return;
+
+                this.ctx2D = this.canvasDom.getContext('2d');
+                this.particlesPool = [];
+                
+                // Překlad masivního SVG pro Orel/Peříčko do nativního 2D kontextu
+                this.featherVectorPath = new Path2D("M12.4,2.6C12.4,2.6,9.1,6.8,8.2,9.6C7.3,12.4,7.8,15.6,9.5,18.1C8.2,17.2,6.5,16.5,5.1,16C3.7,15.5,2.1,15.4,0.6,15.6C1.9,16.6,3.6,17.4,5.3,18.1C6.9,18.8,8.8,19.2,10.6,19.3C10.5,21.5,10.8,23.8,11.5,25.8C12,27.3,12.8,28.8,13.8,30C13.5,28.2,13.6,26.3,14,24.5C14.7,21,16.4,17.7,18.7,15.1C21,12.5,23.9,10.4,27.1,8.9C24,9.6,20.8,10.9,18.1,12.7C15.4,14.5,13.2,16.9,11.7,19.7C11.3,17.4,11.3,15,11.8,12.7C12.3,10.4,13.4,8.3,15,6.5C14.1,5.3,13.2,3.9,12.4,2.6Z");
+
+                this.synchronizeViewportDimensions();
+                window.addEventListener('resize', this.synchronizeViewportDimensions.bind(this), { passive: true });
+                
+                requestAnimationFrame(this.executeRenderCycle.bind(this));
+            }
+
+            synchronizeViewportDimensions() {
+                this.canvasWidth = this.canvasDom.width = window.innerWidth;
+                this.canvasHeight = this.canvasDom.height = window.innerHeight;
+                this.populateParticlePool();
+            }
+
+            populateParticlePool() {
+                this.particlesPool = [];
+                // Optimalizace výkonu na mobilu vs desktopu
+                const targetParticleCount = window.innerWidth > CuckooConfig.thresholds.mobileBreakpoint 
+                    ? CuckooConfig.rendering.particleCountDesktop 
+                    : CuckooConfig.rendering.particleCountMobile; 
+                
+                for (let i = 0; i < targetParticleCount; i++) {
+                    this.particlesPool.push({
+                        posX: Math.random() * this.canvasWidth,
+                        posY: Math.random() * this.canvasHeight - this.canvasHeight,
+                        scaleRatio: Math.random() * 0.7 + 0.3,
+                        velocityGravityY: Math.random() * (CuckooConfig.physics.particleGravityMax - CuckooConfig.physics.particleGravityMin) + CuckooConfig.physics.particleGravityMin,
+                        rotationDegree: Math.random() * 360,
+                        rotationVelocity: Math.random() * 0.8 - 0.4,
+                        windPhaseOffset: Math.random() * Math.PI * 2,
+                        alphaChannel: Math.random() * 0.4 + 0.1
+                    });
+                }
+            }
+
+            renderSingleFeatherPath(particleData) {
+                this.ctx2D.save();
+                
+                // Aplikace pozice, rotace a velikosti
+                this.ctx2D.translate(particleData.posX, particleData.posY);
+                this.ctx2D.rotate(particleData.rotationDegree * Math.PI / 180);
+                this.ctx2D.scale(particleData.scaleRatio, particleData.scaleRatio);
+                
+                // Aplikace barev a glow efektu
+                this.ctx2D.fillStyle = `rgba(212, 175, 55, ${particleData.alphaChannel})`;
+                this.ctx2D.shadowBlur = 12;
+                this.ctx2D.shadowColor = "rgba(212, 175, 55, 0.4)";
+                
+                // Hardwarové vykreslení vektoru
+                this.ctx2D.fill(this.featherVectorPath);
+                
+                this.ctx2D.restore();
+            }
+
+            executeRenderCycle() {
+                // Vyčištění plátna pro nový snímek
+                this.ctx2D.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+                
+                // Výpočet fyziky a vykreslení pro každé pírko
+                this.particlesPool.forEach(particle => {
+                    particle.posY += particle.velocityGravityY; 
+                    // Aplikace sinové funkce pro simulaci snášení se ve větru
+                    particle.posX += Math.sin(particle.posY * 0.005 + particle.windPhaseOffset) * CuckooConfig.physics.particleWindMultiplier;
+                    particle.rotationDegree += particle.rotationVelocity; 
+                    
+                    // Fyzika okrajů obrazovky - pokud spadne pod okraj, resetuje se nahoru
+                    if (particle.posY > this.canvasHeight + 50) {
+                        particle.posY = -50;
+                        particle.posX = Math.random() * this.canvasWidth;
+                    }
+                    
+                    this.renderSingleFeatherPath(particle);
+                });
+                
+                // Nekonečná smyčka navázaná na frekvenci monitoru
+                requestAnimationFrame(this.executeRenderCycle.bind(this));
+            }
+        }
+
+        /**
+         * @module LSystemFractalEngine
+         * @description Matematický generátor organického fraktálního stromu, který roste zespodu sekce Služby.
+         */
+        class LSystemFractalEngine {
+            constructor() {
+                this.canvasDom = document.getElementById('fractal-tree-canvas');
+                this.parentSectionContainer = document.getElementById('sluzby');
+                
+                if(!this.canvasDom || !this.parentSectionContainer) return;
+                
+                this.ctx2D = this.canvasDom.getContext('2d');
+                this.isForestGrown = false;
+
+                this.synchronizeSectionDimensions();
+                window.addEventListener('resize', this.synchronizeSectionDimensions.bind(this), { passive: true });
+                this.bindIntersectionTrigger();
+            }
+
+            synchronizeSectionDimensions() {
+                // Fractal engine reaguje na velikost svého rodičovského kontejneru, nikoliv na celé okno
+                this.canvasWidth = this.canvasDom.width = this.parentSectionContainer.offsetWidth;
+                this.canvasHeight = this.canvasDom.height = this.parentSectionContainer.offsetHeight;
+            }
+
+            bindIntersectionTrigger() {
+                const growthObserver = new IntersectionObserver((entries) => {
+                    if(entries[0].isIntersecting && !this.isForestGrown) {
+                        this.isForestGrown = true;
+                        this.initiateForestGrowthSequence();
+                    }
+                }, { threshold: CuckooConfig.thresholds.fractalTrigger });
+                
+                growthObserver.observe(this.parentSectionContainer);
+            }
+
+            initiateForestGrowthSequence() {
+                CuckooLogger.info('LSystemFractalEngine', 'Forest growth sequence triggered.');
+                
+                // Definujeme počáteční body na ose X (pod kartami: 20%, 50%, 80%)
+                const treeSpawnsPositionsX = [0.2, 0.5, 0.8];
+                
+                treeSpawnsPositionsX.forEach((positionXMultiplier, index) => {
+                    // Timeout zajišťuje, že stromy nerostou úplně ve stejný moment
+                    setTimeout(() => {
+                        this.computeRecursiveBranch(
+                            this.canvasWidth * positionXMultiplier, 
+                            this.canvasHeight, 
+                            -90,  // Směr růstu - nahoru
+                            130,  // Počáteční délka kořene
+                            12,   // Počáteční tloušťka
+                            0     // Počáteční hloubka rekurze
+                        );
+                    }, index * 400); 
+                });
+            }
+
+            computeRecursiveBranch(currentX, currentY, growthAngleDegree, currentLength, currentWidth, currentDepth) {
+                // Bázová podmínka rekurze - strom dosáhl maximálního rozvětvení
+                if (currentDepth > CuckooConfig.rendering.fractalMaxDepth || currentLength < CuckooConfig.rendering.fractalMinLength) {
+                    this.renderEmeraldBloom(currentX, currentY);
+                    return;
+                }
+
+                // Převod úhlu na radiány pro trigonometrický výpočet
+                const angleRadians = growthAngleDegree * Math.PI / 180;
+                
+                // Výpočet koncové pozice větve
+                const targetX = currentX + currentLength * Math.cos(angleRadians);
+                const targetY = currentY + currentLength * Math.sin(angleRadians);
+
+                this.ctx2D.beginPath();
+                this.ctx2D.moveTo(currentX, currentY);
+                this.ctx2D.lineTo(targetX, targetY);
+                
+                // Plynulý přechod barev: Od kořenů (Zlatá) po vrcholky (Zelená)
+                const depthProgressRatio = currentDepth / CuckooConfig.rendering.fractalMaxDepth;
+                const computedR = 212 - (212 - 16) * depthProgressRatio;
+                const computedG = 175 - (175 - 185) * depthProgressRatio;
+                const computedB = 55 - (55 - 129) * depthProgressRatio;
+                
+                this.ctx2D.strokeStyle = `rgba(${computedR}, ${computedG}, ${computedB}, 0.35)`;
+                this.ctx2D.lineWidth = currentWidth;
+                this.ctx2D.lineCap = 'round';
+                this.ctx2D.stroke();
+
+                // Asynchronní volání další vrstvy větví (Vytváří vizuální efekt růstu)
+                setTimeout(() => {
+                    // Větvíme mírně doleva
+                    this.computeRecursiveBranch(
+                        targetX, targetY, 
+                        growthAngleDegree - 22, 
+                        currentLength * 0.75, 
+                        currentWidth * 0.7, 
+                        currentDepth + 1
+                    );
+                    
+                    // Větvíme mírně doprava
+                    this.computeRecursiveBranch(
+                        targetX, targetY, 
+                        growthAngleDegree + 22, 
+                        currentLength * 0.75, 
+                        currentWidth * 0.7, 
+                        currentDepth + 1
+                    );
+                }, CuckooConfig.timing.fractalGrowthDelay);
+            }
+
+            renderEmeraldBloom(positionX, positionY) {
+                // Vykreslení finálního rozkvetlého světla
+                this.ctx2D.beginPath();
+                this.ctx2D.arc(positionX, positionY, Math.random() * 3 + 2, 0, Math.PI * 2);
+                
+                this.ctx2D.fillStyle = 'rgba(16, 185, 129, 0.85)'; // Tech Green
+                this.ctx2D.shadowBlur = 18;
+                this.ctx2D.shadowColor = "rgba(249, 211, 113, 0.9)"; // Gold Aura
+                this.ctx2D.fill();
+                
+                // Reset stínu pro zachování čistého canvasu
+                this.ctx2D.shadowBlur = 0; 
+            }
+        }
+
+        /**
+         * @module EagleFlightVectorEngine
+         * @description Fyzikální motor orla, počítá letovou křivku (osa X) a sinusoidu pro náklon a výšku (osa Y).
+         */
+        class EagleFlightVectorEngine {
+            constructor() {
+                this.eagleDomNode = document.getElementById('global-flying-eagle');
+                if(!this.eagleDomNode) return;
+
+                // Nastavení počáteční pozice
+                this.currentGlobalXPosition = -250;
+                this.baseTargetAltitudeY = window.innerHeight / 2.5;
+                this.sineWaveMathematicalAccumulator = 0;
+                
+                // Vzlet orla je naplánován po dokončení preloaderu + bezpečné zpoždění
+                const takeoffDelay = CuckooConfig.timing.preloaderDuration + 1000;
+                setTimeout(() => {
+                    this.eagleDomNode.style.opacity = "1";
+                    CuckooLogger.info('EagleFlightVectorEngine', 'Flight physics active. Eagle has taken off.');
+                    this.executeFlightPhysicsTrajectory();
+                }, takeoffDelay);
+            }
+
+            executeFlightPhysicsTrajectory() {
+                const computeFlightFrame = () => {
+                    // X-Axis: Lineární pohyb vpřed
+                    this.currentGlobalXPosition += CuckooConfig.physics.eagleFlightSpeed;
+                    
+                    // Y-Axis: Využití funkce Sinus pro hladké houpání
+                    this.sineWaveMathematicalAccumulator += CuckooConfig.physics.eagleOscillationFrequency;
+                    
+                    const dynamicFlightAltitudeY = this.baseTargetAltitudeY + Math.sin(this.sineWaveMathematicalAccumulator) * CuckooConfig.physics.eagleOscillationAmplitude;
+                    
+                    // Rotace: Kosinus odpovídá derivaci sinu (Sklon letu)
+                    const flightPitchRotationDeg = Math.cos(this.sineWaveMathematicalAccumulator) * 15;
+
+                    // Hardwarově akcelerované posunutí v DOM stromu přes translate3d
+                    this.eagleDomNode.style.transform = `translate3d(${this.currentGlobalXPosition}px, ${dynamicFlightAltitudeY}px, 0) rotate(${flightPitchRotationDeg}deg)`;
+
+                    // Pokud orel vyletí z viewportu vpravo, je poslán zpět doleva s náhodnou novou výškou
+                    if (this.currentGlobalXPosition > window.innerWidth + 250) {
+                        this.currentGlobalXPosition = -250;
+                        // Náhodná letová hladina (vyhýbá se úplnému spodu)
+                        this.baseTargetAltitudeY = Math.random() * (window.innerHeight * 0.6) + 150;
+                    }
+
+                    // Uzamčení fyzikální smyčky na Refresh Rate monitoru
+                    requestAnimationFrame(computeFlightFrame);
+                };
+                
+                requestAnimationFrame(computeFlightFrame);
+            }
+        }
+
+        /**
+         * ======================================================================
+         * SYSTEM KERNEL BOOTSTRAPPER (MASTER INIT)
+         * Oživí aplikaci a její moduly po bezpečném parsování DOM stromu.
+         * ======================================================================
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Postupná inicializace a alokace nezávislých OOP Modulů
+                const preloaderEngine = new PreloaderManager();
+                const customCursor = new CustomCursorManager();
+                const userInterface = new NavigationController();
+                const scrollRevealSystem = new IntersectionObserverEngine();
+                const ambientParticles = new BackgroundParticleEngine();
+                const lSystemForest = new LSystemFractalEngine();
+                const physicsEagle = new EagleFlightVectorEngine();
+                
+                // Dynamická injekce aktuálního roku do patičky
+                const currentYearElement = document.getElementById('current-year');
+                if(currentYearElement) currentYearElement.textContent = new Date().getFullYear();
+                
+                CuckooLogger.info('SYSTEM KERNEL', 'All systems engaged. Cuckoo OS v7.0 running flawlessly.');
+            } catch (systemFatalError) {
+                console.error("[CUCKOO KERNEL PANIC] Fatal execution failure in initialization sequence.", systemFatalError);
+            }
+        });
+
+    </script>
+</body>
+</html>
+            
